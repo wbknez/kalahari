@@ -20,11 +20,13 @@ package com.solsticesquared.kalahari.util
  *        The per-object hash multiplier to use; this should also be prime.
  * @return A reasonably unique hash code.
  */
-fun hash(vararg fields: Any?, initialValue: Int = 17, multiplier: Int = 37)
-    : Int {
+fun hash(vararg fields: Any?, initialValue: Int = 17,
+         multiplier: Int = 37): Int {
     var result = initialValue
+
     fields.forEach {
         result = (result * multiplier) + (it?.hashCode() ?: 0)
     }
+
     return result
 }
