@@ -4,8 +4,11 @@ plugins {
 
 dependencies {
     implementation(Libraries.kotlin)
+    implementation(Libraries.kotlinref)
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
+
+    testImplementation(Libraries.kotlintest)
 }
 
 repositories {
