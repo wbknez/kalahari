@@ -1,5 +1,10 @@
 plugins {
+    application
     kotlin("jvm") version Versions.kotlin 
+}
+
+application {
+    mainClassName = "${project.group}.${project.name}.AppEntry"
 }
 
 dependencies {
