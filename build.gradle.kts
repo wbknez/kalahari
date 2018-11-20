@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(Libraries.kotlin)
+    implementation(Libraries.kotlinargp)
     implementation(Libraries.kotlinref)
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
