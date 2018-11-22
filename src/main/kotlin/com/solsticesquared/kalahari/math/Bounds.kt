@@ -18,6 +18,16 @@ package com.solsticesquared.kalahari.math
  */
 data class Bounds(val x: Int, val y: Int, val width: Int, val height: Int) {
 
+    /**
+     * Constructor.
+     *
+     * @param width
+     *        The extent along the x-axis.
+     * @param height
+     *        The extent along the y-axis.
+     */
+    constructor(width: Int, height: Int) : this(0, 0, width, height)
+
     val area: Int
         get() = this.width * this.height
 }
