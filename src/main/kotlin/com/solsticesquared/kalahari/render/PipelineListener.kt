@@ -9,6 +9,11 @@ import com.solsticesquared.kalahari.math.Bounds
 interface PipelineListener {
 
     /**
+     * Called whenever a [Pipeline] finishes rendering a scene.
+     */
+    fun onComplete()
+
+    /**
      * Called whenever a single [Pixel] has been fully traced and is ready to
      * be visualized or serialized in some way.
      *
@@ -18,12 +23,12 @@ interface PipelineListener {
     fun onEmit(pixel: Pixel)
 
     /**
-     * Called before a [Pipeline] begins rendering in order to ensure all
-     * listeners are aware of the shape of the rendering window (which also
+     * Called before a [Pipeline] begins rendering a scene in order to ensure
+     * all listeners are aware of the shape of the rendering window (which also
      * defines the total number of pixels to be drawn).
      *
      * @param bounds
      *        The bounds of the rendering window to use.
      */
-    fun onReshape(bounds: Bounds)
+    fun onStart(bounds: Bounds)
 }

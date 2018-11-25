@@ -2,6 +2,8 @@ package com.solsticesquared.kalahari.render
 
 import com.solsticesquared.kalahari.math.Bounds
 import java.awt.image.BufferedImage
+import java.nio.file.Paths
+import javax.imageio.ImageIO
 
 /**
  * Represents an implementation of [PipelineListener] that outputs emitted
@@ -52,11 +54,16 @@ class ImageOutput(val basePath: String, val format: Format) : PipelineListener {
 
     private var img: BufferedImage? = null
 
+    override fun onComplete() {
+        val imgPath = Paths.get(this.basePath + "." + this.format.extension)
+        ImageIO.write(this.img, this.format.extension, imgPath.toFile())
+    }
+
     override fun onEmit(pixel: Pixel) {
         this.img!!.setRGB(pixel.x, pixel.y, pixel.rgb)
     }
 
-    override fun onReshape(bounds: Bounds) {
+    override fun onStart(bounds: Bounds) {
         this.img = BufferedImage(
             bounds.width, bounds.height, BufferedImage.TYPE_INT_RGB
         )
