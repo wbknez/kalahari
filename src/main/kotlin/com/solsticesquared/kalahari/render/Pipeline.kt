@@ -28,6 +28,19 @@ class Pipeline {
 
     private val listeners: MutableList<PipelineListener> = mutableListOf()
 
+    /**
+     *
+     *
+     * @param listener
+     *        The listener to add.
+     */
+    fun addListener(listener: PipelineListener) {
+        this.listeners.add(listener)
+    }
+
+    /**
+     *
+     */
     fun run(tracer: Tracer, bounds: Bounds, order: DrawingOrder) {
         val renderables = order.create(bounds).toObservable()
 
