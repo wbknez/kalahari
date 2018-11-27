@@ -16,17 +16,17 @@ class Point3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         /**
          * The x-axis unit point.
          */
-        val X = Point3(1f, 0f, 0f)
+        val X    = Point3(1f, 0f, 0f)
 
         /**
          * The y-axis unit point.
          */
-        val Y = Point3(0f, 1f, 0f)
+        val Y    = Point3(0f, 1f, 0f)
 
         /**
          * The z-axis unit point.
          */
-        val Z = Point3(0f, 0f, 1f)
+        val Z    = Point3(0f, 0f, 1f)
 
         /**
          * The origin point.
