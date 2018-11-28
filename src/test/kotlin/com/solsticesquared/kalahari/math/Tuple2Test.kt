@@ -95,8 +95,7 @@ class Tuple2Test : ShouldSpec() {
         "The conversion of a tuple to a String" {
             should("use parentheses instead of arrows.") {
                 forAll(Tup2Gen) { tup: Tuple2 ->
-                    val expected =
-                        "(" + tup.x + ", " + tup.y + ")"
+                    val expected = "(${tup.x}, ${tup.y})"
                     tup.toString() == expected
                 }
             }
