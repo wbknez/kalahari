@@ -42,7 +42,7 @@ class Point3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      */
     constructor(point: Point3?) : this(point!!.x, point.y, point.z)
 
-    override fun clone(): Tuple3 = Point3(this)
+    override fun clone(): Point3 = Point3(this)
 
     /**
      * Computes the distance between this point and the specified one.
