@@ -71,6 +71,43 @@ open class Matrix4(t00: Float = 1f, t01: Float = 0f,
 
     override fun clone(): Matrix4 = Matrix4(this)
 
+    operator fun div(scalar: Float): Matrix4 {
+        val inv = 1f / scalar
+        
+        return Matrix4(
+            this.t00 * inv, this.t01 * inv,
+            this.t02 * inv, this.t03 * inv,
+            this.t10 * inv, this.t11 * inv,
+            this.t12 * inv, this.t13 * inv,
+            this.t20 * inv, this.t21 * inv,
+            this.t22 * inv, this.t23 * inv,
+            this.t30 * inv, this.t31 * inv,
+            this.t32 * inv, this.t33 * inv
+        )
+    }
+    
+    /**
+     * Divides this matrix by the specified scalar and also modifies this
+     * matrix as a result.
+     *
+     * @param scalar
+     *        The value to use.
+     * @return A reference to this matrix for easy chaining.
+     */
+    fun divSelf(scalar: Float): Matrix4 {
+        val inv = 1f / scalar
+
+        this.t00 *= inv; this.t01 *= inv
+        this.t02 *= inv; this.t03 *= inv
+        this.t10 *= inv; this.t11 *= inv
+        this.t12 *= inv; this.t13 *= inv
+        this.t20 *= inv; this.t21 *= inv
+        this.t22 *= inv; this.t23 *= inv
+        this.t30 *= inv; this.t31 *= inv
+        this.t32 *= inv; this.t33 *= inv
+        return this
+    }
+
     /**
      * Computes the inverse of this matrix.
      *
@@ -202,7 +239,7 @@ open class Matrix4(t00: Float = 1f, t01: Float = 0f,
             this.t22 - mat.t22, this.t23 - mat.t23,
             this.t30 - mat.t30, this.t31 - mat.t31,
             this.t32 - mat.t32, this.t33 - mat.t33
-               )
+        )
 
     /**
      * Subtracts this matrix from the specified one and also modifies this
@@ -234,7 +271,7 @@ open class Matrix4(t00: Float = 1f, t01: Float = 0f,
             this.t22 + mat.t22, this.t23 + mat.t23,
             this.t30 + mat.t30, this.t31 + mat.t31,
             this.t32 + mat.t32, this.t33 + mat.t33
-               )
+        )
 
     /**
      * Adds this matrix to the specified one and also modifies this matrix as
@@ -289,7 +326,7 @@ open class Matrix4(t00: Float = 1f, t01: Float = 0f,
             this.t22 * scalar, this.t23 * scalar,
             this.t30 * scalar, this.t31 * scalar,
             this.t32 * scalar, this.t33 * scalar
-               )
+        )
 
     operator fun times(mat: Matrix4): Matrix4 =
         Matrix4(

@@ -30,6 +30,30 @@ class Matrix4Test : ShouldSpec() {
 
     init {
 
+        "One matrix multiplied by a scalar" {
+            should("multiply each element by that scalar.") {
+                forAll(Mat4Gen, Gen.float()) { mat: Matrix4, f: Float ->
+                    val g = 1f / f
+                    val expected = Matrix4()
+
+                    for(i in 0..15) { expected[i] = mat[i] * g }
+                    (mat / f) == expected
+                }
+            }
+        }
+
+        "A matrix dividing itself by a scalar" {
+            should("divide each element by that scalar.") {
+                forAll(Mat4Gen, Gen.float()) { mat: Matrix4, f: Float ->
+                    val g = 1f / f
+                    val expected = Matrix4()
+
+                    for(i in 0..15) { expected[i] = mat[i] * g }
+                    mat.divSelf(f) == expected
+                }
+            }
+        }
+
         "The inverse of a matrix" {
             should("be itself when identity.") {
                 val mat    = Matrix4()
