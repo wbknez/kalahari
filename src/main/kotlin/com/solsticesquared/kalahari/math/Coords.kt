@@ -9,4 +9,4 @@ package com.solsticesquared.kalahari.math
  * @property y
  *        The y-axis coordinate.
  */
-data class Coords(val x: Int, val y: Int)
+data class Coords(val x: Int, val y: Int) : Cloneable

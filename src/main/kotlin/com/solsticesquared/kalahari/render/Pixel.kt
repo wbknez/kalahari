@@ -17,4 +17,4 @@ package com.solsticesquared.kalahari.render
  * @property rgb
  *           The RGB color value.
  */
-data class Pixel(val x: Int, val y: Int, val rgb: Int)
+data class Pixel(val x: Int, val y: Int, val rgb: Int) : Cloneable

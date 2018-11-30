@@ -16,7 +16,8 @@ package com.solsticesquared.kalahari.math
  * @property y
  *           The origin on the y-axis.
  */
-data class Bounds(val x: Int, val y: Int, val width: Int, val height: Int) {
+data class Bounds(val x: Int, val y: Int, val width: Int, val height: Int)
+    : Cloneable {
 
     /**
      * Constructor.
