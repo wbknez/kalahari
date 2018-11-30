@@ -30,6 +30,8 @@ interface ObjectPool<T> {
      *
      * @return An object for use.
      * @throws ObjectPoolException
+     *         If an attempt is made to borrow more than the allowed number
+     *         of objects and the constraint handler throws an exception.
      */
     fun borrow(): T
 
