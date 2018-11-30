@@ -8,7 +8,7 @@ package com.solsticesquared.kalahari.math
  * @property magnitudeSquared
  *           The length of this vector squared.
  */
-class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
+open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     : Cloneable, Tuple3(x, y, z) {
 
     companion object {
@@ -116,7 +116,7 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return dX * dX + dY * dY + dZ * dZ
     }
 
-    operator fun div(scalar: Float): Vector3 {
+    open operator fun div(scalar: Float): Vector3 {
         val inv = 1f / scalar
         return Vector3(this.x * inv, this.y * inv, this.z * inv)
     }
@@ -129,9 +129,12 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The scalar to divide by.
      * @return A reference to this vector for easy chaining.
      */
-    fun divSelf(scalar: Float): Vector3 {
+    open fun divSelf(scalar: Float): Vector3 {
         val inv = 1f / scalar
-        this.x *= inv; this.y *= inv; this.z *= inv
+
+        this.x *= inv
+        this.y *= inv
+        this.z *= inv
         return this
     }
 
@@ -193,7 +196,7 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *
      * @return A negated vector.
      */
-    fun negateSelf(): Vector3 {
+    open fun negateSelf(): Vector3 {
         this.x = -this.x
         this.y = -this.y
         this.z = -this.z
@@ -210,7 +213,7 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         val mag = this.magnitude
         val vec = Vector3(this)
 
-        if(mag != 0f) {
+        if(mag != 0f && mag != 1f) {
             val inv = 1f / mag
 
             vec.x *= inv
@@ -228,10 +231,10 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *
      * @return A reference to this vector for easy chaining.
      */
-    fun normalizeSelf(): Vector3 {
+    open fun normalizeSelf(): Vector3 {
         val mag = this.magnitude
 
-        if(mag != 0f) {
+        if(mag != 0f && mag != 1f) {
             val inv = 1f / mag
 
             this.x *= inv
@@ -274,7 +277,7 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return this
     }
 
-    operator fun times(scalar: Float): Vector3 =
+    open operator fun times(scalar: Float): Vector3 =
         Vector3(this.x * scalar, this.y * scalar, this.z * scalar)
 
     /**
@@ -285,13 +288,13 @@ class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The value to use.
      * @return A reference to this vector for easy chaining.
      */
-    fun timesSelf(scalar: Float): Vector3 {
+    open fun timesSelf(scalar: Float): Vector3 {
         this.x *= scalar
         this.y *= scalar
         this.z *= scalar
         return this
     }
 
-    operator fun unaryMinus(): Vector3 =
+    open operator fun unaryMinus(): Vector3 =
         Vector3(-this.x, -this.y, -this.z)
 }
