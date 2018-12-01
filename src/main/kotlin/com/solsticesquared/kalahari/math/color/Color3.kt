@@ -64,6 +64,164 @@ fun intToComponent(value: Int): Float {
 class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
     : Cloneable, Tuple3(red, green, blue) {
 
+    /**
+     * Represents a collection of RGB colors.
+     *
+     * Colors are provided courtesy of Matplotlib, a plotting library for
+     * Python 3.
+     */
+    companion object {
+
+        val AliceBlue = Color3(240, 248, 255)
+        val AntiqueWhite = Color3(250, 235, 215)
+        val Aqua = Color3(0, 255, 255)
+        val Aquamarine = Color3(127, 255, 212)
+        val Azure = Color3(240, 255, 255)
+        val Beige = Color3(245, 245, 220)
+        val Bisque = Color3(255, 228, 196)
+        val Black = Color3(0, 0, 0)
+        val BlanchedAlmond = Color3(255, 235, 205)
+        val Blue = Color3(0, 0, 255)
+        val BlueViolet = Color3(138, 43, 226)
+        val Brown = Color3(165, 42, 42)
+        val BurlyWood = Color3(222, 184, 135)
+        val CadetBlue = Color3(95, 158, 160)
+        val Chartreuse = Color3(127, 255, 0)
+        val Chocolate = Color3(210, 105, 30)
+        val Coral = Color3(255, 127, 80)
+        val CornflowerBlue = Color3(100, 149, 237)
+        val Cornsilk = Color3(255, 248, 220)
+        val Crimson = Color3(220, 20, 60)
+        val Cyan = Color3(0, 255, 255)
+        val DarkBlue = Color3(0, 0, 139)
+        val DarkVyan = Color3(0, 139, 139)
+        val DarkGoldenrod = Color3(184, 134, 11)
+        val DarkGray = Color3(169, 169, 169)
+        val DarkGreen = Color3(0, 100, 0)
+        val DarkGrey = Color3(169, 169, 169)
+        val DarkKhaki = Color3(189, 183, 107)
+        val DarkMagenta = Color3(139, 0, 139)
+        val DarkOliveGreen = Color3(85, 107, 47)
+        val DarkOrange = Color3(255, 140, 0)
+        val DarkOrchid = Color3(153, 50, 204)
+        val DarkRed = Color3(139, 0, 0)
+        val DarkSalmon = Color3(233, 150, 122)
+        val DarkSeaGreen = Color3(143, 188, 143)
+        val DarkSlateBlue = Color3(72, 61, 139)
+        val DarkSlateGray = Color3(47, 79, 79)
+        val DarkSlateGrey = Color3(47, 79, 79)
+        val DarkTurquoise = Color3(0, 206, 209)
+        val DarkViolet = Color3(148, 0, 211)
+        val DeepInk = Color3(255, 20, 147)
+        val DeepSkyBlue = Color3(0, 191, 255)
+        val DimGray = Color3(105, 105, 105)
+        val DimGrey = Color3(105, 105, 105)
+        val DodgerBlue = Color3(30, 144, 255)
+        val FireBrick = Color3(178, 34, 34)
+        val FloralWhite = Color3(255, 250, 240)
+        val ForestGreen = Color3(34, 139, 34)
+        val Fuchsia = Color3(255, 0, 255)
+        val Gainsboro = Color3(220, 220, 220)
+        val GhostWhite = Color3(248, 248, 255)
+        val Gold = Color3(255, 215, 0)
+        val Goldenrod = Color3(218, 165, 32)
+        val Gray = Color3(128, 128, 128)
+        val Green = Color3(0, 128, 0)
+        val GreenYellow = Color3(173, 255, 47)
+        val Grey = Color3(128, 128, 128)
+        val Honeydew = Color3(240, 255, 240)
+        val HotPink = Color3(255, 105, 180)
+        val IndianRed = Color3(205, 92, 92)
+        val Indigo = Color3(75, 0, 130)
+        val Ivory = Color3(255, 255, 240)
+        val Khaki = Color3(240, 230, 140)
+        val Lavender = Color3(230, 230, 250)
+        val LavenderBlush = Color3(255, 240, 245)
+        val LawnGreen = Color3(124, 252, 0)
+        val LemonChiffon = Color3(255, 250, 205)
+        val LightBlue = Color3(173, 216, 230)
+        val LightCoral = Color3(240, 128, 128)
+        val LightCyan = Color3(224, 255, 255)
+        val LightGoldenrodYellow = Color3(250, 250, 210)
+        val LightGray = Color3(211, 211, 211)
+        val LightGreen = Color3(144, 238, 144)
+        val LightGrey = Color3(211, 211, 211)
+        val LightPink = Color3(255, 182, 193)
+        val LightSalmon = Color3(255, 160, 122)
+        val LightSeaGreen = Color3(32, 178, 170)
+        val LightSkyBlue = Color3(135, 206, 250)
+        val LightSlateGray = Color3(119, 136, 153)
+        val LightSlateGrey = Color3(119, 136, 153)
+        val LightSteelBlue = Color3(176, 196, 222)
+        val LightYellow = Color3(255, 255, 224)
+        val Lime = Color3(0, 255, 0)
+        val LimeGreen = Color3(50, 205, 50)
+        val Linen = Color3(250, 240, 230)
+        val Magenta = Color3(255, 0, 255)
+        val Maroon = Color3(128, 0, 0)
+        val MediumAquamarine = Color3(102, 205, 170)
+        val MediumBlue = Color3(0, 0, 205)
+        val MediumOrchid = Color3(186, 85, 211)
+        val MediumPurple = Color3(147, 112, 219)
+        val MediumSeaGreen = Color3(60, 179, 113)
+        val MediumSlateBlue = Color3(123, 104, 238)
+        val MediumSpringGreen = Color3(0, 250, 154)
+        val MediumTurquoise = Color3(72, 209, 204)
+        val MediumVioletRed = Color3(199, 21, 133)
+        val MidnightBlue = Color3(25, 25, 112)
+        val MintCream = Color3(245, 255, 250)
+        val MistyRose = Color3(255, 228, 225)
+        val Moccasin = Color3(255, 228, 181)
+        val NavajoWhite = Color3(255, 222, 173)
+        val Navy = Color3(0, 0, 128)
+        val OldLace = Color3(253, 245, 230)
+        val Olive = Color3(128, 128, 0)
+        val OliveDrab = Color3(107, 142, 35)
+        val Orange = Color3(255, 165, 0)
+        val OrangeRed = Color3(255, 69, 0)
+        val Orchid = Color3(218, 112, 214)
+        val PaleGoldenrod = Color3(238, 232, 170)
+        val PaleGreen = Color3(152, 251, 152)
+        val PaleTurquoise = Color3(175, 238, 238)
+        val PaleVioletRed = Color3(219, 112, 147)
+        val PapayaWhip = Color3(255, 239, 213)
+        val PeachPuff = Color3(255, 218, 185)
+        val Peru = Color3(205, 133, 63)
+        val Pink = Color3(255, 192, 203)
+        val Plum = Color3(221, 160, 221)
+        val PowderBlue = Color3(176, 224, 230)
+        val Purple = Color3(128, 0, 128)
+        val RebeccaPurple = Color3(102, 51, 153)
+        val Red = Color3(255, 0, 0)
+        val RosyBrown = Color3(188, 143, 143)
+        val RoyalBlue = Color3(65, 105, 225)
+        val SaddleBrown = Color3(139, 69, 19)
+        val Salmon = Color3(250, 128, 114)
+        val SandyBrown = Color3(244, 164, 96)
+        val SeaGreen = Color3(46, 139, 87)
+        val SeaShell = Color3(255, 245, 238)
+        val Sienna = Color3(160, 82, 45)
+        val Silver = Color3(192, 192, 192)
+        val SkyBlue = Color3(135, 206, 235)
+        val SlateBlue = Color3(106, 90, 205)
+        val SlateGray = Color3(112, 128, 144)
+        val SlateGrey = Color3(112, 128, 144)
+        val Snow = Color3(255, 250, 250)
+        val SpringGreen = Color3(0, 255, 127)
+        val SteelBlue = Color3(70, 130, 180)
+        val Tan = Color3(210, 180, 140)
+        val Teal = Color3(0, 128, 128)
+        val Thistle = Color3(216, 191, 216)
+        val Tomato = Color3(255, 99, 71)
+        val Turquoise = Color3(64, 224, 208)
+        val Violet = Color3(238, 130, 238)
+        val Wheat = Color3(245, 222, 179)
+        val White = Color3(255, 255, 255)
+        val WhiteSmoke = Color3(245, 245, 245)
+        val Yellow = Color3(255, 255, 0)
+        val YellowGreen = Color3(154, 205, 50)
+    }
+
     var red: Float
         get() = this.x
         set(value) { this.x = value }
@@ -81,6 +239,19 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
 
     val awt: Color
         get() = this.toAwtColor()
+
+    /**
+     * Constructor.
+     *
+     * @param red
+     *        The red color component to use.
+     * @param green
+     *        The green color component to use.
+     * @param blue
+     *        The blue color component to use.
+     */
+    constructor(red: Int = 0, green: Int = 0, blue: Int = 0)
+        : this(intToComponent(red), intToComponent(green), intToComponent(blue))
 
     /**
      * Constructor.
@@ -215,6 +386,25 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         this.red   = x
         this.green = y
         this.blue  = z
+        return this
+    }
+
+    /**
+     * Sets the components of this color to the specified values after they
+     * have been converted from integer representation(s) to floating-point.
+     *
+     * @param red
+     *        The red color component to use.
+     * @param green
+     *        The green color component to use.
+     * @param blue
+     *        The blue color component to use.
+     * @return A reference to this color for easy chaining.
+     */
+    fun set(red: Int, green: Int, blue: Int): Color3 {
+        this.red   = intToComponent(red)
+        this.green = intToComponent(green)
+        this.blue  = intToComponent(blue)
         return this
     }
 
