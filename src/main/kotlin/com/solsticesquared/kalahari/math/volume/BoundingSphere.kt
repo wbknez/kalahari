@@ -28,8 +28,30 @@ class BoundingSphere(val radius: Float = 1f,
             this.center.x - this.radius,
             this.center.y - this.radius,
             this.center.z - this.radius
-                      )
+        )
 
+    /**
+     * Constructor.
+     *
+     * @param radius
+     *        The radius to use.
+     * @param x
+     *        The x-axis coordinate of the center to use.
+     * @param y
+     *        The y-axis coordinate of the center to use.
+     * @param z
+     *        The z-axis coordinate of the center to use.
+     */
+    constructor(radius: Float = 1f, x: Float = 0.0f, y: Float = 0.0f,
+                z: Float = 0.0f)
+        : this(radius, Point3(x, y, z))
+
+    /**
+     * Constructor.
+     *
+     * @param sphere
+     *        The bounding sphere to copy.
+     */
     constructor(sphere: BoundingSphere?) : this(sphere!!.radius, sphere.center)
 
     override fun clone(): BoundingSphere = BoundingSphere(this)
@@ -136,6 +158,5 @@ class BoundingSphere(val radius: Float = 1f,
         return dist <= (radii * radii)
     }
 
-    override fun toString(): String =
-        "(%f, %s)".format(this.radius, this.center)
+    override fun toString(): String = "(${this.radius}, ${this.center})"
 }

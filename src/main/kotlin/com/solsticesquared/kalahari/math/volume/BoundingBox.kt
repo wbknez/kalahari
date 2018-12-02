@@ -36,6 +36,32 @@ class BoundingBox(val xLen: Float = 1f,
             this.center.z - this.zLen
                       )
 
+    /**
+     * Constructor.
+     *
+     * @param xLen
+     *           The maximum length along the x-axis to use.
+     * @param yLen
+     *           The maximum length along the y-axis to use.
+     * @param zLen
+     *           The maximum length along the z-axis to use.
+     * @param x
+     *        The x-axis coordinate of the center to use.
+     * @param y
+     *        The y-axis coordinate of the center to use.
+     * @param z
+     *        The z-axis coordinate of the center to use.
+     */
+    constructor(xLen: Float = 1f, yLen: Float = 1f, zLen: Float = 1f,
+                x: Float = 0f, y: Float = 0f, z: Float = 0f)
+        : this(xLen, yLen, zLen, Point3(x, y, z))
+
+    /**
+     * Constructor.
+     *
+     * @param box
+     *        The bounding box to copy from.
+     */
     constructor(box: BoundingBox?)
         : this(box!!.xLen, box.yLen, box.zLen, box.center.clone())
 
@@ -183,7 +209,5 @@ class BoundingBox(val xLen: Float = 1f,
     }
 
     override fun toString(): String =
-        "(<%f, %f, %f>, %s)".format(
-            this.xLen, this.yLen, this.zLen, this.center
-                                   )
+        "(<${this.xLen}, ${this.yLen}, ${this.zLen}>, ${this.center})"
 }
