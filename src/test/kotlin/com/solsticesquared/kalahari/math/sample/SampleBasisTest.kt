@@ -15,13 +15,13 @@ class SampleBasisTest : ShouldSpec() {
             should("The number of samples in the collection must be the same " +
                    "size as the number of samples times the number of sets.") {
                 shouldThrow<IllegalArgumentException>{
-                    SampleBasis<Int>(4, 4, List(15, { it }))
+                    SampleBasis(4, 4, List(15) { it })
                 }
                 shouldThrow<IllegalArgumentException>{
-                    SampleBasis<Int>(4, 5, List(16, { it }))
+                    SampleBasis(4, 5, List(16) { it })
                 }
                 shouldThrow<IllegalArgumentException>{
-                    SampleBasis<Int>(5, 4, List(16, { it }))
+                    SampleBasis(5, 4, List(16) { it })
                 }
             }
         }
