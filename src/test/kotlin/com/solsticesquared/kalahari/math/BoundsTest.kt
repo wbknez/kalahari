@@ -11,10 +11,10 @@ import io.kotlintest.specs.ShouldSpec
 class BoundsGenerator : Gen<Bounds> {
 
     override fun generate(): Bounds {
-        val x = Gen.int().generate()
-        val y = Gen.int().generate()
-        val height = Gen.int().generate() + y + 1
-        val width  = Gen.int().generate() + x + 1
+        val x = Gen.choose(1, 1000).generate()
+        val y = Gen.choose(1, 1000).generate()
+        val height = Gen.choose(y + 1, (y * 2) + 1).generate()
+        val width  = Gen.choose(x + 1, (x * 2) + 1).generate()
 
         return Bounds(x, y, width, height)
     }
