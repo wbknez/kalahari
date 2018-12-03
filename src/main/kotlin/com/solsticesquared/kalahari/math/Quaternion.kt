@@ -1,5 +1,14 @@
 package com.solsticesquared.kalahari.math
 
+/**
+ * Represents a rotation in three dimensional Cartesian space using
+ * hyper-complex numbers.
+ *
+ * @property magnitude
+ *           The length of this quaternion.
+ * @property magnitudeSquared
+ *           The length squared of this quaternion.
+ */
 class Quaternion(x: Float = 0.0f,
                  y: Float = 0.0f,
                  z: Float = 0.0f,
@@ -15,10 +24,10 @@ class Quaternion(x: Float = 0.0f,
     /**
      * Constructor.
      *
-     * @param quat
-     *        The quaternion to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(quat: Quaternion?) : this(quat!!.x, quat.y, quat.z, quat.w)
+    constructor(tuple: Tuple4?) : this(tuple!!.x, tuple.y, tuple.z, tuple.w)
 
     override fun clone(): Quaternion = Quaternion(this)
 

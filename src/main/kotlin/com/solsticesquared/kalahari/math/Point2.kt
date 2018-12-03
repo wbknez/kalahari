@@ -31,10 +31,10 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
     /**
      * Constructor.
      *
-     * @param point
-     *        The point to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(point: Point2?) : this(point!!.x, point.y)
+    constructor(tuple: Tuple2?) : this(tuple!!.x, tuple.y)
 
     override fun clone(): Point2 = Point2(this)
 

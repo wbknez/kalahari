@@ -256,10 +256,10 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
     /**
      * Constructor.
      *
-     * @param color
-     *        The color to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(color: Color3?) : this(color!!.red, color.green, color.blue)
+    constructor(tuple: Tuple3?) : this(tuple!!.x, tuple.y, tuple.z)
 
     override fun clone(): Color3 = Color3(this)
 

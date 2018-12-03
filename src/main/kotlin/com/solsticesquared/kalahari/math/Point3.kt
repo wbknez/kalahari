@@ -37,10 +37,10 @@ class Point3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     /**
      * Constructor.
      *
-     * @param point
-     *        The three-dimensional point to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(point: Point3?) : this(point!!.x, point.y, point.z)
+    constructor(tuple: Tuple3?) : this(tuple!!.x, tuple.y, tuple.z)
 
     override fun clone(): Point3 = Point3(this)
 
@@ -155,6 +155,19 @@ class Point3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         this.z = tuple.z
         return this
     }
+
+    /**
+     * Sets the components of this point to those computed from projecting
+     * the specified ray through the specified amount of parametric time.
+     *
+     * @param ray
+     *        The ray to project.
+     * @param t
+     *        The parametric time to use.
+     * @return A reference to this point for easy chaining.
+     */
+    fun setFromProjection(ray: Ray3, t: Float): Point3 =
+        ray.projectAlong(t, this)
 
     operator fun times(scalar: Float): Point3 =
         Point3(this.x * scalar, this.y * scalar, this.z * scalar)

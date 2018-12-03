@@ -48,10 +48,10 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     /**
      * Constructor.
      *
-     * @param vec
-     *        The vector to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(vec: Vector3?) : this(vec!!.x, vec.y, vec.z)
+    constructor(tuple: Tuple3?) : this(tuple!!.x, tuple.y, tuple.z)
 
     override fun clone(): Vector3 = Vector3(this)
 

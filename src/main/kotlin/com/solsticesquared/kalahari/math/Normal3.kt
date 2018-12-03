@@ -26,10 +26,10 @@ class Normal3(x: Float = 0.0f, y: Float = 1.0f, z: Float = 0.0f,
     /**
      * Constructor.
      *
-     * @param normal
-     *        The normal vector to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(normal: Normal3?) : this(normal!!.x, normal.y, normal.z)
+    constructor(tuple: Tuple3?) : this(tuple!!.x, tuple.y, tuple.z)
 
     init {
         if(normalize) {

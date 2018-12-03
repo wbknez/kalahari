@@ -21,10 +21,10 @@ class TexCoord2(u: Float = 0.0f, v: Float = 0.0f) : Cloneable, Tuple2(u, v) {
     /**
      * Constructor.
      *
-     * @param texCoord
-     *        The texture coordinate to copy from.
+     * @param tuple
+     *        The tuple to copy from.
      */
-    constructor(texCoord: TexCoord2?) : this(texCoord!!.u, texCoord.v)
+    constructor(tuple: Tuple2?) : this(tuple!!.x, tuple.y)
 
     override fun clone(): TexCoord2 = TexCoord2(this)
 

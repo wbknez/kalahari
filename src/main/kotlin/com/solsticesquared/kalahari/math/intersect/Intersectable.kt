@@ -17,7 +17,7 @@ interface Intersectable {
      *        The ray to test against.
      * @param tMin
      *        The point of intersection given in terms of parametric time.
-     * @param isect
+     * @param record
      *        The intersection to use.  If there is a successful
      *        intersection, then this structure will be filled with all
      *        relevant data.  If not, it will be left untouched.
@@ -26,6 +26,6 @@ interface Intersectable {
      *        successful intersection.
      * @return Whether or not an intersection occurred.
      */
-    fun intersect(ray: Ray3, tMin: FloatContainer, isect: Intersection,
+    fun intersect(ray: Ray3, tMin: FloatContainer, record: Intersection,
                   eps: EpsilonTable): Boolean
 }
