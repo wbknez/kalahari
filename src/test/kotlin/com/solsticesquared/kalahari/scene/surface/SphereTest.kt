@@ -19,8 +19,9 @@ class SphereGenerator : Gen<Sphere> {
 
     override fun generate(): Sphere =
         Sphere(Gen.choose(1, 1000).generate().toFloat(),
-               Point3(Gen.float().generate(), Gen.float().generate(),
-                      Gen.float().generate()))
+               Point3(Gen.choose(1, 1000).generate().toFloat(),
+                      Gen.choose(1, 1000).generate().toFloat(),
+                      Gen.choose(1, 1000).generate().toFloat()))
 }
 
 /**
@@ -88,6 +89,37 @@ class SphereTest : ShouldSpec() {
                     val ray = Ray3(Vector3(origin - sphere.center), origin)
 
                     !sphere.intersect(ray, tMin, record, hEps)
+                }
+            }
+        }
+
+        "Hit rays that start on a sphere" {
+            val hEps   = EpsilonTable(0.001f,
+                                      mutableMapOf(Sphere.ID to Sphere.hEps))
+            val record = Intersection()
+            val tMin   = FloatContainer(0f)
+
+            should("never intersect if the direction is towards the sphere.") {
+                forAll(SphGen) {sphere: Sphere ->
+                    val origin = sphere.center + Point3(sphere.radius,
+                                                        sphere.radius,
+                                                        sphere.radius)
+                    val ray = Ray3(Vector3(origin - sphere.center), origin)
+
+                    !sphere.intersect(ray, tMin, record, hEps)
+                }
+            }
+
+            should("always intersect if the direction is away from the " +
+                   "sphere (far side).") {
+                forAll(SphGen) {sphere: Sphere ->
+                    val origin = sphere.center + Point3(sphere.radius,
+                                                        sphere.radius,
+                                                        sphere.radius)
+                    val ray = Ray3(Vector3(sphere.center - origin).normalize(),
+                                   origin)
+
+                    sphere.intersect(ray, tMin, record, hEps)
                 }
             }
         }

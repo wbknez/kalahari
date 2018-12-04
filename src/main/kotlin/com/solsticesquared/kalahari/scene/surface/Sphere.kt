@@ -9,7 +9,7 @@ import com.solsticesquared.kalahari.scene.GeometricSurface
 import com.solsticesquared.kalahari.util.container.FloatContainer
 
 /**
- * Represents an implementation of [GeometricSurface] that is defined as a
+ * Represents an implementation of [GeometricSurface] that is defined as an
  * implicit sphere.
  *
  * @property center
