@@ -10,6 +10,29 @@ class Normal3(x: Float = 0.0f, y: Float = 1.0f, z: Float = 0.0f,
               normalize: Boolean = true)
     : Cloneable, Vector3(x, y, z) {
 
+    companion object {
+
+        /**
+         * The generalized unit normal.
+         */
+        val Unit = Normal3(1f, 1f, 1f)
+
+        /**
+         * The x-axis unit normal.
+         */
+        val X    = Normal3(1f, 0f, 0f)
+
+        /**
+         * The y-axis unit normal.
+         */
+        val Y    = Normal3(0f, 1f, 0f)
+
+        /**
+         * The z-axis unit normal.
+         */
+        val Z    = Normal3(0f, 0f, 1f)
+    }
+    
     /**
      * Constructor.
      *
