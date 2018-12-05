@@ -88,20 +88,21 @@ data class Sphere(val radius: Float = 1f,
             t = (-b + e) * denom
         }
 
-        if(t <= hEps) {
-            return false
+        return when(t <= hEps) {
+            false -> {
+                val invRadius = 1f / this.radius
+
+                record.localPosition.setFromProjection(ray, t)
+                record.normal.set((x + t * ray.dir.x) * invRadius,
+                                  (y + t * ray.dir.y) * invRadius,
+                                  (z + t * ray.dir.z) * invRadius)
+                record.reversed = false
+                record.worldPosition.setFromProjection(ray, t)
+                tMin.value = t
+
+                true
+            }
+            true  -> false
         }
-
-        val invRadius = 1f / this.radius
-
-        record.localPosition.setFromProjection(ray, t)
-        record.normal.set((x + t * ray.dir.x) * invRadius,
-                          (y + t * ray.dir.y) * invRadius,
-                          (z + t * ray.dir.z) * invRadius)
-        record.reversed = false
-        record.worldPosition.setFromProjection(ray, t)
-        tMin.value = t
-
-        return true
     }
 }

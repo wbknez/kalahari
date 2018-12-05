@@ -70,16 +70,17 @@ data class Plane(val normal: Normal3 = Normal3.Y.clone(),
         val hEps = eps[Plane.ID]
         val t    = getIntersectionTime(this.point, this.normal, ray)
 
-        if(t <= hEps) {
-            return false
+        return when(t <= hEps) {
+            false -> {
+                record.localPosition.setFromProjection(ray, t)
+                record.normal.set(this.normal)
+                record.reversed = false
+                record.worldPosition.setFromProjection(ray, t)
+                tMin.value = t
+
+                true
+            }
+            true  -> false
         }
-
-        record.localPosition.setFromProjection(ray, t)
-        record.normal.set(this.normal)
-        record.reversed = false
-        record.worldPosition.setFromProjection(ray, t)
-        tMin.value = t
-
-        return true
     }
 }
