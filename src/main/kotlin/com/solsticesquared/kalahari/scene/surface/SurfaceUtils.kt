@@ -16,6 +16,10 @@ sealed class SurfaceUtils {
          * Computes the parametric time of intersection between the specified
          * point with the specified surface normal and the specified ray.
          *
+         * This value is negative if the ray direction dotted with the normal
+         * is zero.  This typically denotes that no intersection is possible
+         * and allows this method to be used in an epsilon check.
+         *
          * @param point
          *        The point to intersect with.
          * @param normal
@@ -26,11 +30,26 @@ sealed class SurfaceUtils {
          */
         fun getIntersectionTime(point: Point3, normal: Normal3, ray: Ray3)
             : Float {
-            val iX = point.x - ray.origin.x
-            val iY = point.y - ray.origin.y
-            val iZ = point.z - ray.origin.z
-            return (iX * normal.x + iY * normal.y + iZ * normal.z) /
-                   ray.dir.dot(normal)
+            val iX    = point.x - ray.origin.x
+            val iY    = point.y - ray.origin.y
+            val iZ    = point.z - ray.origin.z
+            val dDotN = ray.dir.dot(normal)
+
+            return when(dDotN != 0f) {
+                false -> -1f
+                true  -> (iX * normal.x + iY * normal.y + iZ * normal.z) / dDotN
+            }
+        }
+
+        fun solveQuartic(a: Float, b: Float, c: Float, d: Float, e: Float)
+            : FloatArray {
+            // FIXME: Implement me!
+            return floatArrayOf(0f)
+        }
+
+        fun solveQuartic(coeffs: FloatArray): FloatArray {
+            return solveQuartic(coeffs[0], coeffs[1], coeffs[2], coeffs[3],
+                                coeffs[4])
         }
     }
 }

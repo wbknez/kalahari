@@ -50,6 +50,20 @@ class SurfaceUtilsTest : ShouldSpec() {
                     )
                 }
             }
+
+            should("be negative when no intersection is possible.") {
+                forAll(Poi3Gen, Poi3Gen) {
+                    origin: Point3, point: Point3 ->
+
+                    val normal = Normal3(0f, 1f, 0f)
+                    val ray    = Ray3(Vector3(1f, 0f, 1f), origin)
+                    val dDotN  = ray.dir.dot(normal)
+
+                    -1f == SurfaceUtils.getIntersectionTime(
+                        point, normal, ray
+                    ) && dDotN == 0f
+                }
+            }
         }
     }
 }
