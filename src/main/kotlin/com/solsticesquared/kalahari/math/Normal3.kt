@@ -150,6 +150,20 @@ class Normal3(x: Float = 0.0f, y: Float = 1.0f, z: Float = 0.0f,
         return this.normalizeSelf()
     }
 
+    /**
+     * Sets the components of this normal to those of the specified one.
+     *
+     * @param normal
+     *        The normal to copy from.
+     * @return A reference to this normal for easy chaining.
+     */
+    fun set(normal: Normal3): Normal3 {
+        this.x = normal.x
+        this.y = normal.y
+        this.z = normal.z
+        return this
+    }
+
     override fun set(tuple: Tuple3?): Normal3 {
         this.x = tuple!!.x
         this.y = tuple.y
