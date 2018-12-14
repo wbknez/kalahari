@@ -73,22 +73,22 @@ class SphereTest : ShouldSpec() {
 
             should("always intersect if the direction is towards the sphere.") {
                 forAll(SphGen) {sphere: Sphere ->
-                    val offSet = sphere.radius + 1f
-                    val origin = sphere.center + Point3(offSet, offSet, offSet)
-                    val ray = Ray3(Vector3(sphere.center - origin), origin)
+                    val radius = sphere.radius * 2f
+                    val radialPoint = Point3(radius, radius, radius)
+                    val hit = Ray3(-Vector3.Unit, sphere.center + radialPoint)
 
-                    sphere.intersect(ray, tMin, record, hEps)
+                    sphere.intersect(hit, tMin, record, hEps)
                 }
             }
 
             should("never intersect if the direction is away from the " +
                    "sphere.") {
                 forAll(SphGen) {sphere: Sphere ->
-                    val offSet = sphere.radius + 1f
-                    val origin = sphere.center + Point3(offSet, offSet, offSet)
-                    val ray = Ray3(Vector3(origin - sphere.center), origin)
+                    val radius = sphere.radius * 2f
+                    val radialPoint = Point3(radius, radius, radius)
+                    val hit = Ray3(Vector3.Unit, sphere.center + radialPoint)
 
-                    !sphere.intersect(ray, tMin, record, hEps)
+                    !sphere.intersect(hit, tMin, record, hEps)
                 }
             }
         }
@@ -99,27 +99,25 @@ class SphereTest : ShouldSpec() {
             val record = Intersection()
             val tMin   = FloatContainer(0f)
 
-            should("never intersect if the direction is towards the sphere.") {
+            should("always intersect if the direction is towards the sphere " +
+                   "(hit the far side).") {
                 forAll(SphGen) {sphere: Sphere ->
-                    val origin = sphere.center + Point3(sphere.radius,
-                                                        sphere.radius,
-                                                        sphere.radius)
-                    val ray = Ray3(Vector3(origin - sphere.center), origin)
+                    val radius = sphere.radius
+                    val radialPoint = Point3(radius, radius, radius)
+                    val hit = Ray3(-Vector3.Unit, sphere.center + radialPoint)
 
-                    !sphere.intersect(ray, tMin, record, hEps)
+                    sphere.intersect(hit, tMin, record, hEps)
                 }
             }
 
-            should("always intersect if the direction is away from the " +
-                   "sphere (far side).") {
+            should("never intersect if the direction is away from the sphere" +
+                   ".") {
                 forAll(SphGen) {sphere: Sphere ->
-                    val origin = sphere.center + Point3(sphere.radius,
-                                                        sphere.radius,
-                                                        sphere.radius)
-                    val ray = Ray3(Vector3(sphere.center - origin).normalize(),
-                                   origin)
+                    val radius = sphere.radius
+                    val radialPoint = Point3(radius, radius, radius)
+                    val hit = Ray3(Vector3.Unit, sphere.center + radialPoint)
 
-                    sphere.intersect(ray, tMin, record, hEps)
+                    !sphere.intersect(hit, tMin, record, hEps)
                 }
             }
         }

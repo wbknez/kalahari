@@ -46,17 +46,19 @@ class PlaneTest : ShouldSpec() {
 
             should("always intersect if the ray points towards the plane.") {
                 forAll(PlaGen) {plane: Plane ->
-                    val ray = Ray3(-plane.normal,
-                                   Point3(plane.normal) * 2f + plane.point)
-                    plane.intersect(ray, tMin, record, hEps)
+                    val ray = Ray3(plane.normal, plane.point)
+                    val hit = Ray3(-plane.normal, ray.projectAlong(2f))
+
+                    plane.intersect(hit, tMin, record, hEps)
                 }
             }
 
             should("never intersect if the ray points away from the plane.") {
                 forAll(PlaGen) {plane: Plane ->
-                    val ray = Ray3(plane.normal,
-                                   Point3(plane.normal) * 2f + plane.point)
-                    !plane.intersect(ray, tMin, record, hEps)
+                    val ray = Ray3(plane.normal, plane.point)
+                    val hit = Ray3(plane.normal, ray.projectAlong(2f))
+
+                    !plane.intersect(hit, tMin, record, hEps)
                 }
             }
         }
@@ -69,17 +71,19 @@ class PlaneTest : ShouldSpec() {
 
             should("always intersect if the ray points towards the plane.") {
                 forAll(PlaGen) {plane: Plane ->
-                    val ray = Ray3(plane.normal,
-                                   Point3(-plane.normal) * 2f + plane.point)
-                    plane.intersect(ray, tMin, record, hEps)
+                    val ray = Ray3(-plane.normal, plane.point)
+                    val hit = Ray3(plane.normal, ray.projectAlong(2f))
+
+                    plane.intersect(hit, tMin, record, hEps)
                 }
             }
 
             should("never intersect if the ray points away from the plane.") {
                 forAll(PlaGen) {plane: Plane ->
-                    val ray = Ray3(-plane.normal,
-                                   Point3(-plane.normal) * 2f + plane.point)
-                    !plane.intersect(ray, tMin, record, hEps)
+                    val ray = Ray3(-plane.normal, plane.point)
+                    val hit = Ray3(-plane.normal, ray.projectAlong(2f))
+
+                    !plane.intersect(hit, tMin, record, hEps)
                 }
             }
         }
