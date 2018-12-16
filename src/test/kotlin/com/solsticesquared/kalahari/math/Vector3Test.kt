@@ -155,6 +155,17 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "The dot product of a vector and three components" {
+            should("be the sum of the multiplication of each component.") {
+                forAll(Vec3Gen, Gen.float(), Gen.float(), Gen.float()) {
+                    vec: Vector3, x: Float, y: Float, z: Float ->
+
+                    val expected = vec.x * x + vec.y * y + vec.z * z
+                    vec.dot(x, y, z) == expected
+                }
+            }
+        }
+
         "The dot product of two vectors" {
             should("be the sum of the multiplication of their compoentns.") {
                 forAll(Vec3Gen, Vec3Gen) { a: Vector3, b: Vector3 ->

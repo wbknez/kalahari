@@ -139,6 +139,20 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     }
 
     /**
+     * Computes the dot product between this vector and the specified
+     * components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @param z
+     *        The z-axis component to use.
+     */
+    fun dot(x: Float, y: Float, z: Float): Float =
+        this.x * x + this.y * y + this.z * z
+
+    /**
      * Computes the dot product between this vector and the specified one.
      *
      * @param vec

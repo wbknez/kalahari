@@ -37,7 +37,7 @@ sealed class SurfaceUtils {
 
             return when(dDotN != 0f) {
                 false -> -1f
-                true  -> (iX * normal.x + iY * normal.y + iZ * normal.z) / dDotN
+                true  -> normal.dot(iX, iY, iZ) / dDotN
             }
         }
 
