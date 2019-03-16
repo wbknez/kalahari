@@ -15,12 +15,12 @@ import java.lang.reflect.Method
  *
  * This class is based on the original
  * [org.luaj.vm2.lib.jse.LuajavaLib.ProxyInvocationHandler] but has been
- * rewritten in Kotlin for use with [ImportLib].
+ * rewritten in Kotlin for use with [KhluaLib].
  *
  * @property luaObj
  *           The Lua object to assign the resulting interface to.
  */
-class CreateProxyHandler(private val luaObj: LuaValue) : InvocationHandler {
+class ProxyCreationHandler(private val luaObj: LuaValue) : InvocationHandler {
 
     companion object {
 
@@ -36,7 +36,7 @@ class CreateProxyHandler(private val luaObj: LuaValue) : InvocationHandler {
         val func = this.luaObj.get(name)
 
         if(func.isnil()) {
-            throw LuaError("Could not find proxy function: ${func}.")
+            throw LuaError("Could not find proxy function: $func.")
         }
 
         val hasVarArgs = (method.modifiers and MethodMask) != 0
