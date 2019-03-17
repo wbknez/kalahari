@@ -12,8 +12,8 @@ object Versions {
 }
 
 /**
- * Represents a collection of all fully-qualified dependencies with their versions
- * used in this project in Gradle-compatible format.
+ * Represents a collection of all fully-qualified dependencies with their
+ * versions used in this project in Gradle-compatible format.
  */
 object Libraries {
 
