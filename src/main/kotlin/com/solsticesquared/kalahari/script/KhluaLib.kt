@@ -1,10 +1,6 @@
 package com.solsticesquared.kalahari.script
 
-import org.luaj.vm2.LuaError
-import org.luaj.vm2.LuaString
-import org.luaj.vm2.LuaTable
-import org.luaj.vm2.LuaValue
-import org.luaj.vm2.Varargs
+import org.luaj.vm2.*
 import org.luaj.vm2.lib.VarArgFunction
 import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import java.lang.reflect.InvocationTargetException
@@ -15,11 +11,8 @@ import java.lang.reflect.Proxy
  * [org.luaj.vm2.lib.jse.LuajavaLib] by providing Kotlin and Java class
  * loading capabilities with the addition of short aliases, making class
  * invocation work more like Kotlin and Java themselves.
- *
- * @property aliasToName
- *           The mapping of aliases to fully-qualified class names.
  */
-sealed class KhluaLib : VarArgFunction() {
+class KhluaLib : VarArgFunction() {
 
     companion object {
 
@@ -38,6 +31,11 @@ sealed class KhluaLib : VarArgFunction() {
         val LuaConstructor = LuaValue.valueOf("new") as LuaString
 
         /**
+         * The mapping of aliases to fully-qualified class names.
+         */
+        private val aliasToName = mutableMapOf<String, String>()
+
+        /**
          * Uses the current system [ClassLoader] to find and load the
          * corresponding JVM-compatible class object for the class with the
          * specified name.
@@ -48,7 +46,7 @@ sealed class KhluaLib : VarArgFunction() {
          */
         fun findClassByName(className: String): Class<*> =
             Class.forName(className, true,
-                          ClassLoader.getSystemClassLoader()).javaClass
+                          ClassLoader.getSystemClassLoader())
     }
 
     /**
@@ -106,8 +104,6 @@ sealed class KhluaLib : VarArgFunction() {
         const val LoadLib     = 5
     }
 
-    private val aliasToName = mutableMapOf<String, String>()
-
     /**
      * Binds a class object and all its fields and methods to Lua; in
      * addition, an alias is associated with the fully-qualified class name
@@ -127,8 +123,8 @@ sealed class KhluaLib : VarArgFunction() {
             true  -> args.checkjstring(2)
         }
 
-        when(aliasName in this.aliasToName) {
-            false -> this.aliasToName[aliasName] = className
+        when(aliasName in aliasToName.keys) {
+            false -> aliasToName[aliasName] = className
             true  -> throw LuaError("Name collision: $aliasName already bound.")
         }
 
@@ -223,10 +219,11 @@ sealed class KhluaLib : VarArgFunction() {
             else        -> this.findClassByAlias(classObj.tojstring())
         }
 
-        val ctorArgs = args.subargs(2)
         val obj      = CoerceJavaToLua.coerce(classz)
+        val ctor     = obj.get(LuaConstructor)
+        val ctorArgs = args.subargs(2)
 
-        return obj.invokemethod(LuaConstructor, ctorArgs)
+        return ctor.invoke(ctorArgs)
     }
 
     /**
@@ -246,15 +243,15 @@ sealed class KhluaLib : VarArgFunction() {
      *        The alias to search for.
      * @return A class object.
      */
-    private fun findClassByAlias(alias: String): Class<*> =
-        when(alias in this.aliasToName) {
+    private fun findClassByAlias(alias: String) =
+        when(alias in aliasToName.keys) {
             false -> findClassByName(alias)
-            true  -> findClassByName(this.aliasToName[alias]!!)
+            true  -> findClassByName(aliasToName[alias]!!)
         }
 
-    override fun invoke(args: Varargs?): Varargs {
+    override fun invoke(args: Varargs?): Varargs =
         try {
-            return when (this.opcode) {
+            when (this.opcode) {
                 OpCodes.Init        -> this.doInit(args)
                 OpCodes.BindClass   -> this.doBindClass(args)
                 OpCodes.New         -> this.doNew(args)
@@ -274,5 +271,4 @@ sealed class KhluaLib : VarArgFunction() {
         catch(ex: Exception) {
             throw LuaError(ex)
         }
-    }
 }

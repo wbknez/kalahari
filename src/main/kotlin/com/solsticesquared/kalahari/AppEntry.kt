@@ -1,7 +1,9 @@
 package com.solsticesquared.kalahari
 
+import com.solsticesquared.kalahari.script.KhluaLib
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.mainBody
+import org.luaj.vm2.Globals
 import org.luaj.vm2.lib.jse.JsePlatform
 
 /**
@@ -23,15 +25,31 @@ sealed class AppEntry {
     companion object {
 
         /**
+         * Creates and initializes a set of [Globals] for use with a Lua
+         * interpreter that also includes a custom utility library for this
+         * project.
+         *
+         * @return A set of initialized Lua libraries.
+         */
+        private fun initLibraryGlobals(): Globals {
+            val globals = JsePlatform.standardGlobals()
+
+            globals.load(KhluaLib())
+
+            return globals
+        }
+
+        /**
          * The application entry point.
          *
          * @param args
          *        The array of command line arguments, if any.
+         * @return An exit code.
          */
         @JvmStatic
         fun main(args: Array<String>): Unit = mainBody("kalahari") {
             ArgParser(args).parseInto(::Arguments).run {
-                val globals = JsePlatform.standardGlobals()
+                val globals = initLibraryGlobals()
                 val chunk   = globals.loadfile(this.file)
 
                 chunk.call()
