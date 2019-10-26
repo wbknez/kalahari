@@ -30,29 +30,17 @@ local blue = khlua.newInstance("Color3", 0.0, 0.0, 1.0)
 local white = khlua.newInstance("Color3", 1.0, 1.0, 1.0)
 
 -- Bounding spheres.
-local spRed = khlua.newInstance(
-    "com.solsticesquared.kalahari.math.volume.BoundingSphere",
-    101.0, 150.0, 150.0, 0.0
-)
+local spRed = khlua.newInstance("BoundingSphere", 101.0, 150.0, 150.0, 0.0)
 
-local spYellow = khlua.newInstance(
-    "com.solsticesquared.kalahari.math.volume.BoundingSphere",
-    101.0, 250.0, 250.0, 0.0
-)
+local spYellow = khlua.newInstance("BoundingSphere", 101.0, 250.0, 250.0, 0.0)
 
-local spBlue = khlua.newInstance(
-    "com.solsticesquared.kalahari.math.volume.BoundingSphere",
-    101.0, 350.0, 350.0, 0.0
-)
+local spBlue = khlua.newInstance("BoundingSphere", 101.0, 350.0, 350.0, 0.0)
 
-local trace_it = khlua.createProxy("com.solsticesquared.kalahari.render.Tracer", {
+local trace_it = khlua.createProxy("Tracer", {
     trace = function(coords)
         local x = coords:getX()
         local y = coords:getY()
-        local p = khlua.newInstance(
-            "com.solsticesquared.kalahari.math.Point3",
-            x, y, 0.0
-        )
+        local p = khlua.newInstance("Point3", x, y, 0.0)
 
         -- Primary colors.
         local inRed    = spRed:contains(p)
