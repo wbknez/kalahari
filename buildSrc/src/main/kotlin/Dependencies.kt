@@ -3,12 +3,12 @@
  */
 object Versions {
 
-    const val kotlin     = "1.3.10"
+    const val kotlin     = "1.3.50"
     const val kotlinargp = "2.0.7"
     const val kotlintest = "2.0.7"
     const val luaj       = "3.0.1"
-    const val rxjava     = "2.2.3"
-    const val rxkotlin   = "2.3.0"
+    const val rxjava     = "2.2.13"
+    const val rxkotlin   = "2.4.0"
 }
 
 /**
