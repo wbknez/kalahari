@@ -9,6 +9,7 @@ object Versions {
     const val luaj       = "3.0.1"
     const val rxjava     = "2.2.13"
     const val rxkotlin   = "2.4.0"
+    const val slf4j      = "1.7.28"
 }
 
 /**
@@ -27,4 +28,7 @@ object Libraries {
     const val luaj       = "org.luaj:luaj-jse:${Versions.luaj}"
     const val rxjava     = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
     const val rxkotlin   = "io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlin}"
+    const val slf4japi   = "org.slf4j:slf4j-api:${Versions.slf4j}"
+    const val slf4jjdk   = "org.slf4j:slf4j-jdk14:${Versions.slf4j}"
+    const val slf4jnop   = "org.slf4j:slf4j-nop:${Versions.slf4j}"
 }

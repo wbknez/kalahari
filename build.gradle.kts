@@ -14,8 +14,12 @@ dependencies {
     implementation(Libraries.luaj)
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
+    implementation(Libraries.slf4japi)
+
+    runtimeOnly(Libraries.slf4jjdk)
 
     testImplementation(Libraries.kotlintest)
+    testImplementation(Libraries.slf4jnop)
 }
 
 repositories {
