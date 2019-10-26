@@ -4,6 +4,7 @@ import com.solsticesquared.kalahari.math.Bounds
 import com.solsticesquared.kalahari.render.order.DrawingOrder
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.toObservable
+import org.slf4j.LoggerFactory
 
 /**
  * Represents an implementation of [RuntimeException] that is thrown when a
@@ -25,6 +26,14 @@ class PipelineException(msg: String?, t: Throwable?) : RuntimeException(msg, t)
  *           The collection of objects that are notified of rendering events.
  */
 class Pipeline {
+
+    companion object {
+
+        /**
+         * The logging utility.
+         */
+        private val logger = LoggerFactory.getLogger(Pipeline::class.java)
+    }
 
     private val listeners: MutableList<PipelineListener> = mutableListOf()
 
@@ -56,7 +65,13 @@ class Pipeline {
         val renderables = order.create(bounds).toObservable()
 
         renderables
+            .doOnNext{ logger.info("Tracing pixel: {}.", it) }
+            .doOnComplete{
+                logger.info("Traced {} pixels.", bounds.area)
+                logger.info("Rendering complete!")
+            }
             .flatMap{ Observable.just(Pixel(it.x, it.y, tracer.trace(it).rgb)) }
+            .doOnNext{ logger.info("Pixel traced: {}.", it) }
             .subscribe(
                 { pixel: Pixel -> this.listeners.forEach{ it.onEmit(pixel) } },
                 {
