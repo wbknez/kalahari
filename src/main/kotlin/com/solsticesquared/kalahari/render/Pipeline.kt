@@ -29,7 +29,7 @@ class Pipeline {
     private val listeners: MutableList<PipelineListener> = mutableListOf()
 
     /**
-     *
+     * Adds the specified listener to this pipeline's collection of listeners.
      *
      * @param listener
      *        The listener to add.
@@ -39,7 +39,18 @@ class Pipeline {
     }
 
     /**
+     * Renders a full scene by iterating over all possible pixels in the
+     * specified bounds (with the specified drawing order) and obtaining a
+     * color value for each using the specified ray tracing algorithm.
      *
+     * @param tracer
+     *        The ray tracing algorithm to use.
+     * @param bounds
+     *        The scene bounds to use.
+     * @param order
+     *        The pixel drawing order to use.
+     * @throws PipelineException
+     *         If there was a problem rendering the scene.
      */
     fun run(tracer: Tracer, bounds: Bounds, order: DrawingOrder) {
         val renderables = order.create(bounds).toObservable()
@@ -50,7 +61,7 @@ class Pipeline {
                 { pixel: Pixel -> this.listeners.forEach{ it.onEmit(pixel) } },
                 {
                     t: Throwable -> throw PipelineException(
-                        "Caught in the pipeline during rendering.", t
+                        "Caught in the main pipeline during rendering.", t
                     )
                 },
                 { this.listeners.forEach{ it.onComplete() } },
