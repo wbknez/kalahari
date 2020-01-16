@@ -1,0 +1,4 @@
+**/build/**
+**/target/**
+**/output/**
+appLog.txt
