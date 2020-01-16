@@ -1,5 +1,7 @@
-package com.willoutwest.kalahari.asset
+package com.willoutwest.kalahari.asset.sources
 
+import com.willoutwest.kalahari.asset.NoSuchStreamException
+import com.willoutwest.kalahari.asset.StreamSource
 import io.kotlintest.TestCase
 import io.kotlintest.TestResult
 import io.kotlintest.shouldNotThrow
@@ -14,7 +16,8 @@ import java.nio.file.Paths
  */
 class FileStreamSourceTest : ShouldSpec() {
 
-    private val source: StreamSource = FileStreamSource()
+    private val source: StreamSource =
+        FileStreamSource()
 
     private var testPath: Path? = null
 
