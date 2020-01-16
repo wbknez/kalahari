@@ -4,11 +4,11 @@
 object Versions {
 
     const val klaxon     = "5.2"
-    const val kotlin     = "1.3.60"
+    const val kotlin     = "1.3.61"
     const val kotlinargp = "2.0.7"
     const val kotlintest = "3.4.2"
     const val luaj       = "3.0.1"
-    const val rxjava     = "2.2.13"
+    const val rxjava     = "2.2.17"
     const val rxkotlin   = "2.4.0"
 }
 
