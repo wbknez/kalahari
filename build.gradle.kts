@@ -8,7 +8,6 @@ application {
 }
 
 dependencies {
-    implementation(Libraries.klaxon)
     implementation(Libraries.kotlin)
     implementation(Libraries.kotlinargp)
     implementation(Libraries.kotlinref)

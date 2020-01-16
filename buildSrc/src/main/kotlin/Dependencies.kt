@@ -3,7 +3,6 @@
  */
 object Versions {
 
-    const val klaxon     = "5.2"
     const val kotlin     = "1.3.61"
     const val kotlinargp = "2.0.7"
     const val kotlintest = "3.4.2"
@@ -18,8 +17,6 @@ object Versions {
  */
 object Libraries {
 
-    const val klaxon      =
-        "com.beust:klaxon:${Versions.klaxon}"
     const val kotlin      =
         "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val kotlinref   =
