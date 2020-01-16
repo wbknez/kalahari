@@ -16,8 +16,6 @@ dependencies {
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
 
-    runtimeOnly(Libraries.slf4jjdk)
-
     testImplementation(Libraries.kotlintest)
 }
 
