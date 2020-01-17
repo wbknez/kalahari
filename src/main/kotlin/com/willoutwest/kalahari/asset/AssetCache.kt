@@ -90,13 +90,15 @@ class AssetCache : AutoCloseable {
         val stream = this.loader.getStream(key.path)
 
         try {
-            val asset = reader.load(key, stream, this)
+            stream.use {
+                val asset = reader.load(key, it, this)
 
-            if(register) {
-                this.cache[key] = asset
+                if (register) {
+                    this.cache[key] = asset
+                }
+
+                return asset
             }
-
-            return asset
         }
         catch(ioEx: IOException) {
             throw StreamFailureException("Could not load asset with key: " +
