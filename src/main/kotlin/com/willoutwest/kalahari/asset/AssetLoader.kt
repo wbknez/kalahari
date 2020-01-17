@@ -33,7 +33,6 @@ class AssetLoader : AutoCloseable {
     /**
      * Associates the specified asset reader with the specified file extension.
      *
-     *
      * @param extension
      *        The file extension to use.
      * @param reader
@@ -90,7 +89,9 @@ class AssetLoader : AutoCloseable {
     }
 
     /**
-     *
+     * Finds a stream for the specified file path by iterating over this
+     * asset loader's search path until a stream source open operation
+     * succeeds.
      *
      * @param path
      *        The asset file path to obtain an input stream for.
