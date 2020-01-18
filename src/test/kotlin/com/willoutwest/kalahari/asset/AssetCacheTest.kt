@@ -43,7 +43,7 @@ class AssetCacheTest : ShouldSpec() {
                 val key   = AssetKey("example_asset", "searchforme.txt")
                 val asset = cache.load(key, true)
 
-                asset shouldBe "I am the walrus!"
+                asset shouldBe "I am an example asset!"
             }
 
             should("add the asset to the cache.") {
@@ -65,7 +65,7 @@ class AssetCacheTest : ShouldSpec() {
                 val key   = AssetKey("example_asset", "searchforme.txt")
                 val asset = cache.load(key, false)
 
-                asset shouldBe "I am the walrus!"
+                asset shouldBe "I am an example asset!"
             }
 
             should("not add the asset to the cache.") {
