@@ -2,7 +2,6 @@ package com.willoutwest.kalahari.asset.sources
 
 import com.willoutwest.kalahari.asset.NoSuchStreamException
 import com.willoutwest.kalahari.asset.StreamSource
-import io.kotlintest.TestCase
 import io.kotlintest.shouldNotThrow
 import io.kotlintest.shouldThrow
 import io.kotlintest.specs.ShouldSpec
@@ -17,19 +16,13 @@ class ClasspathStreamSourceTest : ShouldSpec() {
     private val source: StreamSource =
         ClasspathStreamSource()
 
-    private var testPath: Path? = null
-
-    override fun beforeTest(testCase: TestCase) {
-        super.beforeTest(testCase)
-
-        this.testPath = Paths.get("searchforme.txt")
-    }
+    private val testPath: Path = Paths.get("searchforme.txt")
 
     init {
         "a valid file located on disk" {
             should("be opened without error.") {
                 shouldNotThrow<NoSuchStreamException> {
-                    source.open(testPath!!)
+                    source.open(testPath)
                 }
             }
         }

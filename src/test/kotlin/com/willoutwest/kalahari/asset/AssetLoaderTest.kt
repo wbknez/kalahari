@@ -1,7 +1,7 @@
 package com.willoutwest.kalahari.asset
 
 import com.willoutwest.kalahari.asset.sources.ClasspathStreamSource
-import io.kotlintest.TestCase
+import io.kotlintest.IsolationMode
 import io.kotlintest.matchers.collections.shouldHaveSingleElement
 import io.kotlintest.matchers.collections.shouldHaveSize
 import io.kotlintest.matchers.string.shouldBeEmpty
@@ -29,15 +29,10 @@ class AssetLoaderTest : ShouldSpec() {
             }
         }
     }
+    override fun isolationMode(): IsolationMode? =
+        IsolationMode.InstancePerTest
 
-    private var loader: AssetLoader = AssetLoader()
-
-    override fun beforeTest(testCase: TestCase) {
-        super.beforeTest(testCase)
-
-        this.loader.close()
-        this.loader = AssetLoader()
-    }
+    private val loader: AssetLoader = AssetLoader()
 
     init {
         "the extension of a valid file path with a single period" {
@@ -81,17 +76,15 @@ class AssetLoaderTest : ShouldSpec() {
         }
 
         "obtaining a reader for an extension that has an association" {
-            should("not throw an exception.") {
-                loader.associateReader("xml", TestReader())
+            loader.associateReader("xml", TestReader())
 
+            should("not throw an exception.") {
                 shouldNotThrow<NoSuchReaderException> {
                     loader.getReader(Paths.get("test.xml"))
                 }
             }
 
             should("return an instance of the correct reader type.") {
-                loader.associateReader("xml", TestReader())
-
                 loader.getReader(Paths.get("test.xml"))
                         .shouldBeTypeOf<TestReader>()
             }
@@ -106,16 +99,14 @@ class AssetLoaderTest : ShouldSpec() {
         }
 
         "obtaining a stream for a path that has a source" {
-            should("return a valid input stream.") {
-                loader.prependSource(ClasspathStreamSource())
+            loader.prependSource(ClasspathStreamSource())
 
+            should("return a valid input stream.") {
                 loader.getStream(Paths.get("searchforme.txt"))
                       .shouldBeInstanceOf<InputStream>()
             }
 
             should("not throw an exception.") {
-                loader.prependSource(ClasspathStreamSource())
-
                 shouldNotThrow<NoSuchStreamException> {
                     loader.getStream(Paths.get("searchforme.txt"))
                 }
