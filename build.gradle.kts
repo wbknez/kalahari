@@ -22,6 +22,16 @@ repositories {
     jcenter()
 }
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = application.mainClassName
+    }
+
+    from(configurations["runtimeClasspath"].map {
+        if (it.isDirectory) it else zipTree(it)
+    })
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
