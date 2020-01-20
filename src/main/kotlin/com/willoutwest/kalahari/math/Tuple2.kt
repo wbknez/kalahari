@@ -62,7 +62,7 @@ open class Tuple2(var x: Float = 0.0f,
      *        The y-axis value to use.
      * @return A reference to this tuple for easy chaining.
      */
-    open fun set(x: Float, y: Float, z: Float): Tuple2 {
+    open fun set(x: Float, y: Float): Tuple2 {
         this.x = x
         this.y = y
         
