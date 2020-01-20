@@ -46,26 +46,20 @@ class ProxyCreatorTest : ShouldSpec() {
                          """.trimIndent()
             val impl   = vm.load(source).call() as LuaTable
 
-            should("produce only one object.") {
-                val result = creator.invoke(arrayOf(name, impl))
+            val result = creator.invoke(arrayOf(name, impl))
+            val proxy  = result.arg(1) as LuaUserdata
+            val obj    = proxy.userdata()
 
+            should("produce only one object.") {
                 result.narg() shouldBe 1
             }
 
             should("produce a valid object with correct implementation") {
-                val result = creator.invoke(arrayOf(name, impl))
-                val proxy  = result.arg(1) as LuaUserdata
-                val obj    = proxy.userdata()
-
                 (obj is TestInterfaceToFind).shouldBeTrue()
             }
 
             should("be callable.") {
-                val result = creator.invoke(arrayOf(name, impl))
-                val proxy  = result.arg(1) as LuaUserdata
-                val obj    = proxy.userdata() as TestInterfaceToFind
-
-                obj.compute(40) shouldBe 80
+                (obj as TestInterfaceToFind).compute(40) shouldBe 80
             }
         }
 
