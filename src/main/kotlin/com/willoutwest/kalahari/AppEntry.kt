@@ -1,16 +1,43 @@
 package com.willoutwest.kalahari
 
+import com.willoutwest.kalahari.script.ScriptingLibrary
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 import com.xenomachina.argparser.mainBody
+import org.luaj.vm2.Globals
+import org.luaj.vm2.lib.jse.JsePlatform
 import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
+
 
 /**
  * The main driver for the Kalahari ray tracing project.
  */
 sealed class AppEntry {
+
+    /**
+     * Represents a collection of command line arguments and the quantity and
+     * types of the values they accept.
+     */
+    private class Arguments(parser: ArgParser) {
+
+        val file by parser.storing(
+            "-f", "--file", help = "a Lua file that describes a scene"
+        )
+
+        val quiet by parser.flagging(
+            "-q", "--quiet", help = "disable logging output"
+        )
+
+        val threads by parser.storing(
+            "-t", "--threads", help = "number of threads"
+        ) { toInt() }.default(NumProcessors)
+
+        val verbose by parser.flagging(
+            "-v", "--verbose", help = "enable all extra logging output"
+        )
+    }
 
     companion object {
 
@@ -19,29 +46,6 @@ sealed class AppEntry {
          * virtual machine is running.
          */
         val NumProcessors  = Runtime.getRuntime().availableProcessors()
-
-        /**
-         * Represents a collection of command line arguments and the quantity and
-         * types of the values they accept.
-         */
-        private class Arguments(parser: ArgParser) {
-
-            val file by parser.storing(
-                "-f", "--file", help = "a Lua file that describes a scene"
-            )
-
-            val quiet by parser.flagging(
-                "-q", "--quiet", help = "disable logging output"
-            )
-
-            val threads by parser.storing(
-                "-t", "--threads", help = "number of threads"
-            ) { toInt() }.default(NumProcessors)
-
-            val verbose by parser.flagging(
-                "-v", "--verbose", help = "enable all extra logging output"
-            )
-        }
 
         /**
          * Initializes the Java Logging Library using a properties
@@ -78,6 +82,21 @@ sealed class AppEntry {
         }
 
         /**
+         * Creates and initializes a set of global values for use with a Lua
+         * interpreter, loading all necessary libraries into the global
+         * namespace.
+         *
+         * @return A set of initialized Lua libraries.
+         */
+        private fun initScriptingEnvironment(): Globals {
+            val globals = JsePlatform.standardGlobals()
+
+            globals.load(ScriptingLibrary())
+
+            return globals
+        }
+
+        /**
          * The application entry point.
          *
          * @param args
@@ -88,6 +107,11 @@ sealed class AppEntry {
         fun main(args: Array<String>): Unit = mainBody("kalahari") {
             ArgParser(args).parseInto(::Arguments).run {
                 initLogging(this.quiet, this.verbose)
+
+                val globals = initScriptingEnvironment()
+                val chunk = globals.loadfile(this.file)
+
+                chunk.call()
             }
         }
     }

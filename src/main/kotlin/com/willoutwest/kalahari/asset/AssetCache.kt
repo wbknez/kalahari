@@ -100,9 +100,9 @@ class AssetCache : AutoCloseable {
                 return asset
             }
         }
-        catch(ioEx: IOException) {
+        catch(ie: IOException) {
             throw StreamFailureException("Could not load asset with key: " +
-                                         "${key}.", ioEx)
+                                         "${key}.", ie)
         }
     }
 }
