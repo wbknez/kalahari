@@ -21,15 +21,17 @@ class ClassImporter : OneArgFunction() {
          *        The name of the class to find.
          * @return A Kotlin or Java class as a JVM-compatible [Class].
          */
-        fun findClassByName(clsName: String): Class<*> =
-            Class.forName(clsName, true, ClassLoader.getSystemClassLoader())
+        fun findClassByName(clsName: String,
+                            clsLoader: ClassLoader): Class<*> =
+            Class.forName(clsName, true, clsLoader)
     }
 
     override fun call(arg: LuaValue?): LuaValue {
-        val clsName = arg!!.checkjstring()
+        val clsName   = arg!!.checkjstring()
+        val clsLoader = this.javaClass.classLoader
 
         try {
-            return CoerceJavaToLua.coerce(findClassByName(clsName))
+            return CoerceJavaToLua.coerce(findClassByName(clsName, clsLoader))
         }
         catch(cnfe: ClassNotFoundException) {
             throw NoSuchImportException("Could not import class: " +
