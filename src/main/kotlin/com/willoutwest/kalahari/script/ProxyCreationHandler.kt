@@ -1,6 +1,5 @@
 package com.willoutwest.kalahari.script
 
-import org.luaj.vm2.LuaError
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.CoerceLuaToJava
@@ -15,7 +14,7 @@ import java.lang.reflect.Method
  *
  * This class is based on the original
  * [org.luaj.vm2.lib.jse.LuajavaLib.ProxyInvocationHandler] but has been
- * rewritten in Kotlin for use with [KhluaLib].
+ * rewritten in Kotlin for use with [ScriptingLibrary].
  *
  * @property luaObj
  *           The Lua object to assign the resulting interface to.
@@ -36,7 +35,9 @@ class ProxyCreationHandler(private val luaObj: LuaValue) : InvocationHandler {
         val func = this.luaObj.get(name)
 
         if(func.isnil()) {
-            throw LuaError("Could not find proxy function: $func.")
+            throw NoSuchImplementationException(
+                "Could not find proxy implementation function: $func."
+            )
         }
 
         val hasVarArgs = (method.modifiers and MethodMask) != 0
