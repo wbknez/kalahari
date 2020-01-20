@@ -36,7 +36,7 @@ class ProxyCreationHandler(private val luaObj: LuaValue) : InvocationHandler {
 
         if(func.isnil()) {
             throw NoSuchImplementationException(
-                "Could not find proxy implementation function: $func."
+                "Could not find proxy implementation function: $name."
             )
         }
 
