@@ -19,16 +19,17 @@ class ClasspathStreamSourceTest : ShouldSpec() {
     private val testPath: Path = Paths.get("searchforme.txt")
 
     init {
-        "a valid file located on disk" {
-            should("be opened without error.") {
+
+        "Opening a stream to a valid file on the classpath" {
+            should("not throw an exception.") {
                 shouldNotThrow<NoSuchStreamException> {
                     source.open(testPath)
                 }
             }
         }
 
-        "opening a file with an invalid path" {
-            should("thrown an exception.") {
+        "Opening a stream to an invalid file on the classpath" {
+            should("throw an exception.") {
                 shouldThrow<NoSuchStreamException> {
                     source.open(Paths.get("/nonexistent_path.txt"))
                 }

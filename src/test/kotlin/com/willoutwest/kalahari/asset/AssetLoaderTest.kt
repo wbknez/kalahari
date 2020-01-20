@@ -19,63 +19,62 @@ import java.nio.file.Paths
  */
 class AssetLoaderTest : ShouldSpec() {
 
-    companion object {
+    private class TestReader : AssetReader {
 
-        private class TestReader : AssetReader {
-
-            override fun load(key: AssetKey, stream: InputStream,
-                              assets: AssetCache): Any {
-                return Any()
-            }
+        override fun load(key: AssetKey, stream: InputStream,
+                          assets: AssetCache): Any {
+            return Any()
         }
     }
+
     override fun isolationMode(): IsolationMode? =
         IsolationMode.InstancePerTest
 
     private val loader: AssetLoader = AssetLoader()
 
     init {
-        "the extension of a valid file path with a single period" {
+
+        "Extracting the extension of a valid file path with a single period" {
             val path = Paths.get("test_file.json")
             val ext  = loader.getExtension(path)
 
-            should("be parsed correctly.") {
+            should("be as expected.") {
                 ext shouldBe "json"
             }
 
-            should("contain a single component only.") {
+            should("produce a single component only.") {
                 ext.split(".").shouldHaveSize(1)
             }
         }
 
-        "the extension of a valid file path with multiple periods" {
+        "Extracting the extension of a valid file path with multiple periods" {
             val path = Paths.get("test_file.test.example.json")
             val ext  = loader.getExtension(path)
 
-            should("be parsed correctly.") {
+            should("be as expected.") {
                 ext shouldBe "test.example.json"
             }
 
-            should("contain the same number of components as periods.") {
+            should("produce the same number of components as periods.") {
                 ext.split('.').shouldHaveSize(3)
             }
         }
 
-        "the extension of an empty file path" {
+        "Extracting the extension of an empty file path" {
             val path = Paths.get("")
             val ext  = loader.getExtension(path)
 
-            should("likewise be empty.") {
+            should("be empty.") {
                 ext.shouldBeEmpty()
             }
 
-            should("have no components.") {
+            should("produce no components.") {
                 ext.split('.').shouldHaveSize(1)
                 ext.split('.').shouldHaveSingleElement("")
             }
         }
 
-        "obtaining a reader for an extension that has an association" {
+        "Obtaining a reader for an extension that has an association" {
             loader.associateReader("xml", TestReader())
 
             should("not throw an exception.") {
@@ -90,7 +89,7 @@ class AssetLoaderTest : ShouldSpec() {
             }
         }
 
-        "obtaining a reader for an extension that has no association" {
+        "Obtaining a reader for an extension that has no association" {
             should("throw an exception.") {
                 shouldThrow<NoSuchReaderException> {
                     loader.getReader(Paths.get("test.json"))
@@ -98,7 +97,7 @@ class AssetLoaderTest : ShouldSpec() {
             }
         }
 
-        "obtaining a stream for a path that has a source" {
+        "Obtaining a stream for a path that has a source" {
             loader.prependSource(ClasspathStreamSource())
 
             should("return a valid input stream.") {
@@ -113,7 +112,7 @@ class AssetLoaderTest : ShouldSpec() {
             }
         }
 
-        "obtaining a stream for a path that has no source" {
+        "Obtaining a stream for a path that has no source" {
             should("throw an exception.") {
                 shouldThrow<NoSuchStreamException> {
                     loader.getStream(Paths.get("example.csv"))

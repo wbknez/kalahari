@@ -7,21 +7,17 @@ import io.kotlintest.matchers.boolean.shouldBeTrue
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 import java.io.InputStream
-import java.nio.file.Paths
 
 /**
  * Test suite for [AssetCache].
  */
 class AssetCacheTest : ShouldSpec() {
 
-    companion object {
+    private class StringAssetReader : AssetReader {
 
-        private class StringAssetReader : AssetReader {
-
-            override fun load(key: AssetKey, stream: InputStream,
-                              assets: AssetCache): Any {
-                return String(stream.readAllBytes())
-            }
+        override fun load(key: AssetKey, stream: InputStream,
+                          assets: AssetCache): Any {
+            return String(stream.readAllBytes())
         }
     }
 
@@ -31,7 +27,8 @@ class AssetCacheTest : ShouldSpec() {
     private val cache: AssetCache = AssetCache()
 
     init {
-        "loading and registering an example string asset from a file" {
+
+        "Loading and registering an example string asset from a file" {
             val key   = AssetKey("example_asset", "searchforme.txt")
 
             cache.loader.associateReader("txt", StringAssetReader())
@@ -50,7 +47,7 @@ class AssetCacheTest : ShouldSpec() {
             }
         }
 
-        "loading and not registering an example string asset from a file" {
+        "Loading and not registering an example string asset from a file" {
             val key   = AssetKey("example_asset", "searchforme.txt")
 
             cache.loader.associateReader("txt", StringAssetReader())

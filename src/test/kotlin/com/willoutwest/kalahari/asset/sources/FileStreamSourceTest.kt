@@ -35,7 +35,8 @@ class FileStreamSourceTest : ShouldSpec() {
     }
 
     init {
-        "a file located on disk with a valid path" {
+
+        "Opening a stream to a file on disk with a valid path" {
             should("be opened without error.") {
                 shouldNotThrow<NoSuchStreamException> {
                     source.open(testPath!!)
@@ -43,7 +44,7 @@ class FileStreamSourceTest : ShouldSpec() {
             }
         }
 
-        "opening a file with an invalid path" {
+        "Opening a stream to a file on disk with an invalid path" {
             should("thrown an exception.") {
                 shouldThrow<NoSuchStreamException> {
                     source.open(Paths.get("nonexistent_path.txt"))
