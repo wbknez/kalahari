@@ -22,24 +22,18 @@ class Tuple3Generator : Gen<Tuple3> {
     }
 }
 
+fun Gen.Companion.tuple3(): Gen<Tuple3> = Tuple3Generator()
+
 /**
  * Test suite for [Tuple3].
  */
 class Tuple3Test : ShouldSpec() {
 
-    companion object {
-
-        /**
-         * The utility to create randomized [Tuple3] instances.
-         */
-        val Tup3Gen = Tuple3Generator()
-    }
-
-    init {
+     init {
 
         "Accessing a tuple's components using indices" {
             should("use indices that correspond to a natural order.") {
-                assertAll(Tup3Gen) { tup: Tuple3 ->
+                assertAll(Gen.tuple3()) { tup: Tuple3 ->
                     tup[0] shouldBe tup.x
                     tup[1] shouldBe tup.y
                     tup[2] shouldBe tup.z
@@ -49,7 +43,7 @@ class Tuple3Test : ShouldSpec() {
 
         "Setting a tuple's components using indices" {
             should("use indices that correspond to a natural order.") {
-                assertAll(Tup3Gen, Tup3Gen) { a: Tuple3, b: Tuple3 ->
+                assertAll(Gen.tuple3(), Gen.tuple3()) { a: Tuple3, b: Tuple3 ->
                     a[0] = b.x
                     a[1] = b.y
                     a[2] = b.z
@@ -63,13 +57,13 @@ class Tuple3Test : ShouldSpec() {
 
         "Creating a clone of a tuple" {
             should("copy all components correctly.") {
-                assertAll(Tup3Gen) { tup: Tuple3 ->
+                assertAll(Gen.tuple3()) { tup: Tuple3 ->
                     tup.clone() shouldBe tup
                 }
             }
 
             should("not be reference equal.") {
-                assertAll(Tup3Gen) { tup: Tuple3 ->
+                assertAll(Gen.tuple3()) { tup: Tuple3 ->
                     tup.clone().shouldNotBeSameInstanceAs(tup)
                 }
             }
@@ -77,13 +71,13 @@ class Tuple3Test : ShouldSpec() {
 
         "Comparing one tuple to another" {
             should("only be true if their components are equal.") {
-                assertAll(Tup3Gen) { a: Tuple3 ->
+                assertAll(Gen.tuple3()) { a: Tuple3 ->
                     Tuple3(a) shouldBe a
                 }
             }
 
             should("be false if their components are not equal.") {
-                assertAll(Tup3Gen) { a: Tuple3 ->
+                assertAll(Gen.tuple3()) { a: Tuple3 ->
                     Tuple3(a.x * a.x, a.y * a.y, a.z * a.z) shouldNotBe a
                 }
             }
@@ -91,7 +85,7 @@ class Tuple3Test : ShouldSpec() {
 
         "Destructuring a tuple" {
             should("provide components in (x, y, z) form.") {
-                assertAll(Tup3Gen) { tup: Tuple3 ->
+                assertAll(Gen.tuple3()) { tup: Tuple3 ->
                     val (x, y, z) = tup
 
                     x shouldBe tup.x
@@ -103,7 +97,7 @@ class Tuple3Test : ShouldSpec() {
 
         "Converting a tuple to a String" {
             should("use parentheses instead of arrows.") {
-                assertAll(Tup3Gen) { tup: Tuple3 ->
+                assertAll(Gen.tuple3()) { tup: Tuple3 ->
                     tup.toString() shouldBe "(${tup.x}, ${tup.y}, ${tup.z})"
                 }
             }
@@ -111,13 +105,13 @@ class Tuple3Test : ShouldSpec() {
 
         "Assigning one tuple's components to new values" {
             should("assign their components correctly.") {
-                assertAll(Tup3Gen, Tup3Gen) { a: Tuple3, b: Tuple3 ->
+                assertAll(Gen.tuple3(), Gen.tuple3()) { a: Tuple3, b: Tuple3 ->
                     a.set(b.x, b.y, b.z) shouldBe b
                 }
             }
 
             should("chain correctly.") {
-                assertAll(Tup3Gen, Tup3Gen, Tup3Gen) {
+                assertAll(Gen.tuple3(), Gen.tuple3(), Gen.tuple3()) {
                     a: Tuple3, b: Tuple3, c: Tuple3 ->
 
                     a.set(b.x, b.y, b.z).set(c.x, c.y, c.z) shouldBe c
@@ -127,13 +121,13 @@ class Tuple3Test : ShouldSpec() {
 
         "Assigning one tuple to another" {
             should("assign their components correctly.") {
-                assertAll(Tup3Gen, Tup3Gen) { a: Tuple3, b: Tuple3 ->
+                assertAll(Gen.tuple3(), Gen.tuple3()) { a: Tuple3, b: Tuple3 ->
                     a.set(b) shouldBe b
                 }
             }
 
             should("chain correctly.") {
-                assertAll(Tup3Gen, Tup3Gen, Tup3Gen) {
+                assertAll(Gen.tuple3(), Gen.tuple3(), Gen.tuple3()) {
                     a: Tuple3, b: Tuple3, c: Tuple3 ->
 
                     a.set(b).set(c) shouldBe c
