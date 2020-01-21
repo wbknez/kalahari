@@ -1,7 +1,9 @@
 package com.willoutwest.kalahari.math
 
 import com.willoutwest.kalahari.gen.negativeFloats
+import com.willoutwest.kalahari.gen.nonzeroFloats
 import com.willoutwest.kalahari.gen.positiveFloats
+import com.willoutwest.kalahari.gen.smallFloats
 import io.kotlintest.matchers.boolean.shouldBeFalse
 import io.kotlintest.matchers.boolean.shouldBeTrue
 import io.kotlintest.properties.Gen
@@ -188,12 +190,11 @@ class MathUtilsTest : ShouldSpec() {
 
             should("be the percentage increment otherwise.") {
                 assertAll(Gen.numericFloats(), Gen.numericFloats(),
-                          Gen.choose(1, 9)) {
-                    x0: Float, x1: Float, c: Int ->
+                          Gen.smallFloats()) {
+                    x0: Float, x1: Float, t: Float ->
 
                     val a = min(x0, x0 + 1f)
                     val b = max(x0, x0 + 1f)
-                    val t = 1f / c
 
                     MathUtils.lerp(a, b, t).shouldBe(a + (b - a) * t)
                 }
@@ -240,7 +241,7 @@ class MathUtilsTest : ShouldSpec() {
 
         "Inverting a number safely" {
             should("produce a number when not zero.") {
-                assertAll(Gen.numericFloats().filter{ it != 0f }) { x: Float ->
+                assertAll(Gen.nonzeroFloats()) { x: Float ->
                     MathUtils.safeInverse(x).shouldBe(1f / x)
                 }
             }
@@ -255,7 +256,7 @@ class MathUtilsTest : ShouldSpec() {
         }
 
         "Taking the square root of a number" {
-            should("") {
+            should("produce the square root.") {
                 assertAll(Gen.numericFloats()) { x: Float ->
                     MathUtils.sqrt(x).shouldBe(sqrt(x))
                 }
