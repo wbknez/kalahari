@@ -36,6 +36,9 @@ fun Point3.shouldBe(other: Point3) =
 fun Point3.shouldBe(x: Float, y: Float, z: Float) =
     this shouldBe equalsTo(Point3(x, y, z))
 
+/**
+ * Test suite for [Point3].
+ */
 class Point3Test : ShouldSpec() {
 
     init {
