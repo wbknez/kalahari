@@ -49,7 +49,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      * Constructor.
      *
      * @param tuple
-     *
+     *        The tuple to copy from.
      */
     constructor(tuple: Tuple3?) : this(tuple!!.x, tuple.y, tuple.z)
 
@@ -94,13 +94,8 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to use.
      * @return The distance between two vectors.
      */
-    fun distanceTo(vec: Vector3): Float {
-        val dX = this.x - vec.x
-        val dY = this.y - vec.y
-        val dZ = this.z - vec.z
-
-        return MathUtils.sqrt(dX * dX + dY * dY + dZ * dZ)
-    }
+    fun distanceTo(vec: Vector3): Float =
+        MathUtils.sqrt(this.distanceSquaredTo(vec))
 
     /**
      * Computes the squared distance between this vector and the specified one.
