@@ -200,7 +200,9 @@ class BoundingSphereTest : ShouldSpec() {
                 assertAll(Gen.boundingSphere(), Gen.vector3()) {
                     sphere: BoundingSphere, dir: Vector3 ->
 
-                    val ray = Ray3(dir, Gen.insideSphere(sphere).random().first())
+                    val ray = Ray3(dir,
+                                   Gen.insideSphere(sphere).random().first())
+                                .normalizeSelf()
 
                     sphere.intersects(ray).shouldBeTrue()
                 }
@@ -211,6 +213,7 @@ class BoundingSphereTest : ShouldSpec() {
                 assertAll(Gen.boundingSphere()) {sphere: BoundingSphere ->
                     val origin = Gen.outsideSphere(sphere).random().first()
                     val ray    = Ray3(Vector3(sphere.center - origin), origin)
+                                    .normalizeSelf()
 
                     sphere.intersects(ray).shouldBeTrue()
 
@@ -222,6 +225,7 @@ class BoundingSphereTest : ShouldSpec() {
                 assertAll(Gen.boundingSphere()) { sphere: BoundingSphere ->
                     val origin = Gen.outsideSphere(sphere).random().first()
                     val ray    = Ray3(Vector3(origin - sphere.center), origin)
+                                    .normalizeSelf()
 
                     sphere.intersects(ray).shouldBeFalse()
                 }
