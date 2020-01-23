@@ -3,6 +3,7 @@ package com.willoutwest.kalahari.math
 import io.kotlintest.matchers.types.shouldBeSameInstanceAs
 import io.kotlintest.properties.Gen
 import io.kotlintest.properties.assertAll
+import io.kotlintest.should
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
@@ -24,6 +25,30 @@ fun Gen.Companion.ray3(): Gen<Ray3> = Ray3Generator()
 class Ray3Test : ShouldSpec() {
 
     init {
+
+        "Normalizing a ray" {
+            should("normalize both the direction and its inverse") {
+                assertAll(Gen.ray3()) { ray: Ray3 ->
+                    val norm = ray.normalize()
+
+                    norm.dir.shouldBe(ray.dir.normalize())
+                    norm.invDir.shouldBe(ray.invDir.normalize())
+                    norm.origin.shouldBe(ray.origin)
+                }
+            }
+        }
+
+        "Normalizing a ray in place" {
+            should("normalize both its direction and inverse") {
+                assertAll(Gen.ray3()) { ray: Ray3 ->
+                    val norm = ray.clone().normalizeSelf()
+
+                    norm.dir.shouldBe(ray.dir.normalize(), 0.000001f)
+                    norm.invDir.shouldBe(ray.invDir.normalize(), 0.000001f)
+                    norm.origin.shouldBe(ray.origin)
+                }
+            }
+        }
 
         "Projecting a point along a ray" {
             should("be the sum of the origin and product of the direction " +

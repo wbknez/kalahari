@@ -7,11 +7,15 @@ import com.willoutwest.kalahari.util.hash
  *
  * @property dir
  *           The direction to point in.
+ * @property invDir
+ *           The inverse of the direction to point in.
  * @property origin
  *           The starting point.
  */
 class Ray3(val dir: Vector3 = Vector3.Unit.clone(),
            val origin: Point3 = Point3.Zero.clone()) : Cloneable {
+
+    val invDir = this.dir.invert()
 
     /**
      * Constructor.
@@ -21,7 +25,7 @@ class Ray3(val dir: Vector3 = Vector3.Unit.clone(),
      */
     constructor(ray: Ray3?) : this(ray!!.dir.clone(), ray.origin.clone())
 
-    override fun clone(): Ray3 = Ray3(this)
+    public override fun clone(): Ray3 = Ray3(this)
 
     override fun equals(other: Any?): Boolean =
         when(other) {
@@ -30,6 +34,34 @@ class Ray3(val dir: Vector3 = Vector3.Unit.clone(),
         }
 
     override fun hashCode(): Int = hash(this.dir, this.origin)
+
+    /**
+     * Normalizes this ray by computing the normalization of the direction
+     * (and inverse direction), if appropriate.
+     *
+     * @return A normalized ray.
+     */
+    fun normalize(): Ray3 {
+        val ray = Ray3(this)
+
+        ray.dir.normalizeSelf()
+        ray.invDir.normalizeSelf()
+
+        return ray
+    }
+
+    /**
+     * Normalizes this ray by computing the normalization of the direction,
+     * if appropriate, and modifies this ray as a result.
+     *
+     * @return A reference to this ray for easy chaining.
+     */
+    fun normalizeSelf(): Ray3 {
+        this.dir.normalizeSelf()
+        this.invDir.set(this.dir).invertSelf().normalizeSelf()
+
+        return this
+    }
 
     /**
      * Computes the resultant point from projecting this ray through the
@@ -71,6 +103,7 @@ class Ray3(val dir: Vector3 = Vector3.Unit.clone(),
      */
     fun set(dir: Vector3, origin: Point3): Ray3 {
         this.dir.set(dir)
+        this.invDir.set(dir).invertSelf()
         this.origin.set(origin)
 
         return this
@@ -85,6 +118,7 @@ class Ray3(val dir: Vector3 = Vector3.Unit.clone(),
      */
     fun set(ray: Ray3?): Ray3 {
         this.dir.set(ray!!.dir)
+        this.invDir.set(ray.dir).invertSelf()
         this.origin.set(ray.origin)
 
         return this
