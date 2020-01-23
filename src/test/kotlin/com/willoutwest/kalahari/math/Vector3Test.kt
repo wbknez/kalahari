@@ -10,6 +10,7 @@ import io.kotlintest.properties.assertAll
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 import io.kotlintest.tables.row
+import kotlin.math.abs
 
 class Vector3Generator : Gen<Vector3> {
 
@@ -32,11 +33,27 @@ private fun equalsTo(vector: Vector3) = object : Matcher<Vector3> {
                       "Vector $value should not be $vector")
 }
 
-fun Vector3.shouldBe(other: Vector3) =
-    this shouldBe equalsTo(other)
+private fun equalsTo(vector: Vector3, tol: Float) = object : Matcher<Vector3> {
+
+    override fun test(value: Vector3): MatcherResult =
+        MatcherResult(abs(value.x - vector.x) <= tol &&
+                      abs(value.y - vector.y) <= tol &&
+                      abs(value.z - vector.z) <= tol,
+                      "Vector $value should be $vector",
+                      "Vector $value should not be $vector")
+}
 
 fun Vector3.shouldBe(x: Float, y: Float, z: Float) =
     this shouldBe equalsTo(Vector3(x, y, z))
+
+fun Vector3.shouldBe(x: Float, y: Float, z: Float, tol: Float) =
+    this shouldBe equalsTo(Vector3(x, y, z), tol)
+
+fun Vector3.shouldBe(other: Vector3) =
+    this shouldBe equalsTo(other)
+
+fun Vector3.shouldBe(other: Vector3, tol: Float) =
+    this shouldBe equalsTo(other, tol)
 
 /**
  * Test suite for [vector3].
