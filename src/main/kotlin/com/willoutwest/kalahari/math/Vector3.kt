@@ -184,7 +184,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return this
     }
 
-    operator fun minus(vec: Vector3): Vector3 =
+    open operator fun minus(vec: Vector3): Vector3 =
         Vector3(this.x - vec.x, this.y - vec.y, this.z - vec.z)
 
     /**
@@ -195,7 +195,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to subtract.
      * @return A reference to this vector for easy chaining.
      */
-    fun minusSelf(vec: Vector3): Vector3 {
+    open fun minusSelf(vec: Vector3): Vector3 {
         this.x -= vec.x
         this.y -= vec.y
         this.z -= vec.z
@@ -222,7 +222,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *
      * @return A normalized vector.
      */
-    fun normalize(): Vector3 {
+    open fun normalize(): Vector3 {
         val mag = this.magnitude
         val vec = Vector3(this)
 
@@ -258,7 +258,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return this
     }
 
-    operator fun plus(vec: Vector3): Vector3 =
+    open operator fun plus(vec: Vector3): Vector3 =
         Vector3(this.x + vec.x, this.y + vec.y, this.z + vec.z)
 
     /**
@@ -269,10 +269,11 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to add.
      * @return A reference to this vector for easy chaining.
      */
-    fun plusSelf(vec: Vector3): Vector3 {
+    open fun plusSelf(vec: Vector3): Vector3 {
         this.x += vec.x
         this.y += vec.y
         this.z += vec.z
+
         return this
     }
 
@@ -307,6 +308,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         this.x *= scalar
         this.y *= scalar
         this.z *= scalar
+
         return this
     }
 
