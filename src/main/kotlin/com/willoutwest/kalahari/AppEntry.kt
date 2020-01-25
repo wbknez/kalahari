@@ -10,7 +10,6 @@ import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
 
-
 /**
  * The main driver for the Kalahari ray tracing project.
  */
