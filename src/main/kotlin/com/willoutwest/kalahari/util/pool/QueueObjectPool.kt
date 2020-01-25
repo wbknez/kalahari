@@ -4,7 +4,7 @@ import java.util.ArrayDeque
 
 /**
  * Represents an implementation of [ObjectPool] that is backed by an
- * unsynchronized array-based dequeue.
+ * un-synchronized array-based dequeue.
  *
  * @param preallocate
  *        Whether or not to pre-allocate objects to the queue up to capacity.
@@ -19,6 +19,9 @@ class QueueObjectPool<T>(override var capacity: Int,
                          preallocate: Boolean = false)
     : ObjectPool<T> {
 
+    override val available: Int
+        get() = this.capacity - this.borrowed
+
     var borrowed: Int = 0
         private set
 
@@ -31,9 +34,6 @@ class QueueObjectPool<T>(override var capacity: Int,
             }
         }
     }
-
-    override val available: Int
-        get() = this.capacity - this.borrowed
 
     override fun borrow(): T {
         if(this.available - 1 < 0) {
