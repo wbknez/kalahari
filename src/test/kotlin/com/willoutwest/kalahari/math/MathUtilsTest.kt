@@ -193,8 +193,8 @@ class MathUtilsTest : ShouldSpec() {
                           Gen.smallFloats()) {
                     x0: Float, x1: Float, t: Float ->
 
-                    val a = min(x0, x0 + 1f)
-                    val b = max(x0, x0 + 1f)
+                    val a = min(x0, x1)
+                    val b = max(x0, x1)
 
                     MathUtils.lerp(a, b, t).shouldBe(a + (b - a) * t)
                 }
