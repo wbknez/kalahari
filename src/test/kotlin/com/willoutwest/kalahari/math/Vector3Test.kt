@@ -36,9 +36,9 @@ private fun equalsTo(vector: Vector3) = object : Matcher<Vector3> {
 private fun equalsTo(vector: Vector3, tol: Float) = object : Matcher<Vector3> {
 
     override fun test(value: Vector3): MatcherResult =
-        MatcherResult(abs(value.x - vector.x) <= tol &&
-                      abs(value.y - vector.y) <= tol &&
-                      abs(value.z - vector.z) <= tol,
+        MatcherResult(value.toArray().zip(vector.toArray()).all {
+                          abs(it.first - it.second) <= tol
+                      },
                       "Vector $value should be $vector",
                       "Vector $value should not be $vector")
 }

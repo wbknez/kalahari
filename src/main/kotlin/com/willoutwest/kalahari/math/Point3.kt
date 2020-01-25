@@ -37,6 +37,14 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
     /**
      * Constructor.
      *
+     * @param array
+     *        The array to copy from.
+     */
+    constructor(array: FloatArray) : this(array[0], array[1], array[2])
+
+    /**
+     * Constructor.
+     *
      * @param tuple
      *        The tuple to copy from.
      */
@@ -144,21 +152,12 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         return this
     }
 
-    override fun set(x: Float, y: Float, z: Float): Point3 {
-        this.x = x
-        this.y = y
-        this.z = z
+    override fun set(x: Float, y: Float, z: Float): Point3 =
+        super.set(x, y, z) as Point3
 
-        return this
-    }
+    override fun set(array: FloatArray): Point3 = super.set(array) as Point3
 
-    override fun set(tuple: Tuple3?): Point3 {
-        this.x = tuple!!.x
-        this.y = tuple.y
-        this.z = tuple.z
-
-        return this
-    }
+    override fun set(tuple: Tuple3?): Point3 = super.set(tuple) as Point3
 
     operator fun times(scalar: Float): Point3 =
         Point3(this.x * scalar, this.y * scalar, this.z * scalar)

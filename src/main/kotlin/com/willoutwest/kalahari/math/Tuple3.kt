@@ -19,6 +19,15 @@ open class Tuple3(var x: Float = 0.0f,
     /**
      * Constructor.
      *
+     * @param array
+     *        The array to copy from.
+     */
+    constructor(array: FloatArray)
+        : this(array[0], array[1], array[2])
+
+    /**
+     * Constructor.
+     *
      * @param tuple
      *        The tuple to copy from.
      */
@@ -80,6 +89,21 @@ open class Tuple3(var x: Float = 0.0f,
     }
 
     /**
+     * Sets the components of this tuple to those of the specified array.
+     *
+     * @param array
+     *        The array to copy from.
+     * @return A reference to this tuple for easy chaining.
+     */
+    open fun set(array: FloatArray): Tuple3 {
+        this.x = array[0]
+        this.y = array[1]
+        this.z = array[2]
+
+        return this
+    }
+
+    /**
      * Sets the components of this tuple to those of the specified one.
      *
      * @param tuple
@@ -93,6 +117,13 @@ open class Tuple3(var x: Float = 0.0f,
 
         return this
     }
+
+    /**
+     * Converts this tuple to a three element floating-point array.
+     *
+     * @return A tuple as an array.
+     */
+    fun toArray(): FloatArray = floatArrayOf(this.x, this.y, this.z)
 
     override fun toString(): String = "(${this.x}, ${this.y}, ${this.z})"
 }

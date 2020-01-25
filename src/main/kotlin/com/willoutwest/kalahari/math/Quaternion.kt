@@ -50,6 +50,15 @@ class Quaternion(x: Float = 0.0f,
     /**
      * Constructor.
      *
+     * @param array
+     *        The array to copy from.
+     */
+    constructor(array: FloatArray)
+        : this(array[0], array[1], array[2], array[3])
+
+    /**
+     * Constructor.
+     *
      * @param tuple
      *        The tuple to copy from.
      */
@@ -217,23 +226,14 @@ class Quaternion(x: Float = 0.0f,
         return this
     }
 
-    override fun set(x: Float, y: Float, z: Float, w: Float): Quaternion {
-        this.x = x
-        this.y = y
-        this.z = z
-        this.w = w
+    override fun set(x: Float, y: Float, z: Float, w: Float): Quaternion =
+        super.set(x, y, z, w) as Quaternion
 
-        return this
-    }
+    override fun set(array: FloatArray): Quaternion =
+        super.set(array) as Quaternion
 
-    override fun set(tuple: Tuple4?): Quaternion {
-        this.x = tuple!!.x
-        this.y = tuple.y
-        this.z = tuple.z
-        this.w = tuple.w
-
-        return this
-    }
+    override fun set(tuple: Tuple4?): Quaternion =
+        super.set(tuple) as Quaternion
 
     /**
      * Composes this quaternion as a rotation of the specified amount in

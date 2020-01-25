@@ -21,6 +21,14 @@ class TexCoord2(u: Float = 0.0f, v: Float = 0.0f) : Cloneable, Tuple2(u, v) {
     /**
      * Constructor.
      *
+     * @param array
+     *        The array to copy from.
+     */
+    constructor(array: FloatArray) : this(array[0], array[1])
+
+    /**
+     * Constructor.
+     *
      * @param tuple
      *        The tuple to copy from.
      */
@@ -28,17 +36,11 @@ class TexCoord2(u: Float = 0.0f, v: Float = 0.0f) : Cloneable, Tuple2(u, v) {
 
     override fun clone(): TexCoord2 = TexCoord2(this)
 
-    override fun set(x: Float, y: Float): TexCoord2 {
-        this.u = x
-        this.v = y
+    override fun set(x: Float, y: Float): TexCoord2 =
+        super.set(x, y) as TexCoord2
 
-        return this
-    }
+    override fun set(array: FloatArray): TexCoord2 =
+        super.set(array) as TexCoord2
 
-    override fun set(tuple: Tuple2?): TexCoord2 {
-        this.u = tuple!!.x
-        this.v = tuple.y
-
-        return this
-    }
+    override fun set(tuple: Tuple2?): TexCoord2 = super.set(tuple) as TexCoord2
 }

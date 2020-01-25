@@ -10,6 +10,14 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
     /**
      * Constructor.
      *
+     * @param array
+     *        The array to copy from.
+     */
+    constructor(array: FloatArray) : this(array[0], array[1], array[2])
+
+    /**
+     * Constructor.
+     *
      * @param tuple
      *        The tuple to copy from.
      */
@@ -59,6 +67,8 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
 
     override fun set(x: Float, y: Float, z: Float): Normal3 =
         super.set(x, y, z) as Normal3
+
+    override fun set(array: FloatArray): Normal3 = super.set(array) as Normal3
 
     override fun set(tuple: Tuple3?): Normal3 = super.set(tuple) as Normal3
 

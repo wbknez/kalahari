@@ -83,6 +83,14 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
     /**
      * Constructor.
      *
+     * @param array
+     *        The array to copy from.
+     */
+    constructor(array: FloatArray) : this(array[0], array[1], array[2])
+
+    /**
+     * Constructor.
+     *
      * @param tuple
      *        The tuple to copy from.
      */
@@ -215,13 +223,8 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         return this
     }
 
-    override fun set(x: Float, y: Float, z: Float): Color3 {
-        this.red   = x
-        this.green = y
-        this.blue  = z
-
-        return this
-    }
+    override fun set(x: Float, y: Float, z: Float): Color3 =
+        super.set(x, y, z) as Color3
 
     /**
      * Sets the components of this color to the specified values after they
@@ -235,21 +238,13 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
      *        The blue color component to use.
      * @return A reference to this color for easy chaining.
      */
-    fun set(red: Int, green: Int, blue: Int): Color3 {
-        this.red   = intToComponent(red)
-        this.green = intToComponent(green)
-        this.blue  = intToComponent(blue)
+    fun set(red: Int, green: Int, blue: Int): Color3 =
+        super.set(intToComponent(red), intToComponent(green),
+                  intToComponent(blue)) as Color3
 
-        return this
-    }
+    override fun set(array: FloatArray): Tuple3 = super.set(array) as Color3
 
-    override fun set(tuple: Tuple3?): Color3 {
-        this.red   = tuple!!.x
-        this.green = tuple.y
-        this.blue  = tuple.z
-
-        return this
-    }
+    override fun set(tuple: Tuple3?): Color3 = super.set(tuple) as Color3
 
     operator fun times(color: Color3): Color3 =
         Color3(this.red * color.red, this.green * color.green,

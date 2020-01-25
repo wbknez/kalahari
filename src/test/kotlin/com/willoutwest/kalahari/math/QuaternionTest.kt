@@ -38,10 +38,9 @@ private fun equalsTo(quat: Quaternion, tol: Float) =
     object : Matcher<Quaternion> {
 
     override fun test(value: Quaternion): MatcherResult =
-        MatcherResult(abs(value.x - quat.x) <= tol &&
-                      abs(value.y - quat.y) <= tol &&
-                      abs(value.z - quat.z) <= tol &&
-                      abs(value.w - quat.w) <= tol,
+        MatcherResult(value.toArray().zip(quat.toArray()).all {
+                          abs(it.first - it.second) <= tol
+                      },
                       "Quaternion $value should be $quat",
                       "Quaternion $value should not be $quat")
 }
