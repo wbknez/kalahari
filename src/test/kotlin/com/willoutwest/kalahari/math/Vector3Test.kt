@@ -63,7 +63,7 @@ class Vector3Test : ShouldSpec() {
     init {
 
         "Crossing a vector with another" {
-            should("cross each vector's components.") {
+            should("cross each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -73,7 +73,7 @@ class Vector3Test : ShouldSpec() {
                 }
             }
 
-            should("be orthogonal when they are orthogonal.") {
+            should("be orthogonal when they are orthogonal") {
                 forall(
                     row(Vector3.X, Vector3.Y,  Vector3.Z),
                     row(Vector3.X, Vector3.Z, -Vector3.Y),
@@ -87,7 +87,7 @@ class Vector3Test : ShouldSpec() {
                 }
             }
 
-            should("be zero when they are parallel.") {
+            should("be zero when they are parallel") {
                 forall(
                     row(Vector3.X, Vector3.X),
                     row(Vector3.Y, Vector3.Y),
@@ -100,7 +100,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Crossing a vector with another in place" {
-            should("cross each vector's components.") {
+            should("cross each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -110,7 +110,7 @@ class Vector3Test : ShouldSpec() {
                 }
             }
 
-            should("be orthogonal when they are orthogonal.") {
+            should("be orthogonal when they are orthogonal") {
                 forall(
                     row(Vector3.X, Vector3.Y,  Vector3.Z),
                     row(Vector3.X, Vector3.Z, -Vector3.Y),
@@ -124,7 +124,7 @@ class Vector3Test : ShouldSpec() {
                 }
             }
 
-            should("be zero when they are parallel.") {
+            should("be zero when they are parallel") {
                 forall(
                     row(Vector3.X, Vector3.X),
                     row(Vector3.Y, Vector3.Y),
@@ -137,7 +137,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Computing the distance between two vectors" {
-            should("be the root of the dot product of (a - b).") {
+            should("be the root of the dot product of (a - b)") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -148,7 +148,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Computing the squared distance between two vectors" {
-            should("be the dot product of (a - b).") {
+            should("be the dot product of (a - b)") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -158,7 +158,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Dividing a vector by a scalar" {
-            should("divide each component by that scalar.") {
+            should("divide each component by that scalar") {
                 assertAll(Gen.vector3(), Gen.nonzeroFloats()) {
                     vec: Vector3, scalar: Float ->
 
@@ -172,7 +172,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Dividing a vector by a scalar in place" {
-            should("divide each of its components by that scalar.") {
+            should("divide each of its components by that scalar") {
                 assertAll(Gen.vector3(), Gen.nonzeroFloats()) {
                     vec: Vector3, scalar: Float ->
 
@@ -186,7 +186,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Doting a vector with three components" {
-            should("sum the product of each component.") {
+            should("sum the product of each component") {
                 assertAll(Gen.vector3(), Gen.float(), Gen.float(),
                           Gen.float()) {
                     vec: Vector3, x: Float, y: Float, z: Float ->
@@ -198,7 +198,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Dotting a vector with another" {
-            should("sum the product of their components.") {
+            should("sum the product of their components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -208,7 +208,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Inverting a vector" {
-            should("invert each component.") {
+            should("invert each component") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
                     vec.invert().shouldBe(MathUtils.safeInverse(vec.x),
                                           MathUtils.safeInverse(vec.y),
@@ -218,7 +218,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Inverting a vector in place" {
-            should("invert each of its components.") {
+            should("invert each of its components") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
                     vec.clone().invert().shouldBe(MathUtils.safeInverse(vec.x),
                                                   MathUtils.safeInverse(vec.y),
@@ -228,7 +228,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Subtracting a vector from another" {
-            should("subtract each vector's components.") {
+            should("subtract each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -238,7 +238,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Subtracting a vector from another in place" {
-            should("subtract each of its components.") {
+            should("subtract each of its components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -250,7 +250,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Negating a vector" {
-            should("negate each component.") {
+            should("negate each component") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
                     (-vec).shouldBe(-vec.x, -vec.y, -vec.z)
                 }
@@ -258,7 +258,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Negating a vector in place" {
-            should("negate each of its components.") {
+            should("negate each of its components") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
                     vec.clone().negateSelf().shouldBe(-vec.x, -vec.y, -vec.z)
                 }
@@ -266,7 +266,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Normalizing a vector" {
-            should("divide each component by the magnitude.") {
+            should("divide each component by the magnitude") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
 
                     when(vec.magnitude != 0f) {
@@ -278,7 +278,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Normalizing a vector in place" {
-            should("divide each component by the magnitude.") {
+            should("divide each component by the magnitude") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
 
                     when(vec.magnitude != 0f) {
@@ -292,7 +292,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Adding a vector to another" {
-            should("add each vector's components.") {
+            should("add each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -302,7 +302,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Adding a vector to another in place" {
-            should("add each of its components.") {
+            should("add each of its components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
@@ -338,7 +338,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Taking the magnitude of a vector" {
-            should("be the root of the product of its components.") {
+            should("be the root of the product of its components") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
                     vec.magnitude.shouldBe(MathUtils.sqrt(vec.dot(vec)))
                 }
@@ -346,7 +346,7 @@ class Vector3Test : ShouldSpec() {
         }
 
         "Taking the squared magnitude of a vector" {
-            should("be the product of its components.") {
+            should("be the product of its components") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
                     vec.magnitudeSquared.shouldBe(vec.dot(vec))
                 }
