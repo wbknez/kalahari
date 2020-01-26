@@ -31,4 +31,10 @@ fun Gen.Companion.positiveFloats(): Gen<Float> = numericFloats().map {
  * Produces a randomized sequence of numeric <code>float</code> values
  * between one and zero, inclusive.
  */
+fun Gen.Companion.smallDoubles(): Gen<Double> = numericDoubles(0.0, 1.0)
+
+/**
+ * Produces a randomized sequence of numeric <code>float</code> values
+ * between one and zero, inclusive.
+ */
 fun Gen.Companion.smallFloats(): Gen<Float> = numericFloats(0f, 1f)
