@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.math
 
 import com.willoutwest.kalahari.util.hash
+import java.lang.IllegalArgumentException
 
 /**
  * Represents a matrix-like mathematical object in four dimensional space.
@@ -73,6 +74,21 @@ open class Table4(var t00: Float = 0f, var t01: Float = 0f,
 
     public override fun clone(): Table4 = Table4(this)
 
+    /**
+     * Returns the column at the specified index in this table as an array of
+     * floating-point values.
+     *
+     * @return An array of column values.
+     */
+    fun column(index: Int): FloatArray =
+        when(index) {
+            0    -> floatArrayOf(this.t00, this.t10, this.t20, this.t30)
+            1    -> floatArrayOf(this.t01, this.t11, this.t21, this.t31)
+            2    -> floatArrayOf(this.t02, this.t12, this.t22, this.t32)
+            3    -> floatArrayOf(this.t03, this.t13, this.t23, this.t33)
+            else -> throw IndexOutOfBoundsException()
+        }
+
     operator fun component1(): Float  = this.t00
     operator fun component2(): Float  = this.t01
     operator fun component3(): Float  = this.t02
@@ -130,6 +146,21 @@ open class Table4(var t00: Float = 0f, var t01: Float = 0f,
              this.t10, this.t11, this.t12, this.t13,
              this.t20, this.t21, this.t22, this.t23,
              this.t30, this.t31, this.t32, this.t33)
+
+    /**
+     * Returns the row at the specified index in this table as an array of
+     * floating-point values.
+     *
+     * @return An array of row values.
+     */
+    fun row(index: Int): FloatArray =
+        when(index) {
+            0    -> floatArrayOf(this.t00, this.t01, this.t02, this.t03)
+            1    -> floatArrayOf(this.t10, this.t11, this.t12, this.t13)
+            2    -> floatArrayOf(this.t20, this.t21, this.t22, this.t23)
+            3    -> floatArrayOf(this.t30, this.t31, this.t32, this.t33)
+            else -> throw java.lang.IndexOutOfBoundsException("")
+        }
 
     operator fun set(index: Int, value: Float) =
         when(index) {
@@ -209,7 +240,7 @@ open class Table4(var t00: Float = 0f, var t01: Float = 0f,
      *        The array to copy from.
      * @return A reference to this table for easy chaining.
      */
-    fun set(array: FloatArray): Table4 {
+    open fun set(array: FloatArray): Table4 {
         this.t00 = array[0];  this.t01 = array[1]
         this.t02 = array[2];  this.t03 = array[3]
         this.t10 = array[4];  this.t11 = array[5]
