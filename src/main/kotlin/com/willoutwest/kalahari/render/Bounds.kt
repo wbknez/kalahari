@@ -30,5 +30,5 @@ data class Bounds(val x: Int, val y: Int, val width: Int, val height: Int)
     constructor(width: Int, height: Int) : this(0, 0, width, height)
 
     val area: Int
-        get() = (this.width - this.x) * (this.height - this.y)
+        get() = this.width * this.height
 }

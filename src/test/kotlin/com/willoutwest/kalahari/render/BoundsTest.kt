@@ -33,8 +33,7 @@ class BoundsTest : ShouldSpec() {
         "Computing the area of a bounds" {
             should("be the product of the width times the height") {
                 assertAll(Gen.bounds()) { bounds: Bounds ->
-                    bounds.area shouldBe ((bounds.width - bounds.x) *
-                                          (bounds.height - bounds.y))
+                    bounds.area shouldBe (bounds.width * bounds.height)
                 }
             }
         }
