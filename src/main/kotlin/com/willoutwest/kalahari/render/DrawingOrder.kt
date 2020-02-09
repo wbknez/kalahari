@@ -14,5 +14,5 @@ interface DrawingOrder {
      *        The total area to cover.
      * @return A list of ordered pixel coordinates.
      */
-    fun order(bounds: Bounds): List<Coords>
+    fun orderOf(bounds: Bounds): List<Coords>
 }
