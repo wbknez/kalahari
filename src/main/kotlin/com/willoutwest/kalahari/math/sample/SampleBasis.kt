@@ -1,5 +1,8 @@
 package com.willoutwest.kalahari.math.sample
 
+import com.willoutwest.kalahari.math.Point2
+import com.willoutwest.kalahari.math.Point3
+
 /**
  * Represents a collection of sample points organized as an array of sets.
  *
@@ -34,3 +37,13 @@ data class SampleBasis<T>(val numSamples: Int,
 
     public override fun clone(): SampleBasis<T> = SampleBasis(this)
 }
+
+/**
+ * Represents a sample basis in two dimensional space.
+ */
+typealias SampleBasis2 = SampleBasis<Point2>
+
+/**
+ * Represents a sample basis in three dimensional space.
+ */
+typealias SampleBasis3 = SampleBasis<Point3>
