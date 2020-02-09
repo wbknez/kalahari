@@ -3,8 +3,8 @@ package com.willoutwest.kalahari.util
 import java.util.SplittableRandom
 
 /**
- * Applies the Fisher-Yates shuffle to this mutable list, resulting in a
- * statistically random ordering of elements.
+ * Applies the Fisher-Yates shuffling algorithm to this mutable list,
+ * resulting in a statistically random ordering of elements.
  *
  * @param random
  *        The pseudo-random number generator to use.
