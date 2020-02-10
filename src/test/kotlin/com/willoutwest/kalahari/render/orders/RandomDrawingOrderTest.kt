@@ -1,20 +1,20 @@
-package com.willoutwest.kalahari.render.order
+package com.willoutwest.kalahari.render.orders
 
 import com.willoutwest.kalahari.render.Bounds
 import com.willoutwest.kalahari.render.Coords
 import com.willoutwest.kalahari.render.bounds
-import com.willoutwest.kalahari.render.orders.NaturalDrawingOrder
 import io.kotlintest.properties.Gen
 import io.kotlintest.properties.assertAll
 import io.kotlintest.shouldBe
+import io.kotlintest.shouldNotBe
 import io.kotlintest.specs.ShouldSpec
 
 /**
- * Test suite for [NaturalDrawingOrder].
+ * Test suite for [RandomDrawingOrder].
  */
-class NaturalDrawingOrderTest : ShouldSpec() {
+class RandomDrawingOrderTest : ShouldSpec() {
 
-    val order = NaturalDrawingOrder()
+    val order = RandomDrawingOrder()
 
     init {
 
@@ -33,7 +33,8 @@ class NaturalDrawingOrderTest : ShouldSpec() {
                         }
                     }
 
-                    pixels.shouldBe(naturalOrder)
+                    pixels.size shouldBe counter
+                    pixels.shouldNotBe(naturalOrder)
                 }
             }
         }
