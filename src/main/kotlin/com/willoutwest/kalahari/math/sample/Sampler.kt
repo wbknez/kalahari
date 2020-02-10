@@ -8,6 +8,7 @@ import com.willoutwest.kalahari.math.sample.mappers.DiskSampleMapper
 import com.willoutwest.kalahari.math.sample.mappers.HemisphereSampleMapper
 import com.willoutwest.kalahari.math.sample.mappers.SphereSampleMapper
 import com.willoutwest.kalahari.util.fisherShuffle
+import com.willoutwest.kalahari.util.hash
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
@@ -181,6 +182,15 @@ class Sampler<T>(private val basis: SampleBasis<T>,
     }
 
     public override fun clone(): Sampler<T> = Sampler(this)
+
+    override fun equals(other: Any?): Boolean =
+        when(other) {
+            is Sampler<*> -> this.basis == other.basis &&
+                             this.indices.contentEquals(other.indices)
+            else          -> false
+        }
+
+    override fun hashCode(): Int = hash(this.basis, this.indices)
 
     /**
      * Randomly selects a sample point from this sampler's basis.
