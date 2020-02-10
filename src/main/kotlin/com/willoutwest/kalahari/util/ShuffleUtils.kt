@@ -10,9 +10,9 @@ import java.util.SplittableRandom
  *        The pseudo-random number generator to use.
  */
 fun <T> MutableList<T>.fisherShuffle(random: SplittableRandom) {
-    for(i in 0 until this.size - 1) {
-        val index = random.nextInt(i)
+    for(i in this.size - 1 downTo 1) {
+        val choice = random.nextInt(i + 1)
 
-        this[i] = this[index].also { this[index] = this[i] }
+        this[i] = this[choice].also { this[choice] = this[i] }
     }
 }
