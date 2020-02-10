@@ -18,12 +18,15 @@ class RandomDrawingOrderTest : ShouldSpec() {
 
     init {
 
-        "Ordering a bounds of pixels naturally" {
-            should("produce coordinates in increasing, row-major order") {
-                assertAll(Gen.bounds(1, 1, 100, 100)) { bounds: Bounds ->
-                    val pixels = order.orderOf(bounds)
+        "Ordering a bounds of pixels randomly" {
+            should("produce random coordinates in increasing, row-major " +
+                   "order") {
+                assertAll(Gen.bounds(xMax=1, yMax=1, widthMin=19,
+                                     widthMax=20, heightMin=19,
+                                     heightMax= 20)) { bounds: Bounds ->
+                    val coords       = order.orderOf(bounds)
                     val naturalOrder = mutableListOf<Coords>()
-                    var counter = 0
+                    var counter      = 0
 
                     for(i in bounds.y until bounds.y + bounds.height) {
                         for(j in bounds.x until bounds.x + bounds.width) {
@@ -33,8 +36,8 @@ class RandomDrawingOrderTest : ShouldSpec() {
                         }
                     }
 
-                    pixels.size shouldBe counter
-                    pixels.shouldNotBe(naturalOrder)
+                    coords.size shouldBe counter
+                    coords.shouldNotBe(naturalOrder)
                 }
             }
         }
