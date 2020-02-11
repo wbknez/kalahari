@@ -22,6 +22,14 @@ data class EpsilonTable(val defaultEpsilon: Float,
     /**
      * Constructor.
      *
+     * @param defaultEpsilon
+     *        The default epsilon value to use.
+     */
+    constructor(defaultEpsilon: Float) : this(defaultEpsilon, mutableMapOf())
+
+    /**
+     * Constructor.
+     *
      * @param epsilons
      *        The epsilon table to copy from.
      */
