@@ -39,14 +39,15 @@ import java.lang.IllegalArgumentException
  * @property t33
  *           A table element.
  */
-open class Table4(var t00: Float = 0f, var t01: Float = 0f,
-                  var t02: Float = 0f, var t03: Float = 0f,
-                  var t10: Float = 0f, var t11: Float = 0f,
-                  var t12: Float = 0f, var t13: Float = 0f,
-                  var t20: Float = 0f, var t21: Float = 0f,
-                  var t22: Float = 0f, var t23: Float = 0f,
-                  var t30: Float = 0f, var t31: Float = 0f,
-                  var t32: Float = 0f, var t33: Float = 0f) : Cloneable {
+open class Table4(@JvmField var t00: Float = 0f, @JvmField var t01: Float = 0f,
+                  @JvmField var t02: Float = 0f, @JvmField var t03: Float = 0f,
+                  @JvmField var t10: Float = 0f, @JvmField var t11: Float = 0f,
+                  @JvmField var t12: Float = 0f, @JvmField var t13: Float = 0f,
+                  @JvmField var t20: Float = 0f, @JvmField var t21: Float = 0f,
+                  @JvmField var t22: Float = 0f, @JvmField var t23: Float = 0f,
+                  @JvmField var t30: Float = 0f, @JvmField var t31: Float = 0f,
+                  @JvmField var t32: Float = 0f, @JvmField var t33: Float = 0f)
+    : Cloneable {
 
     /**
      * Constructor.

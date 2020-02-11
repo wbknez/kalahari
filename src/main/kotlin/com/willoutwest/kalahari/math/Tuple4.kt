@@ -14,10 +14,10 @@ import com.willoutwest.kalahari.util.hash
  * @property w
  *           The w-axis component.
  */
-open class Tuple4(var x: Float = 0.0f,
-                  var y: Float = 0.0f,
-                  var z: Float = 0.0f,
-                  var w: Float = 0.0f) : Cloneable {
+open class Tuple4(@JvmField var x: Float = 0.0f,
+                  @JvmField var y: Float = 0.0f,
+                  @JvmField var z: Float = 0.0f,
+                  @JvmField var w: Float = 0.0f) : Cloneable {
 
     /**
      * Constructor.

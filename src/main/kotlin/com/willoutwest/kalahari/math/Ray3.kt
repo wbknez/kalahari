@@ -12,8 +12,8 @@ import com.willoutwest.kalahari.util.hash
  * @property origin
  *           The starting point.
  */
-class Ray3(val dir: Vector3 = Vector3.Unit.clone(),
-           val origin: Point3 = Point3.Zero.clone()) : Cloneable {
+class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
+           @JvmField val origin: Point3 = Point3.Zero.clone()) : Cloneable {
 
     val invDir = this.dir.invert()
 

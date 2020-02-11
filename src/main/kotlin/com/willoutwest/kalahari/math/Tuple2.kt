@@ -10,8 +10,8 @@ import com.willoutwest.kalahari.util.hash
  * @property y
  *           The y-axis component.
  */
-open class Tuple2(var x: Float = 0.0f,
-                  var y: Float = 0.0f) : Cloneable {
+open class Tuple2(@JvmField var x: Float = 0.0f,
+                  @JvmField var y: Float = 0.0f) : Cloneable {
 
     /**
      * Constructor.
