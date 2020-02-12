@@ -150,9 +150,9 @@ class Sampler<T>(private val basis: SampleBasis<T>,
         }
     }
 
-    val count: AtomicLong = AtomicLong(0L)
+    private val count: AtomicLong = AtomicLong(0L)
 
-    val jump: AtomicInteger = AtomicInteger(0)
+    private val jump: AtomicInteger = AtomicInteger(0)
 
     val numSamples: Int
         get() = this.basis.numSamples
