@@ -7,7 +7,6 @@ import com.willoutwest.kalahari.math.sample.Sampler
 import com.willoutwest.kalahari.math.sample.Sampler2
 import com.willoutwest.kalahari.math.sample.generators.JitteredSampleGenerator
 import com.willoutwest.kalahari.render.Bounds
-import com.willoutwest.kalahari.util.hash
 
 /**
  * Represents a single "view" of a scene given by a pixel-filled plane.
