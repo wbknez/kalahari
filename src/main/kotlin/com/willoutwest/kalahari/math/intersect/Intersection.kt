@@ -20,9 +20,10 @@ import com.willoutwest.kalahari.math.Point3
  * @property worldPosition
  *           The intersection point in world space.
  */
-data class Intersection(var depth: Int = 0,
-                        val localPosition: Point3 = Point3(),
-                        val normal: Normal3 = Normal3(),
-                        var obj: Any? = null,
-                        var reversed: Boolean = false,
-                        val worldPosition: Point3 = Point3()) : Cloneable
+data class Intersection(@JvmField var depth: Int = 0,
+                        @JvmField val localPosition: Point3 = Point3(),
+                        @JvmField val normal: Normal3 = Normal3(),
+                        @JvmField var obj: Any? = null,
+                        @JvmField var reversed: Boolean = false,
+                        @JvmField val worldPosition: Point3 = Point3())
+    : Cloneable
