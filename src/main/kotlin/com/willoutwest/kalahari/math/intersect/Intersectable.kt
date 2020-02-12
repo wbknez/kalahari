@@ -12,7 +12,7 @@ import com.willoutwest.kalahari.util.FloatContainer
 interface Intersectable {
 
     /**
-     * Performs a ray intersecton test against this object's geometry.
+     * Performs a ray intersection test against this object's geometry.
      *
      * @param ray
      *        The ray to test against.

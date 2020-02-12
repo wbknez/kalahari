@@ -31,7 +31,7 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         return Normal3(this.x * inv, this.y * inv, this.z * inv)
     }
 
-    override fun divSelf(scalar: Float): Vector3 =
+    override fun divSelf(scalar: Float): Normal3 =
         super.divSelf(scalar) as Normal3
 
     override operator fun minus(vec: Vector3): Normal3 =
