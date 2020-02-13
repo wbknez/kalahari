@@ -7,6 +7,7 @@ import com.willoutwest.kalahari.math.sample.Sampler
 import com.willoutwest.kalahari.math.sample.Sampler2
 import com.willoutwest.kalahari.math.sample.generators.JitteredSampleGenerator
 import com.willoutwest.kalahari.render.Bounds
+import com.willoutwest.kalahari.util.hash
 
 /**
  * Represents a single "view" of a scene given by a pixel-filled plane.
@@ -28,17 +29,28 @@ import com.willoutwest.kalahari.render.Bounds
  * @property sampler
  *           The sampling mechanism to reduce anti-aliasing.
  */
-data class Viewport(@JvmField var bgColor: Color3 = Color3(0f, 0f, 0f),
-                    @JvmField var bounds: Bounds = Bounds(600, 400),
-                    @JvmField var gamma: Float = 1f,
-                    @JvmField var gamutOp: ColorOperator =
-                        ClampingColorOperator(),
-                    @JvmField var invGamma: Float = 1f,
-                    @JvmField var maxDepth: Int = 1,
-                    @JvmField var pixelSize: Float = 1f,
-                    @JvmField var sampler: Sampler2 = Sampler.squareOf(
+class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
+                    var bounds: Bounds = Bounds(600, 400),
+                    gamma: Float = 1f,
+                    var gamutOp: ColorOperator = ClampingColorOperator(),
+                    var maxDepth: Int = 1,
+                    var pixelSize: Float = 1f,
+                    var sampler: Sampler2 = Sampler.squareOf(
                        1, 83, JitteredSampleGenerator()
                     )) : Cloneable {
+
+    var gamma: Float = 1f
+        set(value) {
+            require(value > 0) {
+                "Gamma correction must be positive."
+            }
+
+            this.invGamma = 1f / value
+            field = value
+        }
+
+    var invGamma: Float = 1f
+        private set
 
     /**
      * Constructor.
@@ -48,8 +60,35 @@ data class Viewport(@JvmField var bgColor: Color3 = Color3(0f, 0f, 0f),
      */
     constructor(viewport: Viewport?) :
         this(viewport!!.bgColor, viewport.bounds, viewport.gamma,
-             viewport.gamutOp, viewport.invGamma, viewport.maxDepth,
-             viewport.pixelSize, viewport.sampler)
+             viewport.gamutOp, viewport.maxDepth, viewport.pixelSize,
+             viewport.sampler)
+
+    init {
+        this.gamma = gamma
+    }
 
     public override fun clone(): Viewport = Viewport(this)
+
+    override fun equals(other: Any?): Boolean =
+        when(other) {
+            is Viewport -> this.bgColor   == other.bgColor   &&
+                           this.bounds    == other.bounds    &&
+                           this.gamma     == other.gamma     &&
+                           this.gamutOp   == other.gamutOp   &&
+                           this.invGamma  == other.invGamma  &&
+                           this.maxDepth  == other.maxDepth  &&
+                           this.pixelSize == other.pixelSize &&
+                           this.sampler   == other.sampler
+            else        -> false
+        }
+
+    override fun hashCode(): Int =
+        hash(this.bounds, this.bgColor, this.gamma, this.gamutOp,
+             this.invGamma, this.maxDepth, this.pixelSize, this.sampler)
+
+    override fun toString() =
+        "Viewport(bgColor=${this.bgColor}, bounds=${this.bounds}, " +
+        "gamma=${this.gamma}, gamutOp=${this.gamutOp}, " +
+        "invGamma=${this.invGamma}, maxDepth=${this.maxDepth}, " +
+        "pixelSize=${this.pixelSize}, sampler=${this.sampler})"
 }
