@@ -29,6 +29,10 @@ data class SampleBasis<T>(val numSamples: Int,
         : this(basis!!.numSamples, basis.numSets, basis.points)
 
     init {
+        require(numSamples > 0) {
+            "The number of samples must be positive."
+        }
+
         require(this.points.size == (this.numSamples * this.numSets)) {
             "The number of points does not match the basis specification: " +
             "$this.samples.size is not: ${this.numSamples * this.numSets}."

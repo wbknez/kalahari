@@ -54,8 +54,8 @@ fun createShuffledIndices(numSamples: Int, numSets: Int): IntArray {
  * @property numSets
  *           The number of sample sets.
  */
-class Sampler<T>(private val basis: SampleBasis<T>,
-                 private val indices: IntArray) : Cloneable {
+class Sampler<T : Any>(private val basis: SampleBasis<T>,
+                       private val indices: IntArray) : Cloneable {
 
     companion object {
 
@@ -217,6 +217,10 @@ class Sampler<T>(private val basis: SampleBasis<T>,
 
         return this.basis.points[sampleIndex]
     }
+
+    override fun toString(): String =
+        "Sampler(numSamples=${this.numSamples}, numSets=${this.numSets}, "+
+        "type=${this.basis.points[0]::class.java.simpleName})"
 }
 
 
