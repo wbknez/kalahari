@@ -39,7 +39,7 @@ class ImageOutput(val basePath: Path, val format: Format) :
         /**
          * Represents a Joint Photographic Experts Group image.
          */
-        JPG("jpeg"),
+        JPG("jpg"),
 
         /**
          * Represents a Joint Photographic Experts Group image.
@@ -56,6 +56,43 @@ class ImageOutput(val basePath: Path, val format: Format) :
          */
         TIFF("tiff")
     }
+
+    companion object {
+
+        /**
+         * Returns the specified file path without its extension as a path
+         * object.
+         *
+         * @param fileStr
+         *        The file path to use.
+         * @return A path without an extension.
+         */
+        fun getExtensionlessPathFromString(fileStr: String): Path =
+            Paths.get(fileStr.substring(0, fileStr.lastIndexOf('.')))
+
+        /**
+         * Searches for and returns the image format associated with the
+         * extension of the specified file path.
+         *
+         * @param fileStr
+         *        The file path to use.
+         * @return An image format.
+         */
+        fun getFormatFromString(fileStr: String): Format =
+            Format.valueOf(
+                fileStr.substring(fileStr.lastIndexOf('.') + 1).toUpperCase()
+            )
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param filePath
+     *        The image file path to use.
+     */
+    constructor(filePath: String) :
+        this(getExtensionlessPathFromString(filePath),
+             getFormatFromString(filePath))
 
     private var img: BufferedImage? = null
 
