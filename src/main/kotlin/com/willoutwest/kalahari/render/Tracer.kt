@@ -2,7 +2,8 @@ package com.willoutwest.kalahari.render
 
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.EpsilonTable
-import com.willoutwest.kalahari.math.Ray3
+import com.willoutwest.kalahari.math.Point3
+import com.willoutwest.kalahari.math.intersect.BoundingSphere
 import com.willoutwest.kalahari.render.orders.NaturalDrawingOrder
 import com.willoutwest.kalahari.scene.Scene
 
@@ -27,5 +28,54 @@ class Tracer(@JvmField var drawOrder: DrawingOrder = NaturalDrawingOrder(),
              @JvmField val hEps: EpsilonTable = EpsilonTable(0.0001f),
              @JvmField val sEps: EpsilonTable = EpsilonTable(0.0001f)) {
 
-    fun trace(ray: Ray3, scene: Scene, depth: Int): Color3 = Color3()
+    private val red    = Color3(1f, 0f, 0f)
+    private val orange = Color3(1f, 0.7f, 0f)
+    private val yellow = Color3(1f, 1f, 0f)
+    private val green  = Color3(0f, 0.7f, 0f)
+    private val blue   = Color3(0f, 0f, 1f)
+    private val white  = Color3(1f, 1f, 1f)
+
+
+    private val bsRed    = BoundingSphere(101f, 150f, 150f, 0f)
+    private val bsYellow = BoundingSphere(101f, 250f, 250f, 0f)
+    private val bsBlue   = BoundingSphere(101f, 350f, 350f, 0f)
+
+    /**
+     *
+     *
+     * @param ray
+     *
+     * @param scene
+     *
+     * @return
+     */
+    fun trace(coords: Coords, scene: Scene): Color3 {
+        val point = Point3(coords.x.toFloat(), coords.y.toFloat(), 0f)
+
+        val inRed    = this.bsRed.contains(point)
+        val inYellow = this.bsYellow.contains(point)
+        val inBlue   = this.bsBlue.contains(point)
+
+        val inOrange = inRed && inYellow
+        val inGreen  = inYellow && inBlue
+
+        if(inOrange) {
+            return this.orange
+        }
+        else if(inGreen) {
+            return this.green
+        }
+        else if(inRed) {
+            return this.red
+        }
+        else if(inYellow) {
+            return this.yellow
+        }
+        else if(inBlue) {
+            return this.blue
+        }
+        else {
+            return this.white
+        }
+    }
 }
