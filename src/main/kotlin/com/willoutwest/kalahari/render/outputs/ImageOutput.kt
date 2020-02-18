@@ -97,8 +97,9 @@ class ImageOutput(val basePath: Path, val format: Format) :
     private var img: BufferedImage? = null
 
     override fun onComplete() {
-        val imgPath = Paths.get(this.basePath.toString(), ".",
-                                this.format.extension)
+        val imgPath = Paths.get(
+            "${this.basePath.toString()}.${this.format.extension}"
+        )
         ImageIO.write(this.img!!, this.format.extension, imgPath.toFile())
     }
 
