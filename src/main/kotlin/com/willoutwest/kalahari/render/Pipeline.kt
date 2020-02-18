@@ -1,6 +1,10 @@
 package com.willoutwest.kalahari.render
 
 import com.willoutwest.kalahari.scene.Scene
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.toObservable
+import java.util.logging.Level
+import java.util.logging.Logger
 
 /**
  * Represents a mechanism to apply a series of sequential transformations to
@@ -11,9 +15,19 @@ import com.willoutwest.kalahari.scene.Scene
  * @property model
  *           The thread pool to use for parallelism (if any).
  */
-class Pipeline(private val model: ThreadingModel) {
+class Pipeline(numThreads: Int) : AutoCloseable {
+
+    companion object {
+
+        /**
+         * The logging utility.
+         */
+        private val logger = Logger.getLogger(Pipeline::class.java.name)
+    }
 
     private val listeners: MutableList<PipelineListener> = mutableListOf()
+
+    private val model: ThreadingModel = ThreadingModel(numThreads)
 
     /**
      * Adds the specified listener to this pipeline's collection of listeners.
@@ -23,6 +37,10 @@ class Pipeline(private val model: ThreadingModel) {
      */
     fun addListener(listener: PipelineListener) {
         this.listeners.add(listener)
+    }
+
+    override fun close() {
+        this.model.close()
     }
 
     /**
@@ -36,5 +54,28 @@ class Pipeline(private val model: ThreadingModel) {
      *        The ray tracing function to use.
      */
     fun submit(scene: Scene, tracer: Tracer) {
+        tracer.drawOrder.orderOf(scene.viewport.bounds).toObservable()
+            .doOnNext{ logger.log(Level.INFO, "Tracing pixel: {}.", it) }
+            .doOnComplete{
+                logger.log(Level.INFO, "Traced {} pixels.",
+                           scene.viewport.bounds.area)
+                logger.log(Level.INFO, "Rendering complete!")
+            }
+            .flatMap{
+                Observable.just(Pixel(it.x, it.y, tracer.trace(it, scene).rgb))
+            }
+            .doOnNext{
+                logger.log(Level.INFO, "Pixel traced: {}.", it)
+            }
+            .subscribe(
+                { pixel: Pixel -> this.listeners.forEach{ it.onEmit(pixel) } },
+                {
+                    t: Throwable -> throw PipelineException(
+                    "Caught in the main pipeline during rendering.", t
+                    )
+                },
+                { this.listeners.forEach{ it.onComplete() } },
+                { this.listeners.forEach{ it.onStart(scene.viewport.bounds) } }
+            )
     }
 }
