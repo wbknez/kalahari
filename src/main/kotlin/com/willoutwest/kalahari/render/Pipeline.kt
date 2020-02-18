@@ -55,9 +55,9 @@ class Pipeline(numThreads: Int) : AutoCloseable {
      */
     fun submit(scene: Scene, tracer: Tracer) {
         tracer.drawOrder.orderOf(scene.viewport.bounds).toObservable()
-            .doOnNext{ logger.log(Level.INFO, "Tracing pixel: {}.", it) }
+            .doOnNext{ logger.log(Level.INFO, "Tracing pixel: {0}.", it) }
             .doOnComplete{
-                logger.log(Level.INFO, "Traced {} pixels.",
+                logger.log(Level.INFO, "Traced {0} pixels.",
                            scene.viewport.bounds.area)
                 logger.log(Level.INFO, "Rendering complete!")
             }
@@ -65,7 +65,7 @@ class Pipeline(numThreads: Int) : AutoCloseable {
                 Observable.just(Pixel(it.x, it.y, tracer.trace(it, scene).rgb))
             }
             .doOnNext{
-                logger.log(Level.INFO, "Pixel traced: {}.", it)
+                logger.log(Level.INFO, "Pixel traced: {0}.", it)
             }
             .subscribe(
                 { pixel: Pixel -> this.listeners.forEach{ it.onEmit(pixel) } },
