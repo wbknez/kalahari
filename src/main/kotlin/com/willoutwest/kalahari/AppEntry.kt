@@ -1,10 +1,17 @@
 package com.willoutwest.kalahari
 
+import com.willoutwest.kalahari.asset.AssetCache
+import com.willoutwest.kalahari.render.Pipeline
+import com.willoutwest.kalahari.render.Tracer
+import com.willoutwest.kalahari.render.outputs.ImageOutput
+import com.willoutwest.kalahari.scene.Scene
 import com.willoutwest.kalahari.script.ScriptingLibrary
+import com.willoutwest.kalahari.util.use
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 import com.xenomachina.argparser.mainBody
 import org.luaj.vm2.Globals
+import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.JsePlatform
 import java.util.logging.Level
 import java.util.logging.LogManager
@@ -23,6 +30,10 @@ sealed class AppEntry {
 
         val file by parser.storing(
             "-f", "--file", help = "a Lua file that describes a scene"
+        )
+
+        val output by parser.storing(
+            "-o", "--output", help = "the output image file"
         )
 
         val quiet by parser.flagging(
@@ -107,10 +118,24 @@ sealed class AppEntry {
             ArgParser(args).parseInto(::Arguments).run {
                 initLogging(this.quiet, this.verbose)
 
-                val globals = initScriptingEnvironment()
-                val chunk = globals.loadfile(this.file)
+                val assets   = AssetCache()
+                val pipeline = Pipeline(this.threads)
 
-                chunk.call()
+                arrayOf(assets, pipeline).use {
+                    pipeline.addListener(ImageOutput(this.output))
+
+                    val globals = initScriptingEnvironment()
+                    val chunk   = globals.loadfile(this.file)
+
+                    val scene  = Scene()
+                    val tracer = Tracer()
+
+                    globals.set("scene",  CoerceJavaToLua.coerce(scene))
+                    globals.set("tracer", CoerceJavaToLua.coerce(tracer))
+
+                    chunk.call()
+                    pipeline.submit(scene, tracer)
+                }
             }
         }
     }
