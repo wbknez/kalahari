@@ -26,4 +26,34 @@ data class Intersection(@JvmField var depth: Int = 0,
                         @JvmField var obj: Any? = null,
                         @JvmField var reversed: Boolean = false,
                         @JvmField val worldPosition: Point3 = Point3())
-    : Cloneable
+    : Cloneable {
+
+    /**
+     * Constructor.
+     *
+     * @param record
+     *        The intersection record to copy from.
+     */
+    constructor(record: Intersection?)
+        : this(record!!.depth, record.localPosition.clone(),
+               record.normal.clone(), record.obj, record.reversed,
+               record.worldPosition.clone())
+
+    override fun clone(): Intersection = Intersection(this)
+
+    /**
+     *
+     *
+     * @param record
+     *        The record to copy from.
+     */
+    fun set(record: Intersection) {
+        this.depth    = record.depth
+        this.obj      = record.obj
+        this.reversed = record.reversed
+
+        this.localPosition.set(record.localPosition)
+        this.normal.set(record.normal)
+        this.worldPosition.set(record.worldPosition)
+    }
+}
