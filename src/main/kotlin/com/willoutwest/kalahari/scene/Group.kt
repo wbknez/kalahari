@@ -41,8 +41,8 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
 
     override fun clone(): Group = Group(this)
 
-    override fun intersect(ray: Ray3, tMin: FloatContainer,
-                           record: Intersection, eps: EpsilonTable): Boolean {
+    override fun intersects(ray: Ray3, tMin: FloatContainer,
+                            record: Intersection, eps: EpsilonTable): Boolean {
         if(!this.enabled || this.children.isEmpty()) {
             return false
         }
@@ -58,7 +58,7 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
         var minTime = Float.MAX_VALUE
 
         this.children.forEach {
-            if(it.intersect(ray, tMin, record, eps) && tMin.value <= minTime) {
+            if(it.intersects(ray, tMin, record, eps) && tMin.value <= minTime) {
                 hit     = true
                 minTime = tMin.value
 

@@ -22,13 +22,13 @@ class Geometric(name: String, private val surface: Surface)
 
     override fun clone(): Geometric = Geometric(this)
 
-    override fun intersect(ray: Ray3, tMin: FloatContainer,
-                           record: Intersection, eps: EpsilonTable): Boolean {
+    override fun intersects(ray: Ray3, tMin: FloatContainer,
+                            record: Intersection, eps: EpsilonTable): Boolean {
         if(this.bounds?.intersects(ray) == false) {
             return false
         }
 
-        return when(this.surface.intersect(ray, tMin, record, eps)) {
+        return when(this.surface.intersects(ray, tMin, record, eps)) {
             false -> false
             true  -> {
                 record.obj = this

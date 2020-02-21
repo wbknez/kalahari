@@ -27,6 +27,6 @@ interface Intersectable {
      *        successful intersection.
      * @return Whether or not an intersection occurred.
      */
-    fun intersect(ray: Ray3, tMin: FloatContainer, record: Intersection,
-                  eps: EpsilonTable): Boolean
+    fun intersects(ray: Ray3, tMin: FloatContainer, record: Intersection,
+                   eps: EpsilonTable): Boolean
 }
