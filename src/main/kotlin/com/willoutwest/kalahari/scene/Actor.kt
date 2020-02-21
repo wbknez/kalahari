@@ -33,7 +33,7 @@ interface Actor : Cloneable, Intersectable {
     var parent: Actor?
 
     /**
-     * Returns a clone of this actor.
+     * Returns a copy of this actor.
      *
      * The actual semantics depend on the deriving class this method is
      * called on.  Because many scenegraph elements are immutable, cloned
