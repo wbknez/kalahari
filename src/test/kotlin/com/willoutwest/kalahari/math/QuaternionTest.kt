@@ -309,5 +309,66 @@ class QuaternionTest : ShouldSpec() {
                 }
             }
         }
+
+        "Converting a quaternion to a matrix" {
+            should("produce a 3x3 matrix only") {
+                assertAll(Gen.quaternion()) { quat: Quaternion ->
+                    val mag    = quat.magnitude
+                    val scalar = when(mag == 1f) {
+                        false -> 2f / mag
+                        true  -> 2f
+                    }
+
+                    val xs = quat.x * scalar
+                    val ys = quat.y * scalar
+                    val zs = quat.z * scalar
+                    val ws = quat.w * scalar
+
+                    val xx = quat.x * xs
+                    val xy = quat.x * ys
+                    val xz = quat.x * zs
+                    val xw = quat.x * ws
+                    val yy = quat.y * ys
+                    val yz = quat.y * zs
+                    val yw = quat.y * ws
+                    val zz = quat.z * zs
+                    val zw = quat.z * ws
+
+                    val expected = Matrix4()
+
+                    expected.t00 = 1.0f - (yy + zz)
+                    expected.t01 = (xy - zw)
+                    expected.t02 = (xz + yw)
+                    expected.t10 = (xy + zw)
+                    expected.t11 = 1.0f - (xx + zz)
+                    expected.t12 = (yz - xw)
+                    expected.t20 = (xz - yw)
+                    expected.t21 = (yz + xw)
+                    expected.t22 = 1.0f - (xx + yy)
+
+                    expected.t03 = 0f
+                    expected.t13 = 0f
+                    expected.t23 = 0f
+                    expected.t30 = 0f
+                    expected.t31 = 0f
+                    expected.t32 = 0f
+                    expected.t33 = 1f
+
+                    quat.toMatrix().shouldBe(expected)
+                }
+            }
+
+            should("produce the correct result to an example") {
+                val quat = Quaternion(0.7071f, 0f, 0f, 0.7071f)
+                val expected = Matrix4(
+                    1f, 0f, 0f, 0f,
+                    0f, 0f, -1f, 0f,
+                    0f, 1f, 0f, 0f,
+                    0f, 0f, 0f, 1f
+                )
+
+                quat.toMatrix().shouldBe(expected, 0.0001f)
+            }
+        }
     }
 }

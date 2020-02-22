@@ -12,7 +12,20 @@ package com.willoutwest.kalahari.math
 class Quaternion(x: Float = 0.0f,
                  y: Float = 0.0f,
                  z: Float = 0.0f,
-                 w: Float = 0.0f) : Cloneable, Tuple4(x, y, z, w) {
+                 w: Float = 1.0f) : Cloneable, Tuple4(x, y, z, w) {
+
+    companion object {
+
+        /**
+         * Represents the identity quaternion.
+         */
+        val Identity = Quaternion(0f, 0f, 0f, 1f)
+
+        /**
+         * Represents the zero quaternion.
+         */
+        val Zero = Quaternion(0f, 0f, 0f, 0f)
+    }
 
     val magnitude: Float
         get() = MathUtils.sqrt(this.magnitudeSquared)
@@ -347,5 +360,55 @@ class Quaternion(x: Float = 0.0f,
                  oldY * quat.y - oldZ * quat.z
 
         return this
+    }
+
+    /**
+     * Converts this quaternion to a rotation matrix.
+     *
+     * @return A rotation matrix.
+     */
+    fun toMatrix(): Matrix4 = toMatrix(Matrix4())
+
+    /**
+     * Converts this quaternion to a rotation matrix and stores the result in
+     * the specified matrix.
+     *
+     * @param store
+     *        The matrix to store the result in.
+     * @return A reference to store for easy chaining.
+     */
+    fun toMatrix(store: Matrix4): Matrix4 {
+        val mag = this.magnitude
+        val scalar = when(mag == 1f) {
+            false -> 2f / mag
+            true  -> 2f
+        }
+
+        val xs = this.x * scalar
+        val ys = this.y * scalar
+        val zs = this.z * scalar
+        val ws = this.w * scalar
+
+        val xx = this.x * xs
+        val xy = this.x * ys
+        val xz = this.x * zs
+        val xw = this.x * ws
+        val yy = this.y * ys
+        val yz = this.y * zs
+        val yw = this.y * ws
+        val zz = this.z * zs
+        val zw = this.z * ws
+
+        store.t00 = 1.0f - (yy + zz)
+        store.t01 = (xy - zw)
+        store.t02 = (xz + yw)
+        store.t10 = (xy + zw)
+        store.t11 = 1.0f - (xx + zz)
+        store.t12 = (yz - xw)
+        store.t20 = (xz - yw)
+        store.t21 = (yz + xw)
+        store.t22 = 1.0f - (xx + yy)
+
+        return store
     }
 }
