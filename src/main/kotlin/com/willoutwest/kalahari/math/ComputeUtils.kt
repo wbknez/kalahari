@@ -12,7 +12,7 @@ import com.willoutwest.kalahari.util.storage.ThreadLocalStorage
  * @property localCache
  *           A thread-specific computing cache.
  */
-sealed class CacheUtils {
+sealed class ComputeUtils {
 
     companion object {
 

@@ -1,6 +1,6 @@
 package com.willoutwest.kalahari.scene
 
-import com.willoutwest.kalahari.math.CacheUtils
+import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
 import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Ray3
@@ -53,7 +53,7 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
             return false
         }
 
-        val cache   = CacheUtils.localCache
+        val cache   = ComputeUtils.localCache
         val hRecord = cache.records.borrow()
 
         var hit     = false

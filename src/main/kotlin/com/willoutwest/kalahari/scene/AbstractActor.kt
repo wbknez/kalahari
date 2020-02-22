@@ -1,6 +1,6 @@
 package com.willoutwest.kalahari.scene
 
-import com.willoutwest.kalahari.math.CacheUtils
+import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.BoundingVolume
@@ -34,7 +34,7 @@ abstract class AbstractActor(override val name: String) : Actor {
     }
 
     override fun rotate(angle: Float, axis: Vector3): Actor {
-        val cache = CacheUtils.localCache
+        val cache = ComputeUtils.localCache
         val quat  = cache.quats.borrow()
 
         quat.setFromAxis(angle, axis)
@@ -46,7 +46,7 @@ abstract class AbstractActor(override val name: String) : Actor {
     }
 
     override fun rotate(roll: Float, pitch: Float, yaw: Float): Actor {
-        val cache = CacheUtils.localCache
+        val cache = ComputeUtils.localCache
         val quat  = cache.quats.borrow()
 
         quat.setFromEuler(roll, pitch, yaw)
