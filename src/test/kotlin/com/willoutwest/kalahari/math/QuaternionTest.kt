@@ -264,8 +264,8 @@ class QuaternionTest : ShouldSpec() {
             should("convert from pitch, roll, and yaw") {
                 assertAll(Gen.smallFloats(), Gen.smallFloats(),
                           Gen.smallFloats()) { a: Float, b: Float, c: Float ->
-                    val pitch = a * MathUtils.TwoPi
-                    val roll  = b * MathUtils.TwoPi
+                    val roll  = a * MathUtils.TwoPi
+                    val pitch = b * MathUtils.TwoPi
                     val yaw   = c * MathUtils.TwoPi
 
                     val cosP = MathUtils.cos(pitch * 0.5f)
@@ -275,7 +275,7 @@ class QuaternionTest : ShouldSpec() {
                     val cosY = MathUtils.cos(yaw * 0.5f)
                     val sinY = MathUtils.sin(yaw * 0.5f)
 
-                    Quaternion(pitch, roll, yaw).shouldBe(
+                    Quaternion(roll, pitch, yaw).shouldBe(
                         cosY * sinR * cosP - sinY * cosR * sinP,
                         cosY * cosR * sinP + sinY * sinR * cosP,
                         sinY * cosR * cosP - cosY * sinR * sinP,
@@ -285,7 +285,7 @@ class QuaternionTest : ShouldSpec() {
             }
 
             should("produce the correct result to an example") {
-                Quaternion(0f, MathUtils.toRadians(90f), 0f)
+                Quaternion(MathUtils.toRadians(90f), 0f, 0f)
                     .shouldBe(0.7071f, 0f, 0f, 0.7071f, 0.00001f)
             }
         }

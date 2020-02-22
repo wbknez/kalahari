@@ -49,15 +49,15 @@ class Quaternion(x: Float = 0.0f,
     /**
      * Constructor.
      *
-     * @param pitch
-     *        The angle of rotation in radians around the y-axis.
      * @param roll
      *        The angle of rotation in radians around the x-axis.
+     * @param pitch
+     *        The angle of rotation in radians around the y-axis.
      * @param yaw
      *        The angle of rotation in radians around the z-axis.
      */
-    constructor(pitch: Float, roll: Float, yaw: Float) : this() {
-        this.setFromEuler(pitch, roll, yaw)
+    constructor(roll: Float, pitch: Float, yaw: Float) : this() {
+        this.setFromEuler(roll, pitch, yaw)
     }
 
     /**
@@ -277,15 +277,15 @@ class Quaternion(x: Float = 0.0f,
      * This method follows the "body 3-2-1" sequence of composition by first
      * applying yaw, then pitch, and finally roll.
      *
-     * @param pitch
-     *        The angle of rotation in radians around the y-axis.
      * @param roll
      *        The angle of rotation in radians around the x-axis.
+     * @param pitch
+     *        The angle of rotation in radians around the y-axis.
      * @param yaw
      *        The angle of rotation in radians around the z-axis.
      * @return A reference to this quaternion for easy chaining.
      */
-    fun setFromEuler(pitch: Float, roll: Float, yaw: Float): Quaternion {
+    fun setFromEuler(roll: Float, pitch: Float, yaw: Float): Quaternion {
         val cosP = MathUtils.cos(pitch * 0.5f)
         val sinP = MathUtils.sin(pitch * 0.5f)
         val cosR = MathUtils.cos(roll * 0.5f)
