@@ -2,7 +2,9 @@ package com.willoutwest.kalahari.scene
 
 import com.willoutwest.kalahari.math.CacheUtils
 import com.willoutwest.kalahari.math.EpsilonTable
+import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Ray3
+import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.util.FloatContainer
 
@@ -74,4 +76,22 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
 
         return hit
     }
+
+    override fun move(x: Float, y: Float, z: Float): Group =
+        super.move(x, y, z) as Group
+
+    override fun move(vec: Vector3): Group = super.move(vec) as Group
+
+    override fun rotate(angle: Float, axis: Vector3): Group =
+        super.rotate(angle, axis) as Group
+
+    override fun rotate(roll: Float, pitch: Float, yaw: Float): Group =
+        super.rotate(roll, pitch, yaw) as Group
+
+    override fun rotate(quat: Quaternion): Group = super.rotate(quat) as Group
+
+    override fun scale(x: Float, y: Float, z: Float): Group =
+        super.scale(x, y, z) as Group
+
+    override fun scale(vec: Vector3): Group = super.scale(vec) as Group
 }

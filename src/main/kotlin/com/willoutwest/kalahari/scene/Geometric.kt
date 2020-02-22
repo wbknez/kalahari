@@ -1,7 +1,9 @@
 package com.willoutwest.kalahari.scene
 
 import com.willoutwest.kalahari.math.EpsilonTable
+import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Ray3
+import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.util.FloatContainer
 
@@ -36,4 +38,23 @@ class Geometric(name: String, private val surface: Surface)
             }
         }
     }
+
+    override fun move(x: Float, y: Float, z: Float): Geometric =
+        super.move(x, y, z) as Geometric
+
+    override fun move(vec: Vector3): Geometric = super.move(vec) as Geometric
+
+    override fun rotate(angle: Float, axis: Vector3): Geometric =
+        super.rotate(angle, axis) as Geometric
+
+    override fun rotate(roll: Float, pitch: Float, yaw: Float): Geometric =
+        super.rotate(roll, pitch, yaw) as Geometric
+
+    override fun rotate(quat: Quaternion): Geometric =
+        super.rotate(quat) as Geometric
+
+    override fun scale(x: Float, y: Float, z: Float): Geometric =
+        super.scale(x, y, z) as Geometric
+
+    override fun scale(vec: Vector3): Geometric = super.scale(vec) as Geometric
 }
