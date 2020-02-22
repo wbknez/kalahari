@@ -14,7 +14,7 @@ import com.willoutwest.kalahari.scene.camera.Viewport
 class Scene {
 
     @JvmField
-    var root: Intersectable? = null
+    var root: Group = Group("root")
 
     @JvmField
     val viewport: Viewport = Viewport()

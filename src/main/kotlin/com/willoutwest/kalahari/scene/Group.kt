@@ -15,7 +15,7 @@ import com.willoutwest.kalahari.util.FloatContainer
  */
 class Group(name: String) : AbstractActor(name), Actor, Cloneable {
 
-    private val children: MutableList<Actor> = mutableListOf()
+    private val children = mutableListOf<Actor>()
 
     /**
      * Constructor.
