@@ -75,7 +75,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The z-axis component to cross with.
      * @return The cross product.
      */
-    fun cross(x: Float, y: Float, z: Float): Vector3 =
+    open fun cross(x: Float, y: Float, z: Float): Vector3 =
         Vector3(this.y * z - this.z * y,
                 this.z * x - this.x * z,
                 this.x * y - this.y * x)
@@ -87,7 +87,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to cross with.
      * @return The cross product.
      */
-    fun cross(vec: Vector3): Vector3 =
+    open fun cross(vec: Vector3): Vector3 =
         Vector3(this.y * vec.z - this.z * vec.y,
                 this.z * vec.x - this.x * vec.z,
                 this.x * vec.y - this.y * vec.x)
@@ -104,7 +104,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The z-axis component to cross with.
      * @return A reference to this vector for easy chaining.
      */
-    fun crossSelf(x: Float, y: Float, z: Float): Vector3 {
+    open fun crossSelf(x: Float, y: Float, z: Float): Vector3 {
         val cX = this.y * z - this.z * y
         val cY = this.z * x - this.x * z
         val cZ = this.x * y - this.y * x
@@ -124,7 +124,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to cross with.
      * @return A reference to this vector for easy chaining.
      */
-    fun crossSelf(vec: Vector3): Vector3 {
+    open fun crossSelf(vec: Vector3): Vector3 {
         val cX = this.y * vec.z - this.z * vec.y
         val cY = this.z * vec.x - this.x * vec.z
         val cZ = this.x * vec.y - this.y * vec.x
@@ -249,7 +249,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *
      * @return An inverted vector.
      */
-    fun invert(): Vector3 =
+    open fun invert(): Vector3 =
         Vector3(MathUtils.safeInverse(this.x),
                 MathUtils.safeInverse(this.y),
                 MathUtils.safeInverse(this.z))
@@ -260,7 +260,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *
      * @return A reference to this vector for easy chaining.
      */
-    fun invertSelf(): Vector3 {
+    open fun invertSelf(): Vector3 {
         this.x = MathUtils.safeInverse(this.x)
         this.y = MathUtils.safeInverse(this.y)
         this.z = MathUtils.safeInverse(this.z)
@@ -405,7 +405,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The z-axis component to add.
      * @return A reference to this vector for easy chaining.
      */
-    fun plusSelf(x: Float, y: Float, z: Float): Vector3 {
+    open fun plusSelf(x: Float, y: Float, z: Float): Vector3 {
         this.x += x
         this.y += y
         this.z += z

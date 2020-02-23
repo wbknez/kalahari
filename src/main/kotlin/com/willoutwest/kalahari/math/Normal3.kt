@@ -34,8 +34,14 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
     override fun divSelf(scalar: Float): Normal3 =
         super.divSelf(scalar) as Normal3
 
+    override fun minus(x: Float, y: Float, z: Float): Normal3 =
+        Normal3(this.x - x, this.y - y, this.z - z)
+
     override operator fun minus(vec: Vector3): Normal3 =
         Normal3(this.x - vec.x, this.y - vec.y, this.z - vec.z)
+
+    override fun minusSelf(x: Float, y: Float, z: Float): Normal3 =
+        super.minusSelf(x, y, z) as Normal3
 
     override fun minusSelf(vec: Vector3): Normal3 =
         super.minusSelf(vec) as Normal3
@@ -61,6 +67,9 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
 
     override operator fun plus(vec: Vector3): Normal3 =
         Normal3(this.x + vec.x, this.y + vec.y, this.z + vec.z)
+
+    override fun plusSelf(x: Float, y: Float, z: Float): Normal3 =
+        super.plusSelf(x, y, z) as Normal3
 
     override fun plusSelf(vec: Vector3): Normal3 =
         super.plusSelf(vec) as Normal3
