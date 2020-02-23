@@ -139,7 +139,6 @@ class Point3Test : ShouldSpec() {
             }
         }
 
-
         "Subtracting a point from another" {
             should("subtract each point's components.") {
                 assertAll(Gen.point3(), Gen.point3()) {

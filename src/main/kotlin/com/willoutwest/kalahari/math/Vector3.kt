@@ -64,6 +64,23 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     override fun clone(): Vector3 = Vector3(this)
 
     /**
+     * Computes the cross product of this vector with the specified x-, y-,
+     * and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to cross with.
+     * @param y
+     *        The y-axis component to cross with.
+     * @param z
+     *        The z-axis component to cross with.
+     * @return The cross product.
+     */
+    fun cross(x: Float, y: Float, z: Float): Vector3 =
+        Vector3(this.y * z - this.z * y,
+                this.z * x - this.x * z,
+                this.x * y - this.y * x)
+
+    /**
      * Computes the cross product of this vector with the specified one.
      *
      * @param vec
@@ -74,6 +91,30 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         Vector3(this.y * vec.z - this.z * vec.y,
                 this.z * vec.x - this.x * vec.z,
                 this.x * vec.y - this.y * vec.x)
+
+    /**
+     * Computes the cross product of this vector with the specified x-, y-,
+     * and z-axis components and modifies this vector as a result.
+     *
+     * @param x
+     *        The x-axis component to cross with.
+     * @param y
+     *        The y-axis component to cross with.
+     * @param z
+     *        The z-axis component to cross with.
+     * @return A reference to this vector for easy chaining.
+     */
+    fun crossSelf(x: Float, y: Float, z: Float): Vector3 {
+        val cX = this.y * z - this.z * y
+        val cY = this.z * x - this.x * z
+        val cZ = this.x * y - this.y * x
+
+        this.x = cX
+        this.y = cY
+        this.z = cZ
+
+        return this
+    }
 
     /**
      * Computes the cross product of this vector with the specified one and
@@ -96,6 +137,21 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     }
 
     /**
+     * Computes the distance between this vector and the specified x-, y-,
+     * and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @param z
+     *        The z-axis component to use.
+     * @return The distance between a vector and three components.
+     */
+    fun distanceTo(x: Float, y: Float, z: Float): Float =
+        MathUtils.sqrt(this.distanceSquaredTo(x, y, z))
+
+    /**
      * Computes the distance between this vector and the specified one.
      *
      * @param vec
@@ -104,6 +160,26 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      */
     fun distanceTo(vec: Vector3): Float =
         MathUtils.sqrt(this.distanceSquaredTo(vec))
+
+    /**
+     * Computes the squared distance between this vector and the specified x-,
+     * y-, and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @param z
+     *        The z-axis component to use.
+     * @return The squared distance between a vector and three components.
+     */
+    fun distanceSquaredTo(x: Float, y: Float, z: Float): Float {
+        val dX = this.x - x
+        val dY = this.y - y
+        val dZ = this.z - z
+
+        return dX * dX + dY * dY + dZ * dZ
+    }
 
     /**
      * Computes the squared distance between this vector and the specified one.
@@ -192,8 +268,42 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return this
     }
 
+    /**
+     * Subtracts this vector from the specified x-, y-, and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @param z
+     *        The z-axis component to subtract.
+     * @return The difference between a vector and three components.
+     */
+    open fun minus(x: Float, y: Float, z: Float): Vector3 =
+        Vector3(this.x - x, this.y - y, this.z - z)
+
     open operator fun minus(vec: Vector3): Vector3 =
         Vector3(this.x - vec.x, this.y - vec.y, this.z - vec.z)
+
+    /**
+     * Subtracts this vector from the specified x-, y-, and z-axis components
+     * and modifies this vector as a result.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @param z
+     *        The z-axis component to subtract.
+     * @return A reference to this vector for easy chaining.
+     */
+    open fun minusSelf(x: Float, y: Float, z: Float): Vector3 {
+        this.x -= x
+        this.y -= y
+        this.z -= z
+
+        return this
+    }
 
     /**
      * Subtracts this vector from the specified vector and also modifies this
@@ -266,8 +376,42 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return this
     }
 
+    /**
+     * Adds this vector to the specified x-, y-, and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @return The sum of a vector and three components.
+     */
+    open fun plus(x: Float, y: Float, z: Float): Vector3 =
+        Vector3(this.x + x, this.y + y, this.z + z)
+
     open operator fun plus(vec: Vector3): Vector3 =
         Vector3(this.x + vec.x, this.y + vec.y, this.z + vec.z)
+
+    /**
+     * Adds this vector to the specified x-, y-, and z-axis components and
+     * modifies this vector as a result.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @return A reference to this vector for easy chaining.
+     */
+    fun plusSelf(x: Float, y: Float, z: Float): Vector3 {
+        this.x += x
+        this.y += y
+        this.z += z
+
+        return this
+    }
 
     /**
      * Adds this vector with the specified one and also modifies this vector

@@ -62,6 +62,43 @@ class Vector3Test : ShouldSpec() {
 
     init {
 
+        "Crossing a vector with three components" {
+            should("cross all components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vec: Vector3, x: Float, y: Float, z: Float ->
+
+                    vec.cross(x, y, z).shouldBe(vec.y * z - vec.z * y,
+                                                vec.z * x - vec.x * z,
+                                                vec.x * y - vec.y * x)
+                }
+            }
+
+            should("be orthogonal when they are orthogonal") {
+                forall(
+                    row(Vector3.X, Vector3.Y,  Vector3.Z),
+                    row(Vector3.X, Vector3.Z, -Vector3.Y),
+                    row(Vector3.Y, Vector3.X, -Vector3.Z),
+                    row(Vector3.Y, Vector3.Z,  Vector3.X),
+                    row(Vector3.Z, Vector3.X,  Vector3.Y),
+                    row(Vector3.Z, Vector3.Y, -Vector3.X)
+                ) { a: Vector3, b: Vector3, c: Vector3 ->
+                    a.cross(b.x, b.y, b.z).shouldBe(c)
+                }
+            }
+
+            should("be zero when they are parallel") {
+                forall(
+                    row(Vector3.X, Vector3.X),
+                    row(Vector3.Y, Vector3.Y),
+                    row(Vector3.Z, Vector3.Z)
+                ) { a: Vector3, b: Vector3 ->
+
+                    a.cross(b.x, b.y, b.z).shouldBe(Vector3.Zero)
+                }
+            }
+        }
+
         "Crossing a vector with another" {
             should("cross each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
@@ -95,6 +132,45 @@ class Vector3Test : ShouldSpec() {
                 ) { a: Vector3, b: Vector3 ->
 
                     a.cross(b).shouldBe(Vector3.Zero)
+                }
+            }
+        }
+
+        "Crossing a vector with three components in place" {
+            should("cross all components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vec: Vector3, x: Float, y: Float, z: Float ->
+
+                    vec.clone().crossSelf(x, y, z).shouldBe(
+                        vec.y * z - vec.z * y,
+                        vec.z * x - vec.x * z,
+                        vec.x * y - vec.y * x
+                    )
+                }
+            }
+
+            should("be orthogonal when they are orthogonal") {
+                forall(
+                    row(Vector3.X, Vector3.Y,  Vector3.Z),
+                    row(Vector3.X, Vector3.Z, -Vector3.Y),
+                    row(Vector3.Y, Vector3.X, -Vector3.Z),
+                    row(Vector3.Y, Vector3.Z,  Vector3.X),
+                    row(Vector3.Z, Vector3.X,  Vector3.Y),
+                    row(Vector3.Z, Vector3.Y, -Vector3.X)
+                ) { a: Vector3, b: Vector3, c: Vector3 ->
+                    a.clone().crossSelf(b.x, b.y, b.z).shouldBe(c)
+                }
+            }
+
+            should("be zero when they are parallel") {
+                forall(
+                    row(Vector3.X, Vector3.X),
+                    row(Vector3.Y, Vector3.Y),
+                    row(Vector3.Z, Vector3.Z)
+                ) { a: Vector3, b: Vector3 ->
+
+                    a.clone().crossSelf(b.x, b.y, b.z).shouldBe(Vector3.Zero)
                 }
             }
         }
@@ -136,6 +212,21 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Computing the distance between a vector and three components" {
+            should("be the root of the iterative product of all components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, x: Float, y: Float, z: Float ->
+
+                    vector.distanceTo(x, y, z).shouldBe(MathUtils.sqrt(
+                        MathUtils.pow(vector.x - x, 2f) +
+                        MathUtils.pow(vector.y - y, 2f) +
+                        MathUtils.pow(vector.z - z, 2f)
+                    ))
+                }
+            }
+        }
+
         "Computing the distance between two vectors" {
             should("be the root of the dot product of (a - b)") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
@@ -143,6 +234,21 @@ class Vector3Test : ShouldSpec() {
 
                     a.distanceTo(b).shouldBe(
                         MathUtils.sqrt((a - b).dot(a - b)))
+                }
+            }
+        }
+
+        "Computing the squared distance between a vector and three components" {
+            should("be the iterative product of all components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, x: Float, y: Float, z: Float ->
+
+                    vector.distanceSquaredTo(x, y, z).shouldBe(
+                        MathUtils.pow(vector.x - x, 2f) +
+                        MathUtils.pow(vector.y - y, 2f) +
+                        MathUtils.pow(vector.z - z, 2f)
+                    )
                 }
             }
         }
@@ -227,12 +333,36 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Subtracting a vector from components" {
+            should("subtract all components from each other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, x: Float, y: Float, z: Float ->
+
+                    vector.minus(x, y, z)
+                        .shouldBe(vector.x - x, vector.y - y, vector.z - z)
+                }
+            }
+        }
+
         "Subtracting a vector from another" {
             should("subtract each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
                     (a - b).shouldBe(a.x - b.x, a.y - b.y, a.z - b.z)
+                }
+            }
+        }
+
+        "Subtracting a vector from components in place" {
+            should("subtract its components from the other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, x: Float, y: Float, z: Float ->
+
+                    vector.clone().minusSelf(x, y, z)
+                        .shouldBe(vector.x - x, vector.y - y, vector.z - z)
                 }
             }
         }
@@ -291,12 +421,36 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Adding a vector from components" {
+            should("add all components to each other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, x: Float, y: Float, z: Float ->
+
+                    vector.plus(x, y, z)
+                        .shouldBe(vector.x + x, vector.y + y, vector.z + z)
+                }
+            }
+        }
+
         "Adding a vector to another" {
             should("add each vector's components") {
                 assertAll(Gen.vector3(), Gen.vector3()) {
                     a: Vector3, b: Vector3 ->
 
                     (a + b).shouldBe(a.x + b.x, a.y + b.y, a.z + b.z)
+                }
+            }
+        }
+
+        "Adding a vector from components in place" {
+            should("add its components to the other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, x: Float, y: Float, z: Float ->
+
+                    vector.clone().plusSelf(x, y, z)
+                        .shouldBe(vector.x + x, vector.y + y, vector.z + z)
                 }
             }
         }
