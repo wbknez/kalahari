@@ -92,12 +92,32 @@ class Point2Test : ShouldSpec() {
             }
         }
 
+        "Subtracting a point from components" {
+            should("subtract all components from each other") {
+                assertAll(Gen.point2(), Gen.smallFloats(), Gen.smallFloats()) {
+                    point: Point2, x: Float, y: Float ->
+
+                    point.minus(x, y).shouldBe(point.x - x, point.y - y)
+                }
+            }
+        }
+
         "Subtracting a point from another" {
             should("subtract each point's components.") {
-                assertAll(Gen.point2(), Gen.point2()) {
-                    a: Point2, b: Point2 ->
+                assertAll(Gen.point2(), Gen.point2()) { a: Point2, b: Point2 ->
 
                     (a - b).shouldBe(a.x - b.x, a.y - b.y)
+                }
+            }
+        }
+
+        "Subtracting a point from components in place" {
+            should("subtract its components from the other") {
+                assertAll(Gen.point2(), Gen.smallFloats(), Gen.smallFloats()) {
+                    point: Point2, x: Float, y: Float ->
+
+                    point.clone().minusSelf(x, y)
+                        .shouldBe(point.x - x, point.y - y)
                 }
             }
         }
@@ -130,12 +150,33 @@ class Point2Test : ShouldSpec() {
             }
         }
 
+        "Adding a point from components" {
+            should("add all components to each other") {
+                assertAll(Gen.point2(), Gen.smallFloats(), Gen.smallFloats()) {
+                    point: Point2, x: Float, y: Float ->
+
+                    point.plus(x, y).shouldBe(point.x + x, point.y + y)
+                }
+            }
+        }
+
         "Adding a point to another" {
             should("add each point's components.") {
                 assertAll(Gen.point2(), Gen.point2()) {
                     a: Point2, b: Point2 ->
 
                     (a + b).shouldBe(a.x + b.x, a.y + b.y)
+                }
+            }
+        }
+
+        "Adding a point from components in place" {
+            should("add its components to the other") {
+                assertAll(Gen.point2(), Gen.smallFloats(), Gen.smallFloats()) {
+                    point: Point2, x: Float, y: Float ->
+
+                    point.clone().plusSelf(x, y)
+                        .shouldBe(point.x + x, point.y + y)
                 }
             }
         }

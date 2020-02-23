@@ -85,8 +85,37 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
         return this
     }
 
+    /**
+     * Subtracts this point from the specified x- and y-axis components.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @return The difference between a point and two components.
+     */
+    fun minus(x: Float, y: Float): Point2 =
+        Point2(this.x - x, this.y - y)
+
     operator fun minus(point: Point2): Point2 =
         Point2(this.x - point.x, this.y - point.y)
+
+    /**
+     * Subtracts this point from the specified x- and y-axis components and
+     * also modifies this point as a result.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @return A reference to this point for easy chaining.
+     */
+    fun minusSelf(x: Float, y: Float): Point2 {
+        this.x -= x
+        this.y -= y
+
+        return this
+    }
 
     /**
      * Subtracts this point from the specified one and also modifies this
@@ -115,8 +144,37 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
         return this
     }
 
+    /**
+     * Adds this point to the specified x- and y-axis components.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @return The sum of a point and two components.
+     */
+    fun plus(x: Float, y: Float): Point2 =
+        Point2(this.x + x, this.y + y)
+
     operator fun plus(point: Point2): Point2 =
         Point2(this.x + point.x, this.y + point.y)
+
+    /**
+     * Adds this point from the specified x- and y-axis components and
+     * modifies this point as a result.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @return A reference to this point for easy chaining.
+     */
+    fun plusSelf(x: Float, y: Float): Point2 {
+        this.x += x
+        this.y += y
+
+        return this
+    }
 
     /**
      * Adds this point to the specified one and also modifies this point as a
