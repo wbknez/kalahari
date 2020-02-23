@@ -101,8 +101,42 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         return this
     }
 
+    /**
+     * Subtracts this point from the specified x-, y-, and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @param z
+     *        The z-axis component to subtract.
+     * @return The difference between a point and three components
+     */
+    fun minus(x: Float, y: Float, z: Float): Point3 =
+        Point3(this.x - x, this.y - y, this.z - z)
+
     operator fun minus(point: Point3): Point3 =
         Point3(this.x - point.x, this.y - point.y, this.z - point.z)
+
+    /**
+     * Subtracts this point from the specified x-, y-, and z-axis components
+     * and modifies this point as a result.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @param z
+     *        The z-axis component to subtract.
+     * @return A reference to this point for easy chaining.
+     */
+    fun minusSelf(x: Float, y: Float, z: Float): Point3 {
+        this.x -= x
+        this.y -= y
+        this.z -= z
+
+        return this
+    }
 
     /**
      * Subtracts this point from the specified one and also modifies this
@@ -133,8 +167,42 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         return this
     }
 
+    /**
+     * Adds this point to the specified x-, y-, and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @return The sum of a point and three components.
+     */
+    fun plus(x: Float, y: Float, z: Float): Point3 =
+        Point3(this.x + x, this.y + y, this.z + z)
+
     operator fun plus(point: Point3): Point3 =
         Point3(this.x + point.x, this.y + point.y, this.z + point.z)
+
+    /**
+     * Adds this point to the specified x-, y-, and z-axis components and
+     * modifies this point as a result.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @return A reference to this point for easy chaining.
+     */
+    fun plusSelf(x: Float, y: Float, z: Float): Point3 {
+        this.x += x
+        this.y += y
+        this.z += z
+
+        return this
+    }
 
     /**
      * Adds this point to the specified one and also modifies this point as a
