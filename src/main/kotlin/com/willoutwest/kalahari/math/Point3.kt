@@ -110,7 +110,7 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
      *        The y-axis component to subtract.
      * @param z
      *        The z-axis component to subtract.
-     * @return The difference between a point and three components
+     * @return The difference between a point and three components.
      */
     fun minus(x: Float, y: Float, z: Float): Point3 =
         Point3(this.x - x, this.y - y, this.z - z)

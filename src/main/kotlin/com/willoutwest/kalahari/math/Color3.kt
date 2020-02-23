@@ -123,6 +123,26 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
     }
 
     /**
+     * Linearly interpolates between this color and the specified red,
+     * green, and blue color components at the specified amount of
+     * parametric time.
+     *
+     * @param red
+     *        The red color component to use.
+     * @param green
+     *        The green color component to use.
+     * @param blue
+     *        The blue color component to use.
+     * @param t
+     *        The parametric time to use.
+     * @return A linearly interpolated color.
+     */
+    fun lerp(red: Float, green: Float, blue: Float, t: Float): Color3 =
+        Color3(this.red + (red - this.red) * t,
+               this.green + (green - this.green) * t,
+               this.blue + (blue - this.blue) * t)
+
+    /**
      * Linearly interpolates between this color and the specified end color
      * at the specified amount of parametric time.
      *
@@ -136,6 +156,29 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         Color3(this.red   + (end.red   - this.red)  *  t,
                this.green + (end.green - this.green) * t,
                this.blue  + (end.blue  - this.blue)  * t)
+
+    /**
+     * Linearly interpolates between this color and the specified red,
+     * green, and blue color components at the specified amount of
+     * parametric time and modifies this color as a result.
+     *
+     * @param red
+     *        The red color component to use.
+     * @param green
+     *        The green color component to use.
+     * @param blue
+     *        The blue color component to use.
+     * @param t
+     *        The parametric time to use.
+     * @return A reference to this color for easy chaining.
+     */
+    fun lerpSelf(red: Float, green: Float, blue: Float, t: Float): Color3 {
+        this.red   = this.red + (red     - this.red)   * t
+        this.green = this.green + (green - this.green) * t
+        this.blue  = this.blue + (blue   - this.blue)  * t
+
+        return this
+    }
 
     /**
      * Linearly interpolates between this color and the specified end color
@@ -156,9 +199,44 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         return this
     }
 
+    /**
+     * Subtracts this color from the specified red, green, and blue color
+     * components.
+     *
+     * @param red
+     *        The red color component to subtract.
+     * @param green
+     *        The green color component to subtract.
+     * @param blue
+     *        The blue color component to subtract.
+     * @return The difference between a color and three components.
+     */
+    fun minus(red: Float, green: Float, blue: Float): Color3 =
+        Color3(this.red - red, this.green - green, this.blue - blue)
+
     operator fun minus(color: Color3): Color3 =
         Color3(this.red - color.red, this.green - color.green,
                this.blue - color.blue)
+
+    /**
+     * Subtracts this color from the specified red, green, and blue color
+     * components and modifies this color as a result.
+     *
+     * @param red
+     *        The red color component to subtract.
+     * @param green
+     *        The green color component to subtract.
+     * @param blue
+     *        The blue color component to subtract.
+     * @return A reference to this color for easy chaining.
+     */
+    fun minusSelf(red: Float, green: Float, blue: Float): Color3 {
+        this.red   -= red
+        this.green -= green
+        this.blue  -= blue
+
+        return this
+    }
 
     /**
      * Subtracts this color from the specified color and also modifies this
@@ -176,9 +254,43 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         return this
     }
 
+    /**
+     * Adds this color to the specified red, green, and blue color components.
+     *
+     * @param red
+     *        The red color component to add.
+     * @param green
+     *        The green color component to add.
+     * @param blue
+     *        The blue color component to add.
+     * @return The sum of a color and three components.
+     */
+    fun plus(red: Float, green: Float, blue: Float): Color3 =
+        Color3(this.red + red, this.green + green, this.blue + blue)
+
     operator fun plus(color: Color3): Color3 =
         Color3(this.red + color.red, this.green + color.green,
                this.blue + color.blue)
+
+    /**
+     * Adds this color to the specified red, green, and blue color
+     * components and modifies this color as a result.
+     *
+     * @param red
+     *        The red color component to add.
+     * @param green
+     *        The green color component to add.
+     * @param blue
+     *        The blue color component to add.
+     * @return A reference to this color for easy chaining.
+     */
+    fun plusSelf(red: Float, green: Float, blue: Float): Color3 {
+        this.red   += red
+        this.green += green
+        this.blue  += blue
+
+        return this
+    }
 
     /**
      * Adds this color to the specified color and also modifies this color as
@@ -245,6 +357,21 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
     override fun set(array: FloatArray): Tuple3 = super.set(array) as Color3
 
     override fun set(tuple: Tuple3?): Color3 = super.set(tuple) as Color3
+
+    /**
+     * Multiplies this color by the specified red, green, and blue color
+     * components.
+     *
+     * @param red
+     *        The red color component to multiply.
+     * @param green
+     *        The green color component to multiply.
+     * @param blue
+     *        The blue color component to multiply.
+     * @return The product of a color and three components.
+     */
+    fun times(red: Float, green: Float, blue: Float): Color3 =
+        Color3(this.red * red, this.green * green, this.blue * blue)
 
     operator fun times(color: Color3): Color3 =
         Color3(this.red * color.red, this.green * color.green,

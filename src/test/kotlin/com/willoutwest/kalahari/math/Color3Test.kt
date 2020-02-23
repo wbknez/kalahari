@@ -112,6 +112,40 @@ class Color3Test : ShouldSpec() {
             }
         }
 
+        "Linearly interpolating a color and three components" {
+            should("be the lower bound when t is zero") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.lerp(red, green, blue, 0f).shouldBe(color)
+                }
+            }
+
+            should("be the upper bound when t is one") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.lerp(red, green, blue, 1f).shouldBe(
+                        color + (Color3(red, green, blue) - color) * 1f
+                    )
+                }
+            }
+
+            should("be the percentage increment otherwise") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float,
+                    t: Float ->
+
+                    color.lerp(red, green, blue, t).shouldBe(
+                        color + (Color3(red, green, blue) - color) * t
+                    )
+                }
+            }
+        }
+
         "Linearly interpolating to two colors over an interval" {
             should("be the lower bound when t is zero.") {
                 assertAll(Gen.color3(), Gen.color3()) { a: Color3, b: Color3 ->
@@ -130,6 +164,41 @@ class Color3Test : ShouldSpec() {
                     a: Color3, b: Color3, t: Float ->
 
                     a.lerp(b, t).shouldBe(a + (b - a) * t)
+                }
+            }
+        }
+
+        "Linearly interpolating a color and three components in place" {
+            should("be the lower bound when t is zero") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.clone().lerpSelf(red, green, blue, 0f)
+                        .shouldBe(color)
+                }
+            }
+
+            should("be the upper bound when t is one") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.clone().lerpSelf(red, green, blue, 1f).shouldBe(
+                        color + (Color3(red, green, blue) - color) * 1f
+                    )
+                }
+            }
+
+            should("be the percentage increment otherwise") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float,
+                    t: Float ->
+
+                    color.clone().lerpSelf(red, green, blue, t).shouldBe(
+                        color + (Color3(red, green, blue) - color) * t
+                    )
                 }
             }
         }
@@ -156,12 +225,38 @@ class Color3Test : ShouldSpec() {
             }
         }
 
+        "Subtracting a color from components" {
+            should("subtract all components from each other") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.minus(red, green, blue)
+                        .shouldBe(color.red - red, color.green - green,
+                                  color.blue - blue)
+                }
+            }
+        }
+
         "Subtracting a color from another" {
             should("subtract each color's components.") {
                 assertAll(Gen.color3(), Gen.color3()) { a: Color3, b: Color3 ->
                     (a - b).shouldBe(a.red - b.red,
                                      a.green - b.green,
                                      a.blue - b.blue)
+                }
+            }
+        }
+
+        "Subtracting a color from components in place" {
+            should("subtract its components from the other") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.clone().minusSelf(red, green, blue)
+                        .shouldBe(color.red - red, color.green - green,
+                                  color.blue - blue)
                 }
             }
         }
@@ -176,12 +271,38 @@ class Color3Test : ShouldSpec() {
             }
         }
 
+        "Adding a color to components" {
+            should("add all components to each other") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.plus(red, green, blue)
+                        .shouldBe(color.red + red, color.green + green,
+                                  color.blue + blue)
+                }
+            }
+        }
+
         "Adding a color to another" {
             should("add each color's components.") {
                 assertAll(Gen.color3(), Gen.color3()) { a: Color3, b: Color3 ->
                     (a + b).shouldBe(a.red + b.red,
                                      a.green + b.green,
                                      a.blue + b.blue)
+                }
+            }
+        }
+
+        "Adding a color to components in place" {
+            should("add its components to the other") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.clone().plusSelf(red, green, blue)
+                        .shouldBe(color.red + red, color.green + green,
+                                  color.blue + blue)
                 }
             }
         }
@@ -217,6 +338,19 @@ class Color3Test : ShouldSpec() {
                     color.clone().powSelf(a).shouldBe(color.red.pow(a),
                                                       color.green.pow(a),
                                                       color.blue.pow(a))
+                }
+            }
+        }
+
+        "Multiply a color by components" {
+            should("multiply all components with each other") {
+                assertAll(Gen.color3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    color: Color3, red: Float, green: Float, blue: Float ->
+
+                    color.times(red, green, blue)
+                        .shouldBe(color.red * red, color.green * green,
+                                  color.blue * blue)
                 }
             }
         }
