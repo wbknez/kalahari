@@ -43,6 +43,21 @@ class Point3Test : ShouldSpec() {
 
     init {
 
+        "Computing the distance between a point and three components" {
+            should("be the root of the iterative product of all components") {
+                assertAll(Gen.point3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    point: Point3, x: Float, y: Float, z: Float ->
+
+                    point.distanceTo(x, y, z).shouldBe(MathUtils.sqrt(
+                        MathUtils.pow(point.x - x, 2f) +
+                        MathUtils.pow(point.y - y, 2f) +
+                        MathUtils.pow(point.z - z, 2f)
+                    ))
+                }
+            }
+        }
+
         "Computing the distance between two points" {
             should("be the root of the dot product of (a - b).") {
                 assertAll(Gen.point3(), Gen.point3()) {
@@ -52,6 +67,21 @@ class Point3Test : ShouldSpec() {
                         MathUtils.pow(a.x - b.x, 2f) +
                         MathUtils.pow(a.y - b.y, 2f) +
                         MathUtils.pow(a.z - b.z, 2f)))
+                }
+            }
+        }
+
+        "Computing the squared distance between a point and three components" {
+            should("be the iterative product of all components") {
+                assertAll(Gen.point3(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    point: Point3, x: Float, y: Float, z: Float ->
+
+                    point.distanceSquaredTo(x, y, z).shouldBe(
+                        MathUtils.pow(point.x - x, 2f) +
+                        MathUtils.pow(point.y - y, 2f) +
+                        MathUtils.pow(point.z - z, 2f)
+                    )
                 }
             }
         }

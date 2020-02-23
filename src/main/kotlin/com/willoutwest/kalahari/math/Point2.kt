@@ -39,6 +39,19 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
     override fun clone(): Point2 = Point2(this)
 
     /**
+     * Computes the distance between this point and the specified x- and
+     * y-axis components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @return The distance between a point and two components.
+     */
+    fun distanceTo(x: Float, y: Float): Float =
+        MathUtils.sqrt(this.distanceSquaredTo(x, y))
+
+    /**
      * Computes the distance between this point and the specified one.
      *
      * @param point
@@ -49,11 +62,28 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
         MathUtils.sqrt(this.distanceSquaredTo(point))
 
     /**
+     * Computes the squared distance between this point and the specified x-
+     * and y-axis components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @return The squared distance between a point and two components.
+     */
+    fun distanceSquaredTo(x: Float, y: Float): Float {
+        val dX = this.x - x
+        val dY = this.y - y
+
+        return dX * dX + dY * dY
+    }
+
+    /**
      * Computes the squared distance between this point and the specified one.
      *
      * @param point
      *        The point to use.
-     * @return The distance between two points.
+     * @return The squared distance between two points.
      */
     fun distanceSquaredTo(point: Point2): Float {
         val dX = this.x - point.x

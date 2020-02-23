@@ -53,6 +53,21 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
     override fun clone(): Point3 = Point3(this)
 
     /**
+     * Computes the distance between this point and the specified x-, y-,
+     * and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @param z
+     *        The z-axis component to use.
+     * @return The distance between a point and three components.
+     */
+    fun distanceTo(x: Float, y: Float, z: Float): Float =
+        MathUtils.sqrt(this.distanceSquaredTo(x, y, z))
+
+    /**
      * Computes the distance between this point and the specified one.
      *
      * @param point
@@ -61,6 +76,26 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
      */
     fun distanceTo(point: Point3): Float =
         MathUtils.sqrt(this.distanceSquaredTo(point))
+
+    /**
+     * Computes the squared distance between this point and the specified x-,
+     * y-, and z-axis components.
+     *
+     * @param x
+     *        The x-axis component to use.
+     * @param y
+     *        The y-axis component to use.
+     * @param z
+     *        The z-axis component to use.
+     * @return The squared distance between a point and three components.
+     */
+    fun distanceSquaredTo(x: Float, y: Float, z: Float): Float {
+        val dX = this.x - x
+        val dY = this.y - y
+        val dZ = this.z - z
+
+        return dX * dX + dY * dY + dZ * dZ
+    }
 
     /**
      * Computes the squared distance between this point and the specified one.
