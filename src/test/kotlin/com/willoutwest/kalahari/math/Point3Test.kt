@@ -263,28 +263,28 @@ class Point3Test : ShouldSpec() {
         "Transforming a point" {
             should("be the product of each component with a row") {
                 assertAll(Gen.point3(), Gen.matrix4()) {
-                    vec: Point3, mat: Matrix4 ->
+                    point: Point3, mat: Matrix4 ->
 
-                    vec.transform(mat).shouldBe(
-                        vec.x * mat.t00 + vec.y * mat.t01 + vec.z * mat.t02
-                        + mat.t03,
-                        vec.x * mat.t10 + vec.y * mat.t11 + vec.z * mat.t12
-                        + mat.t13,
-                        vec.x * mat.t20 + vec.y * mat.t21 + vec.z * mat.t22
-                        + mat.t23
+                    point.transform(mat).shouldBe(
+                        point.x * mat.t00 + point.y * mat.t01 + point.z *
+                        mat.t02 + mat.t03,
+                        point.x * mat.t10 + point.y * mat.t11 + point.z *
+                        mat.t12 + mat.t13,
+                        point.x * mat.t20 + point.y * mat.t21 + point.z *
+                        mat.t22 + mat.t23
                     )
                 }
             }
 
             should("produce itself when using the identity matrix") {
-                assertAll(Gen.point3()) { vec: Point3 ->
-                    vec.transform(Matrix4.Identity).shouldBe(vec)
+                assertAll(Gen.point3()) { point: Point3 ->
+                    point.transform(Matrix4.Identity).shouldBe(point)
                 }
             }
 
             should("produce zero when using the zero matrix") {
-                assertAll(Gen.point3()) { vec: Point3 ->
-                    vec.transform(Matrix4.Zero).shouldBe(Point3.Zero)
+                assertAll(Gen.point3()) { point: Point3 ->
+                    point.transform(Matrix4.Zero).shouldBe(Point3.Zero)
                 }
             }
         }
@@ -292,29 +292,29 @@ class Point3Test : ShouldSpec() {
         "Transforming a point in place" {
             should("be the product of its component with a row") {
                 assertAll(Gen.point3(), Gen.matrix4()) {
-                    vec: Point3, mat: Matrix4 ->
+                    point: Point3, mat: Matrix4 ->
 
-                    vec.clone().transformSelf(mat).shouldBe(
-                        vec.x * mat.t00 + vec.y * mat.t01 + vec.z * mat.t02
-                        + mat.t03,
-                        vec.x * mat.t10 + vec.y * mat.t11 + vec.z * mat.t12
-                        + mat.t13,
-                        vec.x * mat.t20 + vec.y * mat.t21 + vec.z * mat.t22
-                        + mat.t23
+                    point.clone().transformSelf(mat).shouldBe(
+                        point.x * mat.t00 + point.y * mat.t01 + point.z *
+                        mat.t02 + mat.t03,
+                        point.x * mat.t10 + point.y * mat.t11 + point.z *
+                        mat.t12 + mat.t13,
+                        point.x * mat.t20 + point.y * mat.t21 + point.z *
+                        mat.t22 + mat.t23
                     )
                 }
             }
 
             should("produce itself when using the identity matrix") {
-                assertAll(Gen.point3()) { vec: Point3 ->
-                    vec.clone().transformSelf(Matrix4.Identity).shouldBe(vec)
+                assertAll(Gen.point3()) { point: Point3 ->
+                    point.clone().transformSelf(Matrix4.Identity).shouldBe(point)
                 }
             }
 
             should("produce zero when using the zero matrix") {
-                assertAll(Gen.point3()) { vec: Point3 ->
-                    vec.clone().transformSelf(Matrix4.Zero).shouldBe(Point3
-                                                                         .Zero)
+                assertAll(Gen.point3()) { point: Point3 ->
+                    point.clone().transformSelf(Matrix4.Zero)
+                        .shouldBe(Point3.Zero)
                 }
             }
         }

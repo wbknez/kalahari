@@ -87,6 +87,25 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
     override fun timesSelf(scalar: Float): Normal3 =
         super.timesSelf(scalar) as Normal3
 
+    override fun transform(mat: Matrix4): Normal3 =
+        Normal3(
+            this.x * mat.t00 + this.y * mat.t10 + this.z * mat.t20,
+            this.x * mat.t01 + this.y * mat.t11 + this.z * mat.t21,
+            this.x * mat.t02 + this.y * mat.t12 + this.z * mat.t22
+        )
+
+    override fun transformSelf(mat: Matrix4): Normal3 {
+        val vX = this.x
+        val vY = this.y
+        val vZ = this.z
+
+        this.x = vX * mat.t00 + vY * mat.t10 + vZ * mat.t20
+        this.y = vX * mat.t01 + vY * mat.t11 + vZ * mat.t21
+        this.z = vX * mat.t02 + vY * mat.t12 + vZ * mat.t22
+
+        return this
+    }
+
     override operator fun unaryMinus(): Normal3 =
         Normal3(-this.x, -this.y, -this.z)
 }

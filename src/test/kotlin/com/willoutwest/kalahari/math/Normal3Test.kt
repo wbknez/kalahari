@@ -319,6 +319,65 @@ class Normal3Test : ShouldSpec() {
             }
         }
 
+        "Transforming a normal" {
+            should("be the product of each component with a column") {
+                assertAll(Gen.normal3(), Gen.matrix4()) {
+                    normal: Normal3, mat: Matrix4 ->
+
+                    normal.transform(mat).shouldBe(
+                        normal.x * mat.t00 + normal.y * mat.t10 + normal.z *
+                        mat.t20,
+                        normal.x * mat.t01 + normal.y * mat.t11 + normal.z *
+                        mat.t21,
+                        normal.x * mat.t02 + normal.y * mat.t12 + normal.z *
+                        mat.t22
+                    )
+                }
+            }
+
+            should("produce itself when using the identity matrix") {
+                assertAll(Gen.normal3()) { normal: Normal3 ->
+                    normal.transform(Matrix4.Identity).shouldBe(normal)
+                }
+            }
+
+            should("produce zero when using the zero matrix") {
+                assertAll(Gen.normal3()) { normal: Normal3 ->
+                    normal.transform(Matrix4.Zero).shouldBe(Vector3.Zero)
+                }
+            }
+        }
+
+        "Transforming a normal in place" {
+            should("be the product of its component with a row") {
+                assertAll(Gen.normal3(), Gen.matrix4()) {
+                    normal: Normal3, mat: Matrix4 ->
+
+                    normal.clone().transformSelf(mat).shouldBe(
+                        normal.x * mat.t00 + normal.y * mat.t10 + normal.z *
+                        mat.t20,
+                        normal.x * mat.t01 + normal.y * mat.t11 + normal.z *
+                        mat.t21,
+                        normal.x * mat.t02 + normal.y * mat.t12 + normal.z *
+                        mat.t22
+                    )
+                }
+            }
+
+            should("produce itself when using the identity matrix") {
+                assertAll(Gen.normal3()) { normal: Normal3 ->
+                    normal.clone().transformSelf(Matrix4.Identity).shouldBe(normal)
+                }
+            }
+
+            should("produce zero when using the zero matrix") {
+                assertAll(Gen.normal3()) { normal: Normal3 ->
+                    normal.clone().transformSelf(Matrix4.Zero)
+                        .shouldBe(Vector3.Zero)
+                }
+            }
+        }
+
         "Taking the magnitude of a normal" {
             should("be the root of the product of its components") {
                 assertAll(Gen.normal3()) { normal: Normal3 ->

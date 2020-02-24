@@ -538,8 +538,8 @@ class Vector3Test : ShouldSpec() {
 
             should("produce zero when using the zero matrix") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
-                    vec.clone().transformSelf(Matrix4.Zero).shouldBe(Vector3
-                                                                       .Zero)
+                    vec.clone().transformSelf(Matrix4.Zero)
+                        .shouldBe(Vector3.Zero)
                 }
             }
         }
