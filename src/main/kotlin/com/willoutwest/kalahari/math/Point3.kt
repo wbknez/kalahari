@@ -266,6 +266,40 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         return this
     }
 
+    /**
+     * Transforms this point using the specified matrix.
+     *
+     * @param mat
+     *        The transformation matrix to use.
+     * @return A transformed point.
+     */
+    fun transform(mat: Matrix4): Point3 =
+        Point3(
+            this.x * mat.t00 + this.y * mat.t01 + this.z * mat.t02 + mat.t03,
+            this.x * mat.t10 + this.y * mat.t11 + this.z * mat.t12 + mat.t13,
+            this.x * mat.t20 + this.y * mat.t21 + this.z * mat.t22 + mat.t23
+        )
+
+    /**
+     * Transforms this point using the specified matrix and modifies this
+     * point as a result.
+     *
+     * @param mat
+     *        The transformation matrix to use.
+     * @return A reference to this point for easy chaining.
+     */
+    fun transformSelf(mat: Matrix4): Point3 {
+        val vX = this.x
+        val vY = this.y
+        val vZ = this.z
+
+        this.x = vX * mat.t00 + vY * mat.t01 + vZ * mat.t02 + mat.t03
+        this.y = vX * mat.t10 + vY * mat.t11 + vZ * mat.t12 + mat.t13
+        this.z = vX * mat.t20 + vY * mat.t21 + vZ * mat.t22 + mat.t23
+
+        return this
+    }
+
     operator fun unaryMinus(): Point3 =
         Point3(-this.x, -this.y, -this.z)
 }
