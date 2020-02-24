@@ -20,6 +20,25 @@ class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
     /**
      * Constructor.
      *
+     * @param dX
+     *        The x-axis direction to use.
+     * @param dY
+     *        The y-axis direction to use.
+     * @param dZ
+     *        The z-axis direction to use.
+     * @param oX
+     *        The x-axis origin to use.
+     * @param oY
+     *        The y-axis origin to use.
+     * @param oZ
+     *        The z-axis origin to use.
+     */
+    constructor(dX: Float, dY: Float, dZ: Float, oX: Float, oY: Float,
+                oZ: Float) : this(Vector3(dX, dY, dZ), Point3(oX, oY, oZ))
+
+    /**
+     * Constructor.
+     *
      * @param ray
      *        The ray to copy from.
      */
@@ -140,6 +159,32 @@ class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
     fun set(ray: Ray3?): Ray3 =
         this.set(ray!!.dir.x, ray.dir.y, ray.dir.z, ray.origin.x,
                  ray.origin.y, ray.origin.z)
+
+    /**
+     * Transforms this ray - both the direction and origin - using the
+     * specified matrix.
+     *
+     * @param mat
+     *        The transformation matrix to use.
+     * @return A transformed ray.
+     */
+    fun transform(mat: Matrix4): Ray3 =
+        Ray3(this.dir.transform(mat), this.origin.transform(mat))
+
+    /**
+     * Transforms this ray - both the direction and origin - using the
+     * specified matrix.
+     *
+     * @param mat
+     *        The transformation matrix to use.
+     * @return A transformed ray.
+     */
+    fun transformSelf(mat: Matrix4): Ray3 {
+        this.dir.transformSelf(mat)
+        this.origin.transformSelf(mat)
+
+        return this
+    }
 
     override fun toString(): String = "(${this.dir}, ${this.origin})"
 }

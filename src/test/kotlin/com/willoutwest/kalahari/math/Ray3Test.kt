@@ -79,5 +79,57 @@ class Ray3Test : ShouldSpec() {
                 }
             }
         }
+        
+        "Transforming a ray" {
+            should("transform both the direction and the origin correctly") {
+                assertAll(Gen.ray3(), Gen.matrix4()) {
+                    ray: Ray3, mat: Matrix4 ->
+                    
+                    val dir    = ray.dir
+                    val origin = ray.origin
+                    val result = ray.transform(mat)
+                    
+                    result.dir.shouldBe(
+                        dir.x * mat.t00 + dir.y * mat.t01 + dir.z * mat.t02,
+                        dir.x * mat.t10 + dir.y * mat.t11 + dir.z * mat.t12,
+                        dir.x * mat.t20 + dir.y * mat.t21 + dir.z * mat.t22
+                    )
+                    result.origin.shouldBe(
+                        origin.x * mat.t00 + origin.y * mat.t01 + origin.z *
+                        mat.t02 + mat.t03,
+                        origin.x * mat.t10 + origin.y * mat.t11 + origin.z *
+                        mat.t12 + mat.t13,
+                        origin.x * mat.t20 + origin.y * mat.t21 + origin.z *
+                        mat.t22 + mat.t23
+                    )
+                }
+            }
+        }
+
+        "Transforming a ray in place" {
+            should("transform both the direction and the origin correctly") {
+                assertAll(Gen.ray3(), Gen.matrix4()) {
+                    ray: Ray3, mat: Matrix4 ->
+
+                    val dir    = ray.dir
+                    val origin = ray.origin
+                    val result = ray.clone().transformSelf(mat)
+
+                    result.dir.shouldBe(
+                        dir.x * mat.t00 + dir.y * mat.t01 + dir.z * mat.t02,
+                        dir.x * mat.t10 + dir.y * mat.t11 + dir.z * mat.t12,
+                        dir.x * mat.t20 + dir.y * mat.t21 + dir.z * mat.t22
+                    )
+                    result.origin.shouldBe(
+                        origin.x * mat.t00 + origin.y * mat.t01 + origin.z *
+                        mat.t02 + mat.t03,
+                        origin.x * mat.t10 + origin.y * mat.t11 + origin.z *
+                        mat.t12 + mat.t13,
+                        origin.x * mat.t20 + origin.y * mat.t21 + origin.z *
+                        mat.t22 + mat.t23
+                    )
+                }
+            }
+        }
     }
 }
