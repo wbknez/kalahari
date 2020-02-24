@@ -104,14 +104,8 @@ open class Tuple4(@JvmField var x: Float = 0.0f,
      *        The array to copy from.
      * @return A reference to this tuple for easy chaining.
      */
-    open fun set(array: FloatArray): Tuple4 {
-        this.x = array[0]
-        this.y = array[1]
-        this.z = array[2]
-        this.w = array[3]
-
-        return this
-    }
+    open fun set(array: FloatArray): Tuple4 =
+        this.set(array[0], array[1], array[2], array[3])
 
     /**
      * Sets the components of this tuple to those of the specified one.
@@ -120,14 +114,8 @@ open class Tuple4(@JvmField var x: Float = 0.0f,
      *        The tuple to copy from.
      * @return A reference to this tuple for easy chaining.
      */
-    open fun set(tuple: Tuple4?): Tuple4 {
-        this.x = tuple!!.x
-        this.y = tuple.y
-        this.z = tuple.z
-        this.w = tuple.w
-
-        return this
-    }
+    open fun set(tuple: Tuple4?): Tuple4 =
+        this.set(tuple!!.x, tuple.y, tuple.z, tuple.w)
 
     /**
      * Converts this tuple to a four element floating-point array.

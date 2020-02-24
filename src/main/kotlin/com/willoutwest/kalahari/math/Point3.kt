@@ -75,7 +75,7 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
      * @return The distance between two points.
      */
     fun distanceTo(point: Point3): Float =
-        MathUtils.sqrt(this.distanceSquaredTo(point))
+        this.distanceTo(point.x, point.y, point.z)
 
     /**
      * Computes the squared distance between this point and the specified x-,
@@ -104,13 +104,8 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
      *        The point to use.
      * @return The distance between two points.
      */
-    fun distanceSquaredTo(point: Point3): Float {
-        val dX = this.x - point.x
-        val dY = this.y - point.y
-        val dZ = this.z - point.z
-
-        return dX * dX + dY * dY + dZ * dZ
-    }
+    fun distanceSquaredTo(point: Point3): Float =
+        this.distanceSquaredTo(point.x, point.y, point.z)
 
     operator fun div(scalar: Float): Point3 {
         val inv = 1f / scalar
@@ -151,7 +146,7 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         Point3(this.x - x, this.y - y, this.z - z)
 
     operator fun minus(point: Point3): Point3 =
-        Point3(this.x - point.x, this.y - point.y, this.z - point.z)
+        this.minus(point.x, point.y, point.z)
 
     /**
      * Subtracts this point from the specified x-, y-, and z-axis components
@@ -181,13 +176,8 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
      *        The point to subtract.
      * @return A reference to this point for easy chaining.
      */
-    fun minusSelf(point: Point3): Point3 {
-        this.x -= point.x
-        this.y -= point.y
-        this.z -= point.z
-
-        return this
-    }
+    fun minusSelf(point: Point3): Point3 =
+        this.minusSelf(point.x, point.y, point.z)
 
     /**
      * Negates this point and also modifies this point as a result.
@@ -217,7 +207,7 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
         Point3(this.x + x, this.y + y, this.z + z)
 
     operator fun plus(point: Point3): Point3 =
-        Point3(this.x + point.x, this.y + point.y, this.z + point.z)
+        this.plus(point.x, point.y, point.z)
 
     /**
      * Adds this point to the specified x-, y-, and z-axis components and
@@ -247,13 +237,8 @@ class Point3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
      *        The point to add.
      * @return A reference to this point for easy chaining.
      */
-    fun plusSelf(point: Point3): Point3 {
-        this.x += point.x
-        this.y += point.y
-        this.z += point.z
-
-        return this
-    }
+    fun plusSelf(point: Point3): Point3 =
+        this.plusSelf(point.x, point.y, point.z)
 
     override fun set(x: Float, y: Float, z: Float): Point3 =
         super.set(x, y, z) as Point3

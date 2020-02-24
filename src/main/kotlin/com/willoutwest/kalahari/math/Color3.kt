@@ -153,9 +153,7 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
      * @return A linearly interpolated color.
      */
     fun lerp(end: Color3, t: Float): Color3 =
-        Color3(this.red   + (end.red   - this.red)  *  t,
-               this.green + (end.green - this.green) * t,
-               this.blue  + (end.blue  - this.blue)  * t)
+        this.lerp(end.red, end.green, end.blue, t)
 
     /**
      * Linearly interpolates between this color and the specified red,
@@ -191,13 +189,8 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
      *        The parametric time to use.
      * @return A reference to this color for easy chaining.
      */
-    fun lerpSelf(end: Color3, t: Float): Color3 {
-        this.red   = this.red   + (end.red   - this.red)   * t
-        this.green = this.green + (end.green - this.green) * t
-        this.blue  = this.blue  + (end.blue  - this.blue)  * t
-
-        return this
-    }
+    fun lerpSelf(end: Color3, t: Float): Color3 =
+        this.lerpSelf(end.red, end.green, end.blue, t)
 
     /**
      * Subtracts this color from the specified red, green, and blue color
@@ -215,8 +208,7 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         Color3(this.red - red, this.green - green, this.blue - blue)
 
     operator fun minus(color: Color3): Color3 =
-        Color3(this.red - color.red, this.green - color.green,
-               this.blue - color.blue)
+        this.minus(color.red, color.green, color.blue)
 
     /**
      * Subtracts this color from the specified red, green, and blue color
@@ -246,13 +238,8 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
      *        The color to subtract.
      * @return A reference to this color for easy chaining.
      */
-    fun minusSelf(color: Color3): Color3 {
-        this.red   -= color.red
-        this.green -= color.green
-        this.blue  -= color.blue
-
-        return this
-    }
+    fun minusSelf(color: Color3): Color3 =
+        this.minusSelf(color.red, color.green, color.blue)
 
     /**
      * Adds this color to the specified red, green, and blue color components.
@@ -269,8 +256,7 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         Color3(this.red + red, this.green + green, this.blue + blue)
 
     operator fun plus(color: Color3): Color3 =
-        Color3(this.red + color.red, this.green + color.green,
-               this.blue + color.blue)
+        this.plus(color.red, color.green, color.blue)
 
     /**
      * Adds this color to the specified red, green, and blue color
@@ -300,13 +286,8 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
      *        The color to add.
      * @return A reference to this color for easy chaining.
      */
-    fun plusSelf(color: Color3): Color3 {
-        this.red   += color.red
-        this.green += color.green
-        this.blue  += color.blue
-
-        return this
-    }
+    fun plusSelf(color: Color3): Color3 =
+        this.plusSelf(color.red, color.green, color.blue)
 
     /**
      * Raises each component of this color to the specified power.
@@ -374,8 +355,7 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
         Color3(this.red * red, this.green * green, this.blue * blue)
 
     operator fun times(color: Color3): Color3 =
-        Color3(this.red * color.red, this.green * color.green,
-               this.blue * color.blue)
+        this.times(color.red, color.green, color.blue)
 
     operator fun times(scalar: Float): Color3 =
         Color3(this.red * scalar, this.green * scalar, this.blue * scalar)
@@ -388,13 +368,8 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
      *        The color to multiply.
      * @return A reference to this color for easy chaining.
      */
-    fun timesSelf(color: Color3): Color3 {
-        this.red   *= color.red
-        this.green *= color.green
-        this.blue  *= color.blue
-
-        return this
-    }
+    fun timesSelf(color: Color3): Color3 =
+        this.timesSelf(color.red, color.green, color.blue)
 
     /**
      * Multiplies this color by the specified scalar and also modifies this

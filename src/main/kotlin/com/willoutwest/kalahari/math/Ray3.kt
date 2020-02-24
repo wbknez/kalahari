@@ -91,6 +91,32 @@ class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
             this.origin.z + t * this.dir.z
         )
 
+    /**
+     * Sets the origin and direction of this ray using the specified
+     * components of each.
+     *
+     * @param dX
+     *        The x-axis direction to use.
+     * @param dY
+     *        The y-axis direction to use.
+     * @param dZ
+     *        The z-axis direction to use.
+     * @param oX
+     *        The x-axis origin to use.
+     * @param oY
+     *        The y-axis origin to use.
+     * @param oZ
+     *        The z-axis origin to use.
+     * @return A reference to this ray for easy chaining.
+     */
+    fun set(dX: Float, dY: Float, dZ: Float, oX: Float, oY: Float, oZ: Float):
+        Ray3 {
+        this.dir.set(dX, dY, dZ)
+        this.invDir.set(this.dir).invertSelf()
+        this.origin.set(oX, oY, oZ)
+
+        return this
+    }
 
     /**
      * Sets the origin and direction of this ray to those specified.
@@ -101,13 +127,8 @@ class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
      *        The origin to use.
      * @return A reference to this ray for easy chaining.
      */
-    fun set(dir: Vector3, origin: Point3): Ray3 {
-        this.dir.set(dir)
-        this.invDir.set(dir).invertSelf()
-        this.origin.set(origin)
-
-        return this
-    }
+    fun set(dir: Vector3, origin: Point3): Ray3 =
+        this.set(dir.x, dir.y, dir.z, origin.x, origin.y, origin.z)
 
     /**
      * Sets the origin and direction of this ray to those of the specified one.
@@ -116,13 +137,9 @@ class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
      *        The ray to copy from.
      * @return A reference to this ray for easy chaining.
      */
-    fun set(ray: Ray3?): Ray3 {
-        this.dir.set(ray!!.dir)
-        this.invDir.set(ray.dir).invertSelf()
-        this.origin.set(ray.origin)
-
-        return this
-    }
+    fun set(ray: Ray3?): Ray3 =
+        this.set(ray!!.dir.x, ray.dir.y, ray.dir.z, ray.origin.x,
+                 ray.origin.y, ray.origin.z)
 
     override fun toString(): String = "(${this.dir}, ${this.origin})"
 }

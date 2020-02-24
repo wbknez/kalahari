@@ -88,9 +88,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      * @return The cross product.
      */
     open fun cross(vec: Vector3): Vector3 =
-        Vector3(this.y * vec.z - this.z * vec.y,
-                this.z * vec.x - this.x * vec.z,
-                this.x * vec.y - this.y * vec.x)
+        this.cross(vec.x, vec.y, vec.z)
 
     /**
      * Computes the cross product of this vector with the specified x-, y-,
@@ -124,17 +122,8 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to cross with.
      * @return A reference to this vector for easy chaining.
      */
-    open fun crossSelf(vec: Vector3): Vector3 {
-        val cX = this.y * vec.z - this.z * vec.y
-        val cY = this.z * vec.x - this.x * vec.z
-        val cZ = this.x * vec.y - this.y * vec.x
-
-        this.x = cX
-        this.y = cY
-        this.z = cZ
-
-        return this
-    }
+    open fun crossSelf(vec: Vector3): Vector3 =
+        this.crossSelf(vec.x, vec.y, vec.z)
 
     /**
      * Computes the distance between this vector and the specified x-, y-,
@@ -158,8 +147,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to use.
      * @return The distance between two vectors.
      */
-    fun distanceTo(vec: Vector3): Float =
-        MathUtils.sqrt(this.distanceSquaredTo(vec))
+    fun distanceTo(vec: Vector3): Float = this.distanceTo(vec.x, vec.y, vec.z)
 
     /**
      * Computes the squared distance between this vector and the specified x-,
@@ -188,13 +176,8 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to use.
      * @return The squared distance.
      */
-    fun distanceSquaredTo(vec: Vector3): Float {
-        val dX = this.x - vec.x
-        val dY = this.y - vec.y
-        val dZ = this.z - vec.z
-
-        return dX * dX + dY * dY + dZ * dZ
-    }
+    fun distanceSquaredTo(vec: Vector3): Float =
+        this.distanceSquaredTo(vec.x, vec.y, vec.z)
 
     open operator fun div(scalar: Float): Vector3 {
         val inv = 1f / scalar
@@ -241,8 +224,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector use.
      * @return The dot product.
      */
-    fun dot(vec: Vector3): Float =
-        this.x * vec.x + this.y * vec.y + this.z * vec.z
+    fun dot(vec: Vector3): Float = this.dot(vec.x, vec.y, vec.z)
 
     /**
      * Computes the inverse of this vector.
@@ -283,7 +265,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         Vector3(this.x - x, this.y - y, this.z - z)
 
     open operator fun minus(vec: Vector3): Vector3 =
-        Vector3(this.x - vec.x, this.y - vec.y, this.z - vec.z)
+        this.minus(vec.x, vec.y, vec.z)
 
     /**
      * Subtracts this vector from the specified x-, y-, and z-axis components
@@ -313,13 +295,8 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to subtract.
      * @return A reference to this vector for easy chaining.
      */
-    open fun minusSelf(vec: Vector3): Vector3 {
-        this.x -= vec.x
-        this.y -= vec.y
-        this.z -= vec.z
-
-        return this
-    }
+    open fun minusSelf(vec: Vector3): Vector3 =
+        this.minusSelf(vec.x, vec.y, vec.z)
 
     /**
      * Negates this vector and also modifies this vector as a result.
@@ -391,7 +368,7 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         Vector3(this.x + x, this.y + y, this.z + z)
 
     open operator fun plus(vec: Vector3): Vector3 =
-        Vector3(this.x + vec.x, this.y + vec.y, this.z + vec.z)
+        this.plus(vec.x, vec.y, vec.z)
 
     /**
      * Adds this vector to the specified x-, y-, and z-axis components and
@@ -421,13 +398,8 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
      *        The vector to add.
      * @return A reference to this vector for easy chaining.
      */
-    open fun plusSelf(vec: Vector3): Vector3 {
-        this.x += vec.x
-        this.y += vec.y
-        this.z += vec.z
-
-        return this
-    }
+    open fun plusSelf(vec: Vector3): Vector3 =
+        this.plusSelf(vec.x, vec.y, vec.z)
 
     override fun set(x: Float, y: Float, z: Float): Vector3 =
         super.set(x, y, z) as Vector3

@@ -59,7 +59,7 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
      * @return The distance between two points.
      */
     fun distanceTo(point: Point2): Float =
-        MathUtils.sqrt(this.distanceSquaredTo(point))
+        this.distanceTo(point.x, point.y)
 
     /**
      * Computes the squared distance between this point and the specified x-
@@ -85,12 +85,8 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
      *        The point to use.
      * @return The squared distance between two points.
      */
-    fun distanceSquaredTo(point: Point2): Float {
-        val dX = this.x - point.x
-        val dY = this.y - point.y
-
-        return dX * dX + dY * dY
-    }
+    fun distanceSquaredTo(point: Point2): Float =
+        this.distanceSquaredTo(point.x, point.y)
 
     operator fun div(scalar: Float): Point2 {
         val inv = 1f / scalar
@@ -127,8 +123,7 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
     fun minus(x: Float, y: Float): Point2 =
         Point2(this.x - x, this.y - y)
 
-    operator fun minus(point: Point2): Point2 =
-        Point2(this.x - point.x, this.y - point.y)
+    operator fun minus(point: Point2): Point2 = this.minus(point.x, point.y)
 
     /**
      * Subtracts this point from the specified x- and y-axis components and
@@ -155,12 +150,7 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
      *        The point to subtract.
      * @return A reference to this point for easy chaining.
      */
-    fun minusSelf(point: Point2): Point2 {
-        this.x -= point.x
-        this.y -= point.y
-
-        return this
-    }
+    fun minusSelf(point: Point2): Point2 = this.minusSelf(point.x, point.y)
 
     /**
      * Negates this point and also modifies this point as a result.
@@ -186,8 +176,7 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
     fun plus(x: Float, y: Float): Point2 =
         Point2(this.x + x, this.y + y)
 
-    operator fun plus(point: Point2): Point2 =
-        Point2(this.x + point.x, this.y + point.y)
+    operator fun plus(point: Point2): Point2 = this.plus(point.x, point.y)
 
     /**
      * Adds this point from the specified x- and y-axis components and
@@ -214,26 +203,13 @@ class Point2(x: Float = 0f, y: Float = 0f) : Cloneable, Tuple2(x, y) {
      *        The point to add.
      * @return A reference to this point for easy chaining.
      */
-    fun plusSelf(point: Point2): Point2 {
-        this.x += point.x
-        this.y += point.y
+    fun plusSelf(point: Point2): Point2 = this.plusSelf(point.x, point.y)
 
-        return this
-    }
+    override fun set(x: Float, y: Float): Point2 = super.set(x, y) as Point2
 
-    override fun set(x: Float, y: Float): Point2 {
-        this.x = x
-        this.y = y
+    override fun set(array: FloatArray): Point2 = super.set(array) as Point2
 
-        return this
-    }
-
-    override fun set(tuple: Tuple2?): Point2 {
-        this.x = tuple!!.x
-        this.y = tuple.y
-
-        return this
-    }
+    override fun set(tuple: Tuple2?): Point2 = super.set(tuple) as Point2
 
     operator fun times(scalar: Float): Point2 =
         Point2(this.x * scalar, this.y * scalar)

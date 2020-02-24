@@ -95,13 +95,8 @@ open class Tuple3(@JvmField var x: Float = 0.0f,
      *        The array to copy from.
      * @return A reference to this tuple for easy chaining.
      */
-    open fun set(array: FloatArray): Tuple3 {
-        this.x = array[0]
-        this.y = array[1]
-        this.z = array[2]
-
-        return this
-    }
+    open fun set(array: FloatArray): Tuple3 =
+        this.set(array[0], array[1], array[2])
 
     /**
      * Sets the components of this tuple to those of the specified one.
@@ -110,13 +105,8 @@ open class Tuple3(@JvmField var x: Float = 0.0f,
      *        The tuple to copy from.
      * @return A reference to this tuple for easy chaining.
      */
-    open fun set(tuple: Tuple3?): Tuple3 {
-        this.x = tuple!!.x
-        this.y = tuple.y
-        this.z = tuple.z
-
-        return this
-    }
+    open fun set(tuple: Tuple3?): Tuple3 =
+        this.set(tuple!!.x, tuple.y, tuple.z)
 
     /**
      * Converts this tuple to a three element floating-point array.

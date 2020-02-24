@@ -241,18 +241,11 @@ open class Table4(@JvmField var t00: Float = 0f, @JvmField var t01: Float = 0f,
      *        The array to copy from.
      * @return A reference to this table for easy chaining.
      */
-    open fun set(array: FloatArray): Table4 {
-        this.t00 = array[0];  this.t01 = array[1]
-        this.t02 = array[2];  this.t03 = array[3]
-        this.t10 = array[4];  this.t11 = array[5]
-        this.t12 = array[6];  this.t13 = array[7]
-        this.t20 = array[8];  this.t21 = array[9]
-        this.t22 = array[10]; this.t23 = array[11]
-        this.t30 = array[12]; this.t31 = array[13]
-        this.t32 = array[14]; this.t33 = array[15]
-
-        return this
-    }
+    open fun set(array: FloatArray): Table4 =
+        this.set(array[0],  array[1],  array[2],  array[3],
+                 array[4],  array[5],  array[6],  array[7],
+                 array[8],  array[9],  array[10], array[11],
+                 array[12], array[13], array[14], array[15])
 
     /**
     * Sets the array of this table to those of the specified one.
@@ -261,18 +254,11 @@ open class Table4(@JvmField var t00: Float = 0f, @JvmField var t01: Float = 0f,
     *        The table to copy from.
     * @return A reference to this table for easy chaining.
     */
-    open fun set(table: Table4?): Table4 {
-        this.t00 = table!!.t00; this.t01 = table.t01
-        this.t02 = table.t02;   this.t03 = table.t03
-        this.t10 = table.t10;   this.t11 = table.t11
-        this.t12 = table.t12;   this.t13 = table.t13
-        this.t20 = table.t20;   this.t21 = table.t21
-        this.t22 = table.t22;   this.t23 = table.t23
-        this.t30 = table.t30;   this.t31 = table.t31
-        this.t32 = table.t32;   this.t33 = table.t33
-
-        return this
-    }
+    open fun set(table: Table4?): Table4 =
+        this.set(table!!.t00, table.t01, table.t02, table.t03,
+                 table.t10,   table.t11, table.t12, table.t13,
+                 table.t20,   table.t21, table.t22, table.t23,
+                 table.t30,   table.t31, table.t32, table.t33)
 
     /**
     * Converts this table to a sixteen element row-major floating-point array.
