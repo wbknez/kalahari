@@ -427,6 +427,40 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         return this
     }
 
+    /**
+     * Transforms this vector using the specified matrix.
+     *
+     * @param mat
+     *        The transformation matrix to use.
+     * @return A transformed vector.
+     */
+    open fun transform(mat: Matrix4): Vector3 =
+        Vector3(
+            this.x * mat.t00 + this.y * mat.t01 + this.z * mat.t02,
+            this.x * mat.t10 + this.y * mat.t11 + this.z * mat.t12,
+            this.x * mat.t20 + this.y * mat.t21 + this.z * mat.t22
+        )
+
+    /**
+     * Transforms this vector using the specified matrix and modifies this
+     * vector as a result.
+     *
+     * @param mat
+     *        The transformation matrix to use.
+     * @return A reference to this vector for easy chaining.
+     */
+    open fun transformSelf(mat: Matrix4): Vector3 {
+        val vX = this.x
+        val vY = this.y
+        val vZ = this.z
+
+        this.x = vX * mat.t00 + vY * mat.t01 + vZ * mat.t02
+        this.y = vX * mat.t10 + vY * mat.t11 + vZ * mat.t12
+        this.z = vX * mat.t20 + vY * mat.t21 + vZ * mat.t22
+
+        return this
+    }
+
     open operator fun unaryMinus(): Vector3 =
         Vector3(-this.x, -this.y, -this.z)
 }

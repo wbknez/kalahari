@@ -491,6 +491,59 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Transforming a vector" {
+            should("be the product of each component with a row") {
+                assertAll(Gen.vector3(), Gen.matrix4()) {
+                    vec: Vector3, mat: Matrix4 ->
+
+                    vec.transform(mat).shouldBe(
+                        vec.x * mat.t00 + vec.y * mat.t01 + vec.z * mat.t02,
+                        vec.x * mat.t10 + vec.y * mat.t11 + vec.z * mat.t12,
+                        vec.x * mat.t20 + vec.y * mat.t21 + vec.z * mat.t22
+                    )
+                }
+            }
+
+            should("produce itself when using the identity matrix") {
+                assertAll(Gen.vector3()) { vec: Vector3 ->
+                    vec.transform(Matrix4.Identity).shouldBe(vec)
+                }
+            }
+
+            should("produce zero when using the zero matrix") {
+                assertAll(Gen.vector3()) { vec: Vector3 ->
+                    vec.transform(Matrix4.Zero).shouldBe(Vector3.Zero)
+                }
+            }
+        }
+
+        "Transforming a vector in place" {
+            should("be the product of its component with a row") {
+                assertAll(Gen.vector3(), Gen.matrix4()) {
+                    vec: Vector3, mat: Matrix4 ->
+
+                    vec.clone().transformSelf(mat).shouldBe(
+                        vec.x * mat.t00 + vec.y * mat.t01 + vec.z * mat.t02,
+                        vec.x * mat.t10 + vec.y * mat.t11 + vec.z * mat.t12,
+                        vec.x * mat.t20 + vec.y * mat.t21 + vec.z * mat.t22
+                    )
+                }
+            }
+
+            should("produce itself when using the identity matrix") {
+                assertAll(Gen.vector3()) { vec: Vector3 ->
+                    vec.clone().transformSelf(Matrix4.Identity).shouldBe(vec)
+                }
+            }
+
+            should("produce zero when using the zero matrix") {
+                assertAll(Gen.vector3()) { vec: Vector3 ->
+                    vec.clone().transformSelf(Matrix4.Zero).shouldBe(Vector3
+                                                                       .Zero)
+                }
+            }
+        }
+
         "Taking the magnitude of a vector" {
             should("be the root of the product of its components") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
