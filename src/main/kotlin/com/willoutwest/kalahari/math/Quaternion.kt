@@ -158,9 +158,48 @@ class Quaternion(x: Float = 0.0f,
         return this
     }
 
+    /**
+     * Subtracts this quaternion from the specified x-, y-, z-, and w-axis
+     * components.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @param z
+     *        The z-axis component to subtract.
+     * @param w
+     *        The w-axis component to subtract.
+     * @return The difference between a quaternion and four components.
+     */
+    fun minus(x: Float, y: Float, z: Float, w: Float): Quaternion =
+        Quaternion(this.x - x, this.y - y, this.z - z, this.w - w)
+
     operator fun minus(quat: Quaternion): Quaternion =
-        Quaternion(this.x - quat.x, this.y - quat.y,
-                   this.z - quat.z, this.w - quat.w)
+        this.minus(quat.x, quat.y, quat.z, quat.w)
+
+    /**
+     * Subtracts this quaternion from the specified x-, y-, z-, and w-axis
+     * components and modifies this quaternion as a result.
+     *
+     * @param x
+     *        The x-axis component to subtract.
+     * @param y
+     *        The y-axis component to subtract.
+     * @param z
+     *        The z-axis component to subtract.
+     * @param w
+     *        The w-axis component to subtract.
+     * @return A reference to this quaternion for easy chaining.
+     */
+    fun minusSelf(x: Float, y: Float, z: Float, w: Float): Quaternion {
+        this.x -= x
+        this.y -= y
+        this.z -= z
+        this.w -= w
+
+        return this
+    }
 
     /**
      * Subtracts this quaternion from the specified one and also modifies
@@ -170,14 +209,8 @@ class Quaternion(x: Float = 0.0f,
      *        The quaternion to subtract by.
      * @return A reference to this quaternion for easy chaining.
      */
-    fun minusSelf(quat: Quaternion): Quaternion {
-        this.x -= quat.x
-        this.y -= quat.y
-        this.z -= quat.z
-        this.w -= quat.w
-
-        return this
-    }
+    fun minusSelf(quat: Quaternion): Quaternion =
+        this.minusSelf(quat.x, quat.y, quat.z, quat.w)
 
     /**
      * Normalizes this quaternion.
@@ -218,9 +251,48 @@ class Quaternion(x: Float = 0.0f,
         return this
     }
 
+    /**
+     * Adds this quaternion to the specified x-, y-, z-, and w-axis
+     * components.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @param w
+     *        The w-axis component to add.
+     * @return The sum of a quaternion and four components.
+     */
+    fun plus(x: Float, y: Float, z: Float, w: Float): Quaternion =
+        Quaternion(this.x + x, this.y + y, this.z + z, this.w + w)
+
     operator fun plus(quat: Quaternion): Quaternion =
-        Quaternion(this.x + quat.x, this.y + quat.y,
-                   this.z + quat.z, this.w + quat.w)
+        this.plus(quat.x, quat.y, quat.z, quat.w)
+
+    /**
+     * Adds this quaternion to the specified x-, y-, z-, and w-axis
+     * components and modifies this quaternion as a result.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @param w
+     *        The w-axis component to add.
+     * @return A reference to this quaternion for easy chaining.
+     */
+    fun plusSelf(x: Float, y: Float, z: Float, w: Float): Quaternion {
+        this.x += x
+        this.y += y
+        this.z += z
+        this.w += w
+
+        return this
+    }
 
     /**
      * Adds this quaternion to the specified one and also modifies this
@@ -230,14 +302,8 @@ class Quaternion(x: Float = 0.0f,
      *        The quaternion to add with.
      * @return A reference to this quaternion for easy chaining.
      */
-    fun plusSelf(quat: Quaternion): Quaternion {
-        this.x += quat.x
-        this.y += quat.y
-        this.z += quat.z
-        this.w += quat.w
-
-        return this
-    }
+    fun plusSelf(quat: Quaternion): Quaternion =
+        this.plusSelf(quat.x, quat.y, quat.z, quat.w)
 
     override fun set(x: Float, y: Float, z: Float, w: Float): Quaternion =
         super.set(x, y, z, w) as Quaternion
@@ -250,6 +316,32 @@ class Quaternion(x: Float = 0.0f,
 
     /**
      * Composes this quaternion as a rotation of the specified amount in
+     * radians around the specified axis components.
+     *
+     * @param angle
+     *        The amount to rotate by in radians.
+     * @param x
+     *        The x-axis rotational component to use.
+     * @param y
+     *        The y-axis rotational component.
+     * @param z
+     *        The z-axis rotational component to use.
+     * @return A reference to this quaternion for easy chaining.
+     */
+    fun setFromAxis(angle: Float, x: Float, y: Float, z: Float): Quaternion {
+        val halfAngle = angle / 2f
+        val sin = MathUtils.sin(halfAngle)
+
+        this.x = x * sin
+        this.y = y * sin
+        this.z = z * sin
+        this.w = MathUtils.cos(halfAngle)
+
+        return this
+    }
+
+    /**
+     * Composes this quaternion as a rotation of the specified amount in
      * radians around the specified axis.
      *
      * @param angle
@@ -258,17 +350,8 @@ class Quaternion(x: Float = 0.0f,
      *        The axis to rotate around.
      * @return A reference to this quaternion for easy chaining.
      */
-    fun setFromAxis(angle: Float, axis: Vector3): Quaternion {
-        val halfAngle = angle / 2f
-        val sin = MathUtils.sin(halfAngle)
-
-        this.x = axis.x * sin
-        this.y = axis.y * sin
-        this.z = axis.z * sin
-        this.w = MathUtils.cos(halfAngle)
-
-        return this
-    }
+    fun setFromAxis(angle: Float, axis: Vector3): Quaternion =
+        this.setFromAxis(angle, axis.x, axis.y, axis.z)
 
     /**
      * Composes this quaternion using the specified angles of rotation around
@@ -305,17 +388,30 @@ class Quaternion(x: Float = 0.0f,
         Quaternion(this.x * scalar, this.y * scalar,
                    this.z * scalar, this.w * scalar)
 
-    operator fun times(quat: Quaternion): Quaternion =
+    /**
+     * Multiplies this quaternion by the specified x-, y-, z-, and w-axis
+     * components.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @param w
+     *        The w-axis component to add.
+     * @return The product of a quaternion and four components.
+     */
+    fun times(x: Float, y: Float, z: Float, w: Float): Quaternion =
         Quaternion(
-            this.w * quat.x + this.x * quat.w +
-            this.y * quat.z - this.z * quat.y,
-            this.w * quat.y - this.x * quat.z +
-            this.y * quat.w + this.z * quat.x,
-            this.w * quat.z + this.x * quat.y -
-            this.y * quat.x + this.z * quat.w,
-            this.w * quat.w - this.x * quat.x -
-            this.y * quat.y - this.z * quat.z
+            this.w * x + this.x * w + this.y * z - this.z * y,
+            this.w * y - this.x * z + this.y * w + this.z * x,
+            this.w * z + this.x * y - this.y * x + this.z * w,
+            this.w * w - this.x * x - this.y * y - this.z * z
         )
+
+    operator fun times(quat: Quaternion): Quaternion =
+        this.times(quat.x, quat.y, quat.z, quat.w)
 
     /**
      * Multiplies the components of this quaternion by the specified scalar
@@ -335,6 +431,34 @@ class Quaternion(x: Float = 0.0f,
     }
 
     /**
+     * Multiplies this quaternion by the specified x-, y-, z-, and w-axis
+     * components and modifies this quaternion as a result.
+     *
+     * @param x
+     *        The x-axis component to add.
+     * @param y
+     *        The y-axis component to add.
+     * @param z
+     *        The z-axis component to add.
+     * @param w
+     *        The w-axis component to add.
+     * @return A reference to this quaternion for easy chaining.
+     */
+    fun timesSelf(x: Float, y: Float, z: Float, w: Float): Quaternion {
+        val oldW = this.w
+        val oldX = this.x
+        val oldY = this.y
+        val oldZ = this.z
+
+        this.x = oldW * x + oldX * w + oldY * z - oldZ * y
+        this.y = oldW * y - oldX * z + oldY * w + oldZ * x
+        this.z = oldW * z + oldX * y - oldY * x + oldZ * w
+        this.w = oldW * w - oldX * x - oldY * y - oldZ * z
+
+        return this
+    }
+
+    /**
      * Multiplies this quaternion by the specified one and also modifies this
      * quaternion as a result.
      *
@@ -344,23 +468,8 @@ class Quaternion(x: Float = 0.0f,
      *        The quaternion to multiply with.
      * @return A reference to this quaternion for easy chaining.
      */
-    fun timesSelf(quat: Quaternion): Quaternion {
-        val oldW = this.w
-        val oldX = this.x
-        val oldY = this.y
-        val oldZ = this.z
-
-        this.x = oldW * quat.x + oldX * quat.w +
-                 oldY * quat.z - oldZ * quat.y
-        this.y = oldW * quat.y - oldX * quat.z +
-                 oldY * quat.w + oldZ * quat.x
-        this.z = oldW * quat.z + oldX * quat.y -
-                 oldY * quat.x + oldZ * quat.w
-        this.w = oldW * quat.w - oldX * quat.x -
-                 oldY * quat.y - oldZ * quat.z
-
-        return this
-    }
+    fun timesSelf(quat: Quaternion): Quaternion =
+        this.timesSelf(quat.x, quat.y, quat.z, quat.w)
 
     /**
      * Converts this quaternion to a rotation matrix.

@@ -138,6 +138,19 @@ class QuaternionTest : ShouldSpec() {
             }
         }
 
+        "Subtracting a quaternion from components" {
+            should("subtract all components from each other") {
+                assertAll(Gen.quaternion(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    quat: Quaternion, x: Float, y: Float, z: Float, w: Float ->
+
+                    quat.minus(x, y, z, w).shouldBe(
+                        quat.x - x, quat.y - y, quat.z - z, quat.w - w
+                    )
+                }
+            }
+        }
+
         "Subtracting a quaternion from another" {
             should("subtract each quaternion's components.") {
                 assertAll(Gen.quaternion(), Gen.quaternion()) {
@@ -145,6 +158,19 @@ class QuaternionTest : ShouldSpec() {
 
                     (a - b).shouldBe(a.x - b.x, a.y - b.y, a.z - b.z,
                                      a.w - b.w)
+                }
+            }
+        }
+
+        "Subtracting a quaternion from components in place" {
+            should("subtract its components from the other") {
+                assertAll(Gen.quaternion(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    quat: Quaternion, x: Float, y: Float, z: Float, w: Float ->
+
+                    quat.clone().minusSelf(x, y, z, w).shouldBe(
+                        quat.x - x, quat.y - y, quat.z - z, quat.w - w
+                    )
                 }
             }
         }
@@ -188,6 +214,19 @@ class QuaternionTest : ShouldSpec() {
             }
         }
 
+        "Adding a quaternion to components" {
+            should("add all components from each other") {
+                assertAll(Gen.quaternion(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    quat: Quaternion, x: Float, y: Float, z: Float, w: Float ->
+
+                    quat.plus(x, y, z, w).shouldBe(
+                        quat.x + x, quat.y + y, quat.z + z, quat.w + w
+                    )
+                }
+            }
+        }
+
         "Adding a quaternion to another" {
             should("add each quaternion's components.") {
                 assertAll(Gen.quaternion(), Gen.quaternion()) {
@@ -195,6 +234,19 @@ class QuaternionTest : ShouldSpec() {
 
                     (a + b).shouldBe(a.x + b.x, a.y + b.y, a.z + b.z,
                                      a.w + b.w)
+                }
+            }
+        }
+
+        "Adding a quaternion from components in place" {
+            should("add its components from the other") {
+                assertAll(Gen.quaternion(), Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    quat: Quaternion, x: Float, y: Float, z: Float, w: Float ->
+
+                    quat.clone().plusSelf(x, y, z, w).shouldBe(
+                        quat.x + x, quat.y + y, quat.z + z, quat.w + w
+                    )
                 }
             }
         }
@@ -235,6 +287,92 @@ class QuaternionTest : ShouldSpec() {
                                                             quat.z * scalar,
                                                             quat.w * scalar)
                 }
+            }
+        }
+
+        "Multiplying a quaternion by a components" {
+            should("multiply each components") {
+                assertAll(Gen.quaternion(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    quat: Quaternion, x: Float, y: Float, z: Float, w: Float ->
+
+                    quat.times(x, y, z, w).shouldBe(
+                        quat.w * x + quat.x * w + quat.y * z - quat.z * y,
+                        quat.w * y - quat.x * z + quat.y * w + quat.z * x,
+                        quat.w * z + quat.x * y - quat.y * x + quat.z * w,
+                        quat.w * w - quat.x * x - quat.y * y - quat.z * z
+                    )
+                }
+            }
+        }
+        
+        "Multiplying a quaternion by a quaternion" {
+            should("multiply each components") {
+                assertAll(Gen.quaternion(), Gen.quaternion()) {
+                    a: Quaternion, b: Quaternion ->
+
+                    (a * b).shouldBe(
+                        a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+                        a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
+                        a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
+                        a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
+                    )
+                }
+            }
+        }
+
+        "Multiplying a quaternion by a components in place" {
+            should("multiply its components by the other") {
+                assertAll(Gen.quaternion(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    quat: Quaternion, x: Float, y: Float, z: Float, w: Float ->
+
+                    quat.clone().timesSelf(x, y, z, w).shouldBe(
+                        quat.w * x + quat.x * w + quat.y * z - quat.z * y,
+                        quat.w * y - quat.x * z + quat.y * w + quat.z * x,
+                        quat.w * z + quat.x * y - quat.y * x + quat.z * w,
+                        quat.w * w - quat.x * x - quat.y * y - quat.z * z
+                    )
+                }
+            }
+        }
+
+        "Multiplying a quaternion by a quaternion in place" {
+            should("multiply its components by the other") {
+                assertAll(Gen.quaternion(), Gen.quaternion()) {
+                    a: Quaternion, b: Quaternion ->
+
+                    a.clone().timesSelf(b).shouldBe(
+                        a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+                        a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
+                        a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
+                        a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
+                    )
+                }
+            }
+        }
+
+        "Assigning a quaternion's components using axis angle components" {
+            should("convert from half angle along an axis") {
+                assertAll(Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats()) {
+                    x: Float, y: Float, z: Float, scalar: Float ->
+
+                    val angle    = scalar * MathUtils.TwoPi
+                    val theta    = angle / 2f
+                    val sinTheta = sin(theta)
+
+                    Quaternion().setFromAxis(angle, x, y, z).shouldBe(
+                        x * sinTheta, y * sinTheta, z * sinTheta, cos(theta)
+                    )
+                }
+            }
+
+            should("produce the correct result to an example") {
+                Quaternion(MathUtils.toRadians(90f), Vector3.X)
+                    .shouldBe(0.7071f, 0f, 0f, 0.7071f, 0.00001f)
             }
         }
 
