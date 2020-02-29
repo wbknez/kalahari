@@ -1,5 +1,6 @@
 package com.willoutwest.kalahari.scene
 
+import com.willoutwest.kalahari.math.Matrix4
 import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.BoundingVolume
@@ -19,6 +20,8 @@ import com.willoutwest.kalahari.math.intersect.Intersectable
  * @property enabled
  *           Whether or not an actor is visible; this is mostly for debugging
  *           purposes.
+ * @property invTransform
+ *           The inverse transformation matrix in world space.
  * @property motion
  *           The local spatial attributes.
  * @property name
@@ -31,6 +34,8 @@ interface Actor : Cloneable, Intersectable {
     var bounds: BoundingVolume?
 
     var enabled: Boolean
+
+    val invTransform: Matrix4
 
     val motion: Motion
 
