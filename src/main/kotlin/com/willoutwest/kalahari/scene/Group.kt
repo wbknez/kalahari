@@ -54,13 +54,17 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
         }
 
         val cache   = ComputeUtils.localCache
+        val hRay    = cache.rays.borrow()
         val hRecord = cache.records.borrow()
 
         var hit     = false
         var minTime = Float.MAX_VALUE
 
+        hRay.set(ray).transformSelf(this.invTransform)
+
         this.children.forEach {
-            if(it.intersects(ray, tMin, record, eps) && tMin.value <= minTime) {
+            if(it.intersects(hRay, tMin, record, eps) &&
+                   tMin.value <= minTime) {
                 hit     = true
                 minTime = tMin.value
 
@@ -69,9 +73,16 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
         }
 
         if(hit) {
+            record.set(hRecord)
+
+            record.normal.transformSelf(this.invTransform)
+                         .normalizeSelf()
+            record.worldPosition.transformSelf(this.invTransform)
+
             tMin.value = minTime
         }
 
+        cache.rays.reuse(hRay)
         cache.records.reuse(hRecord)
 
         return hit
