@@ -1,5 +1,6 @@
 package com.willoutwest.kalahari.scene
 
+import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
 import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Ray3
@@ -30,13 +31,22 @@ class Geometric(name: String, private val surface: Surface)
             return false
         }
 
-        return when(this.surface.intersects(ray, tMin, record, eps)) {
-            false -> false
-            true  -> {
-                record.obj = this
-                true
-            }
+        val cache = ComputeUtils.localCache
+        val hRay  = cache.rays.borrow()
+
+        hRay.set(ray).transformSelf(this.invTransform)
+
+        val hit = this.surface.intersects(hRay, tMin, record, eps)
+
+        if(hit) {
+            record.normal.transformSelf(this.invTransform)
+            record.obj = this
+            record.worldPosition.transformSelf(this.invTransform)
         }
+
+        cache.rays.reuse(hRay)
+
+        return hit
     }
 
     override fun move(x: Float, y: Float, z: Float): Geometric =
