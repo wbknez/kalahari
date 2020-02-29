@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.scene
 
 import com.willoutwest.kalahari.math.ComputeUtils
+import com.willoutwest.kalahari.math.Matrix4
 import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.BoundingVolume
@@ -14,6 +15,8 @@ abstract class AbstractActor(override val name: String) : Actor {
     override var bounds: BoundingVolume? = null
 
     override var enabled: Boolean = true
+
+    override val invTransform: Matrix4 = Matrix4.Identity.clone()
 
     override val motion: Motion = Motion()
 
