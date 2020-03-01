@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.math
 
 import com.willoutwest.kalahari.math.intersect.Intersection
+import com.willoutwest.kalahari.util.FloatContainer
 import com.willoutwest.kalahari.util.pool.ConstraintHandler
 import com.willoutwest.kalahari.util.pool.QueueObjectPool
 
@@ -40,6 +41,9 @@ import com.willoutwest.kalahari.util.pool.QueueObjectPool
  *           The pool of temporary rays.
  * @property records
  *           The pool of temporary intersection records.
+ * @property tmins
+ *           The pool of temporary float containers (for minimum parametric
+ *           time).
  * @property vectors
  *           The pool of temporary three-dimensional vectors.
  */
@@ -56,6 +60,8 @@ class ComputeCache(handler: ConstraintHandler) {
     val rays = QueueObjectPool(2, handler, { Ray3() })
 
     val records = QueueObjectPool(2, handler, { Intersection() })
+
+    val tmins = QueueObjectPool(4, handler, { FloatContainer(0f) })
 
     val vectors = QueueObjectPool(4, handler, { Vector3() })
 }
