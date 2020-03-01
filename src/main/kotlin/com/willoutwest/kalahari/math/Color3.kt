@@ -62,6 +62,49 @@ fun intToComponent(value: Int): Float {
 class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
     : Cloneable, Tuple3(red, green, blue) {
 
+    companion object {
+
+        /**
+         * Represents the color red.
+         */
+        val Red = Color3(1f, 0f, 0f)
+
+        /**
+         * Represents the color orange.
+         */
+        val Orange = Color3(1f, 0.5f, 0f)
+
+        /**
+         * Represents the color yellow.
+         */
+        val Yellow = Color3(1f, 1f, 0f)
+
+        /**
+         * Represents the color green.
+         */
+        val Green = Color3(0f, 1f, 0f)
+
+        /**
+         * Represents the color blue.
+         */
+        val Blue = Color3(0f, 0f, 1f)
+
+        /**
+         * Represents the color purple.
+         */
+        val Purple = Color3(0.5f, 0f, 0.5f)
+
+        /**
+         * Represents the color black.
+         */
+        val Black = Color3(0f, 0f, 0f)
+
+        /**
+         * Represents the color white.
+         */
+        val White = Color3(1f, 1f, 1f)
+    }
+
     var red: Float
         get() = this.x
         set(value) { this.x = value }
