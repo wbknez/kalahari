@@ -428,6 +428,46 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     }
 
     /**
+     * Converts this vector to a scaling matrix.
+     *
+     * @return A scaling matrix.
+     */
+    fun toScalingMatrix(): Matrix4 = this.toScalingMatrix(Matrix4())
+
+    /**
+     * Converts this vector to a scaling matrix.
+     *
+     * @param store
+     *        The matrix to store the result in.
+     * @return A reference to [store] for easy chaining.
+     */
+    fun toScalingMatrix(store: Matrix4): Matrix4 =
+        store.set(this.x, 0f, 0f, 0f,
+                  0f, this.y, 0f, 0f,
+                  0f, 0f, this.z, 0f,
+                  0f, 0f, 0f, 1f)
+
+    /**
+     * Converts this vector to a translation matrix.
+     *
+     * @return A translation matrix.
+     */
+    fun toTranslationMatrix(): Matrix4 = this.toTranslationMatrix(Matrix4())
+
+    /**
+     * Converts this vector to a translation matrix.
+     *
+     * @param store
+     *        The matrix to store the result in.
+     * @return A reference to [store] for easy chaining.
+     */
+    fun toTranslationMatrix(store: Matrix4): Matrix4 =
+        store.set(1f, 0f, 0f, this.x,
+                  0f, 1f, 0f, this.y,
+                  0f, 0f, 1f, this.z,
+                  0f, 0f, 0f, 1f)
+
+    /**
      * Transforms this vector using the specified matrix.
      *
      * @param mat

@@ -491,6 +491,32 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Converting a vector to a scaling matrix" {
+            should("place all components along the diagonal") {
+                assertAll(Gen.vector3()) { vec: Vector3 ->
+                    vec.toScalingMatrix().shouldBe(Matrix4(
+                        vec.x, 0f, 0f, 0f,
+                        0f, vec.y, 0f, 0f,
+                        0f, 0f, vec.z, 0f,
+                        0f, 0f, 0f, 1f
+                    ))
+                }
+            }
+        }
+
+        "Converting a vector to a translation matrix" {
+            should("place all components along the last column") {
+                assertAll(Gen.vector3()) { vec: Vector3 ->
+                    vec.toTranslationMatrix().shouldBe(Matrix4(
+                        1f, 0f, 0f, vec.x,
+                        0f, 1f, 0f, vec.y,
+                        0f, 0f, 1f, vec.z,
+                        0f, 0f, 0f, 1f
+                    ))
+                }
+            }
+        }
+
         "Transforming a vector" {
             should("be the product of each component with a row") {
                 assertAll(Gen.vector3(), Gen.matrix4()) {
