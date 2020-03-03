@@ -1,10 +1,11 @@
 package com.willoutwest.kalahari.render
 
 import com.willoutwest.kalahari.math.Color3
+import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
-import com.willoutwest.kalahari.math.Point3
-import com.willoutwest.kalahari.math.intersect.BoundingSphere
+import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.render.orders.NaturalDrawingOrder
+import com.willoutwest.kalahari.scene.Geometric
 import com.willoutwest.kalahari.scene.Scene
 
 /**
@@ -28,54 +29,61 @@ class Tracer(@JvmField var drawOrder: DrawingOrder = NaturalDrawingOrder(),
              @JvmField val hEps: EpsilonTable = EpsilonTable(0.0001f),
              @JvmField val sEps: EpsilonTable = EpsilonTable(0.0001f)) {
 
-    private val red    = Color3(1f, 0f, 0f)
-    private val orange = Color3(1f, 0.7f, 0f)
-    private val yellow = Color3(1f, 1f, 0f)
-    private val green  = Color3(0f, 0.7f, 0f)
-    private val blue   = Color3(0f, 0f, 1f)
-    private val white  = Color3(1f, 1f, 1f)
-
-
-    private val bsRed    = BoundingSphere(101f, 150f, 150f, 0f)
-    private val bsYellow = BoundingSphere(101f, 250f, 250f, 0f)
-    private val bsBlue   = BoundingSphere(101f, 350f, 350f, 0f)
-
     /**
-     *
+     * Computes the reflected color of light based on the path of the
+     * specified ray cast into the specified scene.
      *
      * @param ray
-     *
+     *        The ray to trace.
      * @param scene
-     *
-     * @return
+     *        The scene to render.
+     * @param depth
+     *        The current recursion depth.
+     * @return The reflected color.
      */
-    fun trace(coords: Coords, scene: Scene): Color3 {
-        val point = Point3(coords.x.toFloat(), coords.y.toFloat(), 0f)
+    fun trace(ray: Ray3, scene: Scene, depth: Int): Color3 =
+        this.trace(ray, scene, depth, Color3())
 
-        val inRed    = this.bsRed.contains(point)
-        val inYellow = this.bsYellow.contains(point)
-        val inBlue   = this.bsBlue.contains(point)
+    /**
+     * Computes the reflected color of light based on the path of the
+     * specified ray cast into the specified scene.
+     *
+     * @param ray
+     *        The ray to trace.
+     * @param scene
+     *        The scene to render.
+     * @param depth
+     *        The current recursion depth.
+     * @param store
+     *        The color to store the result in.
+     * @return A reference to [store] for easy chaining.
+     */
+    fun trace(ray: Ray3, scene: Scene, depth: Int, store: Color3):
+        Color3 =
+        when(depth < scene.viewport.maxDepth) {
+            false -> store.set(Color3.Black)
+            true  -> {
+                val cache   = ComputeUtils.localCache
+                val hRecord = cache.records.borrow()
+                val tMin    = cache.tmins.borrow()
 
-        val inOrange = inRed && inYellow
-        val inGreen  = inYellow && inBlue
+                when(scene.root.intersects(ray, tMin, hRecord, this.hEps)) {
+                    false -> store.set(scene.viewport.bgColor)
+                    true  -> {
+                        println("Hit: $ray")
+                        hRecord.depth += 1
 
-        if(inOrange) {
-            return this.orange
+                        val geom  = hRecord.obj as Geometric
+                        val color = geom.color
+
+                        store.set(color)
+                    }
+                }
+
+                cache.records.reuse(hRecord)
+                cache.tmins.reuse(tMin)
+
+                store
+            }
         }
-        else if(inGreen) {
-            return this.green
-        }
-        else if(inRed) {
-            return this.red
-        }
-        else if(inYellow) {
-            return this.yellow
-        }
-        else if(inBlue) {
-            return this.blue
-        }
-        else {
-            return this.white
-        }
-    }
 }
