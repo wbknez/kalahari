@@ -1,5 +1,8 @@
 package com.willoutwest.kalahari.render
 
+import com.willoutwest.kalahari.math.Point3
+import com.willoutwest.kalahari.math.Ray3
+import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.scene.Scene
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.toObservable
@@ -62,7 +65,15 @@ class Pipeline(numThreads: Int) : AutoCloseable {
                 logger.log(Level.INFO, "Rendering complete!")
             }
             .flatMap{
-                Observable.just(Pixel(it.x, it.y, tracer.trace(it, scene).rgb))
+                val fX = it.x.toFloat()
+                val fY = it.y.toFloat()
+
+                Observable.just(Ray3(Vector3(0f, 0f, 1f),
+                                     Point3(fX, fY, 20f)))
+            }
+            .flatMap{
+                Observable.just(Pixel(it.origin.x.toInt(), it.origin.y.toInt(),
+                                      tracer.trace(it, scene, 0).rgb))
             }
             .doOnNext{
                 logger.log(Level.INFO, "Pixel traced: {0}.", it)
