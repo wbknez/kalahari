@@ -81,4 +81,8 @@ abstract class AbstractActor(override val name: String) : Actor {
 
         return this
     }
+
+    override fun visit(visitor: (Actor) -> Unit) {
+        visitor(this)
+    }
 }

@@ -131,4 +131,12 @@ interface Actor : Cloneable, Intersectable {
      * @return A reference to this actor for easy chaining.
      */
     fun scale(vec: Vector3): Actor
+
+    /**
+     * Applies the specified visitation function to this actor.
+     *
+     * @param visitor
+     *        The visitation function to apply.
+     */
+    fun visit(visitor: (Actor) -> Unit)
 }

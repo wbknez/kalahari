@@ -105,4 +105,10 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
         super.scale(x, y, z) as Group
 
     override fun scale(vec: Vector3): Group = super.scale(vec) as Group
+
+    override fun visit(visitor: (Actor) -> Unit) {
+        super.visit(visitor)
+
+        this.children.forEach(visitor)
+    }
 }
