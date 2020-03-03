@@ -57,6 +57,10 @@ class Pipeline(numThreads: Int) : AutoCloseable {
      *        The ray tracing function to use.
      */
     fun submit(scene: Scene, tracer: Tracer) {
+        scene.root.visit {
+            it.motion.toMatrix(it.invTransform).invertSelf()
+        }
+
         tracer.drawOrder.orderOf(scene.viewport.bounds).toObservable()
             .doOnNext{ logger.log(Level.INFO, "Tracing pixel: {0}.", it) }
             .doOnComplete{
