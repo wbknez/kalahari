@@ -467,6 +467,68 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Adding a vector from scaled components" {
+            should("add all components to each other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, scalar: Float, x: Float, y: Float,
+                    z: Float ->
+
+                    vector.plusTimes(scalar, x, y, z).shouldBe(
+                        vector.x + scalar * x,
+                        vector.y + scalar * y,
+                        vector.z + scalar * z
+                    )
+                }
+            }
+        }
+
+        "Adding a vector to another that has been scaled" {
+            should("add each vector's components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.vector3()) {
+                    a: Vector3, scalar, b: Vector3 ->
+
+                    a.plusTimes(scalar, b).shouldBe(
+                        a.x + scalar * b.x,
+                        a.y + scalar * b.y,
+                        a.z + scalar * b.z
+                    )
+                }
+            }
+        }
+
+        "Adding a vector from scaled components in place" {
+            should("add its components to the other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, scalar: Float, x: Float, y: Float,
+                    z: Float ->
+
+                    vector.clone().plusTimesSelf(scalar, x, y, z).shouldBe(
+                        vector.x + scalar * x,
+                        vector.y + scalar * y,
+                        vector.z + scalar * z
+                    )
+                }
+            }
+        }
+
+        "Adding a vector to another that has been scaled in place" {
+            should("add each of its components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.vector3()) {
+                    a: Vector3, scalar, b: Vector3 ->
+
+                    a.clone().plusTimesSelf(scalar, b).shouldBe(
+                        a.x + scalar * b.x,
+                        a.y + scalar * b.y,
+                        a.z + scalar * b.z
+                    )
+                }
+            }
+        }
+
         "Multiplying a vector by a scalar" {
             should("multiply each component by that scalar") {
                 assertAll(Gen.vector3(), Gen.numericFloats()) {

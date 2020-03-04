@@ -401,6 +401,72 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     open fun plusSelf(vec: Vector3): Vector3 =
         this.plusSelf(vec.x, vec.y, vec.z)
 
+    /**
+     * Adds this vector to the scaled product of the specified scalar and
+     * components vector.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param x
+     *        The x-axis component to scale and add.
+     * @param y
+     *        The y-axis component to scale and add.
+     * @param z
+     *        The z-axis component to scale and add.
+     * @return The sum of a vector and three scaled components.
+     */
+    fun plusTimes(scalar: Float, x: Float, y: Float, z: Float): Vector3 =
+        Vector3(this.x + (scalar * x), this.y + (scalar * y),
+                this.z + (scalar * z))
+
+    /**
+     * Adds this vector to the scaled product of the specified scalar and
+     * specified vector.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param vec
+     *        The vector to scale and add.
+     * @return The sum of a vector and a scaled vector.
+     */
+    fun plusTimes(scalar: Float, vec: Vector3): Vector3 =
+        this.plusTimes(scalar, vec.x, vec.y, vec.z)
+
+    /**
+     * Adds this vector to the scaled product of the specified scalar and
+     * specified components and modifies this vector as a result.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param x
+     *        The x-axis component to scale and add.
+     * @param y
+     *        The y-axis component to scale and add.
+     * @param z
+     *        The z-axis component to scale and add.
+     * @return A reference to this vector for easy chaining.
+     */
+    fun plusTimesSelf(scalar: Float, x: Float, y: Float, z: Float): Vector3 {
+        this.x += scalar * x
+        this.y += scalar * y
+        this.z += scalar * z
+
+        return this
+    }
+
+    /**
+     * Adds this vector to the scaled product of the specified scalar and
+     * specified vector and modifies this vector as a result.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param vec
+     *        The vector to scale and add.
+     * @return A reference to this vector for easy chaining.
+     */
+    fun plusTimesSelf(scalar: Float, vec: Vector3): Vector3 =
+        this.plusTimesSelf(scalar, vec.x, vec.y, vec.z)
+
     override fun set(x: Float, y: Float, z: Float): Vector3 =
         super.set(x, y, z) as Vector3
 
