@@ -55,6 +55,24 @@ class Ray3(@JvmField val dir: Vector3 = Vector3.Unit.clone(),
     override fun hashCode(): Int = hash(this.dir, this.origin)
 
     /**
+     * Computes the parametric time at which an intersection between this
+     * ray and the specified point with the specified normal occurs.
+     *
+     * @param point
+     *        The intersection point to use.
+     * @param normal
+     *        The intersection normal to use.
+     * @return The location of an intersection in parametric time.
+     */
+    fun intersectsAt(point: Point3, normal: Normal3): Float {
+        val x = point.x - this.origin.x
+        val y = point.y - this.origin.y
+        val z = point.z - this.origin.z
+
+        return normal.dot(x, y, z) / this.dir.dot(normal)
+    }
+
+    /**
      * Normalizes this ray by computing the normalization of the direction
      * (and inverse direction), if appropriate.
      *

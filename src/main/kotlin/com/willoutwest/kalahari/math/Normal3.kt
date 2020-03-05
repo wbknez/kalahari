@@ -65,8 +65,11 @@ class Normal3(x: Float = 0f, y: Float = 0f, z: Float = 0f)
 
     override fun normalizeSelf(): Normal3 = super.normalizeSelf() as Normal3
 
+    override fun plus(x: Float, y: Float, z: Float): Normal3 =
+        Normal3(this.x + x, this.y + y, this.z + z)
+
     override operator fun plus(vec: Vector3): Normal3 =
-        Normal3(this.x + vec.x, this.y + vec.y, this.z + vec.z)
+        this.plus(vec.x, vec.y, vec.z)
 
     override fun plusSelf(x: Float, y: Float, z: Float): Normal3 =
         super.plusSelf(x, y, z) as Normal3

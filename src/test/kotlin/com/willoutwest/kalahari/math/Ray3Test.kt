@@ -26,6 +26,23 @@ class Ray3Test : ShouldSpec() {
 
     init {
 
+        "Computing the time of intersection" {
+            should("be the division of the normal dotted with the ray") {
+                assertAll(Gen.ray3(), Gen.point3(), Gen.normal3()) {
+                    ray: Ray3, point: Point3, normal: Normal3 ->
+
+                    val x = point.x - ray.origin.x
+                    val y = point.y - ray.origin.y
+                    val z = point.z - ray.origin.z
+
+                    val nDotO = normal.x * x + normal.y * y + normal.z * z
+                    val dDotN = ray.dir.dot(normal)
+
+                    ray.intersectsAt(point, normal) shouldBe (nDotO / dDotN)
+                }
+            }
+        }
+
         "Normalizing a ray" {
             should("normalize both the direction and its inverse") {
                 assertAll(Gen.ray3()) { ray: Ray3 ->
