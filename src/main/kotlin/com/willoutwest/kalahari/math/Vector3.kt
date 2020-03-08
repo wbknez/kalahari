@@ -299,6 +299,72 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
         this.minusSelf(vec.x, vec.y, vec.z)
 
     /**
+     * Subtracts this vector from the scaled product of the specified scalar
+     * and components vector.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param x
+     *        The x-axis component to scale and subtract.
+     * @param y
+     *        The y-axis component to scale and subtract.
+     * @param z
+     *        The z-axis component to scale and subtract.
+     * @return The difference of a vector and three scaled components.
+     */
+    fun minusTimes(scalar: Float, x: Float, y: Float, z: Float): Vector3 =
+        Vector3(this.x - (scalar * x), this.y - (scalar * y),
+                this.z - (scalar * z))
+
+    /**
+     * Subtracts this vector from the scaled product of the specified scalar
+     * and specified vector.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param vec
+     *        The vector to scale and subtract.
+     * @return The difference of a vector and a scaled vector.
+     */
+    fun minusTimes(scalar: Float, vec: Vector3): Vector3 =
+        this.minusTimes(scalar, vec.x, vec.y, vec.z)
+
+    /**
+     * Subtracts this vector from the scaled product of the specified scalar
+     * and specified components and modifies this vector as a result.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param x
+     *        The x-axis component to scale and subtract.
+     * @param y
+     *        The y-axis component to scale and subtract.
+     * @param z
+     *        The z-axis component to scale and subtract.
+     * @return A reference to this vector for easy chaining.
+     */
+    fun minusTimesSelf(scalar: Float, x: Float, y: Float, z: Float): Vector3 {
+        this.x -= scalar * x
+        this.y -= scalar * y
+        this.z -= scalar * z
+
+        return this
+    }
+
+    /**
+     * Subtracts this vector from the scaled product of the specified scalar
+     * and specified vector and modifies this vector as a result.
+     *
+     * @param scalar
+     *        The value to scale by.
+     * @param vec
+     *        The vector to scale and subtract.
+     * @return A reference to this vector for easy chaining.
+     */
+    fun minusTimesSelf(scalar: Float, vec: Vector3): Vector3 =
+        this.minusTimesSelf(scalar, vec.x, vec.y, vec.z)
+
+    /**
      * Negates this vector and also modifies this vector as a result.
      *
      * @return A negated vector.

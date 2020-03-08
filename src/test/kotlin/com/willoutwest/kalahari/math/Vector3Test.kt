@@ -379,6 +379,68 @@ class Vector3Test : ShouldSpec() {
             }
         }
 
+        "Subtracting a vector from scaled components" {
+            should("subtract all components to each other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, scalar: Float, x: Float, y: Float,
+                    z: Float ->
+
+                    vector.minusTimes(scalar, x, y, z).shouldBe(
+                        vector.x - scalar * x,
+                        vector.y - scalar * y,
+                        vector.z - scalar * z
+                    )
+                }
+            }
+        }
+
+        "Subtracting a vector to another that has been scaled" {
+            should("subtract each vector's components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.vector3()) {
+                    a: Vector3, scalar, b: Vector3 ->
+
+                    a.minusTimes(scalar, b).shouldBe(
+                        a.x - scalar * b.x,
+                        a.y - scalar * b.y,
+                        a.z - scalar * b.z
+                    )
+                }
+            }
+        }
+
+        "Subtracting a vector from scaled components in place" {
+            should("subtract its components to the other") {
+                assertAll(Gen.vector3(), Gen.smallFloats(),
+                          Gen.smallFloats(), Gen.smallFloats(),
+                          Gen.smallFloats()) {
+                    vector: Vector3, scalar: Float, x: Float, y: Float,
+                    z: Float ->
+
+                    vector.clone().minusTimesSelf(scalar, x, y, z).shouldBe(
+                        vector.x - scalar * x,
+                        vector.y - scalar * y,
+                        vector.z - scalar * z
+                    )
+                }
+            }
+        }
+
+        "Subtracting a vector to another that has been scaled in place" {
+            should("subtract each of its components") {
+                assertAll(Gen.vector3(), Gen.smallFloats(), Gen.vector3()) {
+                    a: Vector3, scalar, b: Vector3 ->
+
+                    a.clone().minusTimesSelf(scalar, b).shouldBe(
+                        a.x - scalar * b.x,
+                        a.y - scalar * b.y,
+                        a.z - scalar * b.z
+                    )
+                }
+            }
+        }
+
         "Negating a vector" {
             should("negate each component") {
                 assertAll(Gen.vector3()) { vec: Vector3 ->
