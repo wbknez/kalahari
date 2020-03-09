@@ -50,6 +50,9 @@ class TypeAssociator<T, A> {
             "Could not find an association for ${id}."
         )
 
+    operator fun get(obj: Typeable<T>) =
+        this.get(obj.type)
+
     override fun hashCode(): Int = hash(this.associations)
 
     operator fun set(id: T, assoc: A) {
