@@ -1,9 +1,9 @@
 package com.willoutwest.kalahari.scene.camera.lenses
 
+import com.willoutwest.kalahari.math.MathUtils.Companion.Pi
 import com.willoutwest.kalahari.math.MathUtils.Companion.PiOver180
 import com.willoutwest.kalahari.math.MathUtils.Companion.cos
 import com.willoutwest.kalahari.math.MathUtils.Companion.sin
-import com.willoutwest.kalahari.math.MathUtils.Companion.sqrt
 import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.render.Coords
 import com.willoutwest.kalahari.scene.camera.Camera
@@ -12,9 +12,9 @@ import com.willoutwest.kalahari.scene.camera.Viewport
 
 /**
  * Represents an implementation of [Lens] that creates camera rays for a
- * scene as if viewing it through the eye of a fish.
+ * scene as if viewing it through a spherical panoramic projection.
  */
-class FishLens : AbstractLens(), Lens {
+class SphericalLens : AbstractLens(), Lens {
 
     override fun capture(coords: Coords, camera: Camera,
                          viewport: Viewport): Ray3 {
@@ -29,26 +29,22 @@ class FishLens : AbstractLens(), Lens {
         val nX = 2.0f / (ps * width)  * pX
         val nY = 2.0f / (ps * height) * pY
 
-        val rSquared = nX * nX + nY * nY
-        val ray      = Ray3()
+        val lambda = nX * camera.lambdaMax * PiOver180
+        val psi    = nY * camera.psiMax    * PiOver180
 
-        if(rSquared <= 1f) {
-            val r   = sqrt(rSquared)
-            val psi = r * camera.psiMax * PiOver180
+        val phi   = Pi        - lambda
+        val theta = 0.5f * Pi - psi
 
-            val cosAlpha = cos(nX / r)
-            val cosPsi   = cos(psi)
-            val sinAlpha = sin(nY / r)
-            val sinPsi   = sin(psi)
+        val cosPhi   = cos(phi)
+        val cosTheta = cos(theta)
+        val sinPhi   = sin(phi)
+        val sinTheta = sin(theta)
 
-            ray.dir.set(camera.uvw.u)
-                .timesSelf(cosAlpha * sinPsi)
-                .plusTimesSelf(sinAlpha * sinPsi, camera.uvw.v)
-                .minusTimesSelf(cosPsi, camera.uvw.w)
-                .normalizeSelf()
-            ray.origin.set(camera.eye)
-        }
-
-        return ray
+        return Ray3(camera.uvw.u.clone()
+                        .timesSelf(sinPhi * sinTheta)
+                        .plusTimesSelf(cosTheta, camera.uvw.v)
+                        .plusTimesSelf(cosPhi * sinTheta, camera.uvw.w)
+                        .normalizeSelf(),
+                    camera.eye.clone())
     }
 }

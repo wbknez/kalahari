@@ -19,6 +19,8 @@ import com.willoutwest.kalahari.util.Typeable
  *           The observer (camera) location.
  * @property focus
  *           The distance to the focus plane.
+ * @property lambdaMax
+ *           The maximum field of view in the azimuth direction.
  * @property lookAt
  *           The target location.
  * @property psiMax
@@ -53,6 +55,8 @@ class Camera(name: String) :
     var eye: Point3 = Point3(0f, 0f, 500f)
 
     var focus: Float by this.params
+
+    var lambdaMax: Float by this.params
 
     var lookAt: Point3 = Point3.Zero.clone()
 
