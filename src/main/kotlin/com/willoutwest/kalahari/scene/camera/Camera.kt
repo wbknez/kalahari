@@ -21,6 +21,8 @@ import com.willoutwest.kalahari.util.Typeable
  *           The distance to the focus plane.
  * @property lookAt
  *           The target location.
+ * @property psiMax
+ *           The maximum field of view in the polar direction.
  * @property radius
  *           The lens radius.
  * @property sampler
@@ -57,6 +59,8 @@ class Camera(name: String) :
     var radius: Float by this.params
 
     var sampler: Sampler2 by this.params
+
+    var psiMax: Float by this.params
 
     var up: Vector3 = Vector3.Y.clone()
 
