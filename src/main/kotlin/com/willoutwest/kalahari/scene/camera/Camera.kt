@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.scene.camera
 
 import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.math.Vector3
+import com.willoutwest.kalahari.math.sample.Sampler2
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
 
@@ -16,12 +17,23 @@ import com.willoutwest.kalahari.util.Typeable
  *           The amount of time to accumulate light.
  * @property eye
  *           The observer (camera) location.
+ * @property focus
+ *           The distance to the focus plane.
  * @property lookAt
  *           The target location.
+ * @property radius
+ *           The lens radius.
+ * @property sampler
+ *           The lens sampler.
  * @property up
  *           The "up" direction.
  * @property uvw
  *           The orthonormal viewing basis.
+ * @property xShift
+ *           The amount to shift by along the x-axis; only used for
+ *           stereoscopic rendering.
+ * @property zoom
+ *           The amount of per-pixel magnification.
  */
 class Camera(name: String) :
     Cloneable, ParameterMap(name), Typeable<Camera.Type> {
@@ -38,7 +50,13 @@ class Camera(name: String) :
 
     var eye: Point3 = Point3(0f, 0f, 500f)
 
+    var focus: Float by this.params
+
     var lookAt: Point3 = Point3.Zero.clone()
+
+    var radius: Float by this.params
+
+    var sampler: Sampler2 by this.params
 
     var up: Vector3 = Vector3.Y.clone()
 

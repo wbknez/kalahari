@@ -21,7 +21,7 @@ interface Lens {
      *        from.
      * @return A list of in-order cameras to process.
      */
-    fun getCameras(camera: Camera): List<Camera> = listOf(camera)
+    fun getCameras(camera: Camera): List<Camera>
 
     /**
      * Applies some arbitrary pre-render logic to the specified camera and
@@ -32,13 +32,13 @@ interface Lens {
      * @param viewport
      *        The viewing plane to use.
      */
-    fun prepare(camera: Camera, viewport: Viewport) = Unit
+    fun prepare(camera: Camera, viewport: Viewport)
 
     /**
      * Transforms the specified pixel into to a camera ray whose origin has
      * the specified location and whose direction lies inwards toward a scene.
      *
-     * @param point
+     * @param coords
      *        The pixel origin to use.
      * @param camera
      *        The collection of viewing parameters to use.
@@ -46,5 +46,5 @@ interface Lens {
      *        The viewing plane to use.
      * @return A new camera ray.
      */
-    fun capture(point: Coords, camera: Camera, viewport: Viewport): Ray3
+    fun capture(coords: Coords, camera: Camera, viewport: Viewport): Ray3
 }
