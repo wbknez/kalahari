@@ -11,6 +11,8 @@ import com.willoutwest.kalahari.util.Typeable
  * pixel coordinates are transformed into rays that trace the boundaries of a
  * scene.
  *
+ * @property beta
+ *           The stereo separation angle.
  * @property distance
  *           The distance to the viewing plane.
  * @property exposure
@@ -19,14 +21,25 @@ import com.willoutwest.kalahari.util.Typeable
  *           The observer (camera) location.
  * @property focus
  *           The distance to the focus plane.
+ * @property gap
+ *           The amount of space between images (in pixels).
  * @property lambdaMax
  *           The maximum field of view in the azimuth direction.
+ * @property left
+ *           The left camera in a stereoscopic view.
  * @property lookAt
  *           The target location.
+ * @property mode
+ *           The stereoscopic viewing mode.
+ * @property offSet
+ *           The number of pixels to offset by along the y-axis when
+ *           rendering to an output; only used for stereoscopic rendering.
  * @property psiMax
  *           The maximum field of view in the polar direction.
  * @property radius
  *           The lens radius.
+ * @property right
+ *           The right camera in a stereoscopic view.
  * @property sampler
  *           The lens sampler.
  * @property up
@@ -48,6 +61,8 @@ class Camera(name: String) :
      */
     interface Type
 
+    var beta: Float by this.params
+
     var distance: Float by this.params
 
     var exposure: Float = 1f
@@ -56,9 +71,17 @@ class Camera(name: String) :
 
     var focus: Float by this.params
 
+    var gap: Int by this.params
+
     var lambdaMax: Float by this.params
 
+    var left: Camera by this.params
+
     var lookAt: Point3 = Point3.Zero.clone()
+
+    var mode: StereoMode by this.params
+
+    var offSet: Int = 0
 
     var radius: Float by this.params
 
@@ -66,13 +89,15 @@ class Camera(name: String) :
 
     var psiMax: Float by this.params
 
+    var right: Camera by this.params
+
     var up: Vector3 = Vector3.Y.clone()
 
     val uvw: Uvw = Uvw()
 
     override var type: Type by this.params
 
-    var xShift: Float by this.params
+    var xShift: Float = 0f
 
     var zoom: Float by this.params
 
