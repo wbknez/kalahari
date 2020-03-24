@@ -40,6 +40,19 @@ open class ParameterMap(val id: String) : Cloneable {
             else            -> false
         }
 
+    /**
+     * Searches and returns the value associated with the specified key; if
+     * none is found, the specified default value will be returned instead.
+     *
+     * @param key
+     *        The key to search for.
+     * @param defaultValue
+     *        The value to use if no association exists.
+     * @return A value associated with a key.
+     */
+    fun getOrDefault(key: String, defaultValue: Any): Any =
+        this.params.getOrDefault(key, defaultValue)
+
     override fun hashCode(): Int = hash(this.id, this.params)
 
     override fun toString() = "ParameterMap(${this.id}, ${this.params})"
