@@ -134,6 +134,8 @@ sealed class AppEntry {
                     globals.set("tracer", CoerceJavaToLua.coerce(tracer))
 
                     chunk.call()
+
+                    pipeline.prepare(scene, tracer)
                     pipeline.submit(scene, tracer)
                 }
             }

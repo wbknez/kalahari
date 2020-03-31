@@ -7,6 +7,10 @@ import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.render.orders.NaturalDrawingOrder
 import com.willoutwest.kalahari.scene.Geometric
 import com.willoutwest.kalahari.scene.Scene
+import com.willoutwest.kalahari.scene.camera.Camera
+import com.willoutwest.kalahari.scene.camera.Cameras
+import com.willoutwest.kalahari.scene.camera.Lens
+import com.willoutwest.kalahari.util.TypeAssociator
 
 /**
  * Represents a mechanism for computing the reflected color of light based on
@@ -21,13 +25,29 @@ import com.willoutwest.kalahari.scene.Scene
  * @property hEps
  *           The collection of per-geometry epsilon values that denote the
  *           parametric minimum for a valid ray-to-surface intersection.
+ * @property lenses
+ *           A mapping of camera types to lenses.
  * @property sEps
  *           The collection of per-geometry epsilon values that denote the
  *           parametric minimum for a valid shadow ray-to-surface intersection.
  */
-class Tracer(@JvmField var drawOrder: DrawingOrder = NaturalDrawingOrder(),
-             @JvmField val hEps: EpsilonTable = EpsilonTable(0.0001f),
-             @JvmField val sEps: EpsilonTable = EpsilonTable(0.0001f)) {
+class Tracer {
+
+    @JvmField
+    var drawOrder: DrawingOrder = NaturalDrawingOrder()
+
+    @JvmField
+    val hEps: EpsilonTable = EpsilonTable(0.0001f)
+
+    @JvmField
+    val lenses: TypeAssociator<Camera.Type, Lens> = TypeAssociator()
+
+    @JvmField
+    val sEps: EpsilonTable = EpsilonTable(0.0001f)
+
+    init {
+        this.lenses.addAll(Cameras.defaultLenses())
+    }
 
     /**
      * Computes the reflected color of light based on the path of the
@@ -70,7 +90,6 @@ class Tracer(@JvmField var drawOrder: DrawingOrder = NaturalDrawingOrder(),
                 when(scene.root.intersects(ray, tMin, hRecord, this.hEps)) {
                     false -> store.set(scene.viewport.bgColor)
                     true  -> {
-                        println("Hit: $ray")
                         hRecord.depth += 1
 
                         val geom  = hRecord.obj as Geometric
