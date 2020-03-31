@@ -10,7 +10,7 @@ import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.util.FloatContainer
 
 /**
- * Represents an implementation of [Actor] that contains an arbtirary
+ * Represents an implementation of [Actor] that contains an arbitrary
  * geometric surface with associated visualization information.
  *
  * @property color
