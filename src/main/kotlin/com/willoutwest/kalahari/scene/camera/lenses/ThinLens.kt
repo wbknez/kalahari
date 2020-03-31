@@ -10,7 +10,7 @@ import com.willoutwest.kalahari.scene.camera.Viewport
 /**
  * Represents an implementation of [Lens] that creates camera rays for a
  * scene as if viewing it through a circular lens of finite radius, thereby
- * allowing for depth of field
+ * allowing for depth of field.
  */
 class ThinLens : AbstractLens(), Lens {
 
