@@ -3,7 +3,6 @@ package com.willoutwest.kalahari.math.intersect
 import com.willoutwest.kalahari.math.MathUtils
 import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.math.Ray3
-import com.willoutwest.kalahari.util.hash
 
 /**
  * Represents an implementation of [BoundingVolume] that is defined as an
@@ -16,10 +15,10 @@ import com.willoutwest.kalahari.util.hash
  * @property zLen
  *           The maximum length along the z-axis.
  */
-class BoundingBox(val xLen: Float = 1f,
-                  val yLen: Float = 1f,
-                  val zLen: Float = 1f,
-                  override val center: Point3 = Point3.Zero.clone())
+data class BoundingBox(val xLen: Float = 1f,
+                       val yLen: Float = 1f,
+                       val zLen: Float = 1f,
+                       override val center: Point3 = Point3.Zero.clone())
     : BoundingVolume, Cloneable {
 
     override val max: Point3
@@ -70,27 +69,6 @@ class BoundingBox(val xLen: Float = 1f,
 
         return (aX < this.xLen) && (aY < this.yLen) && (aZ < this.zLen)
     }
-
-    override fun equals(other: Any?): Boolean =
-        when (other) {
-            is BoundingBox -> this.xLen == other.xLen &&
-                              this.yLen == other.yLen &&
-                              this.zLen == other.zLen &&
-                              this.center == other.center
-            else           -> false
-        }
-
-    private fun getComponentOf(index: Int, component: Int): Float =
-        when(index) {
-            0 -> when(component) {
-                1 -> 0f
-                else -> 1f
-            }
-            else -> 1f
-        }
-
-    override fun hashCode(): Int =
-        hash(this.xLen, this.yLen, this.zLen, this.center)
 
     override fun intersects(ray: Ray3): Boolean {
         // The algorithm to model bounding box to bounding box intersection
@@ -189,7 +167,4 @@ class BoundingBox(val xLen: Float = 1f,
 
         return dist >= 0f
     }
-
-    override fun toString(): String =
-        "(<${this.xLen}, ${this.yLen}, ${this.zLen}>, ${this.center})"
 }

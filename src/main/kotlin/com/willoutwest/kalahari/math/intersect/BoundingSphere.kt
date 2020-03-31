@@ -3,7 +3,6 @@ package com.willoutwest.kalahari.math.intersect
 import com.willoutwest.kalahari.math.MathUtils
 import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.math.Ray3
-import com.willoutwest.kalahari.util.hash
 import kotlin.math.pow
 
 /**
@@ -13,8 +12,8 @@ import kotlin.math.pow
  * @property radius
  *           The radius of the sphere.
  */
-class BoundingSphere(val radius: Float = 1f,
-                     override val center: Point3 = Point3.Zero.clone())
+data class BoundingSphere(val radius: Float = 1f,
+                          override val center: Point3 = Point3.Zero.clone())
     : BoundingVolume, Cloneable {
 
     override val max: Point3
@@ -55,15 +54,6 @@ class BoundingSphere(val radius: Float = 1f,
 
     override fun contains(point: Point3): Boolean =
         this.center.distanceSquaredTo(point) < this.radius.pow(2)
-
-    override fun equals(other: Any?): Boolean =
-        when(other) {
-            is BoundingSphere -> this.radius == other.radius &&
-                                 this.center == other.center
-            else              -> false
-        }
-
-    override fun hashCode(): Int = hash(this.radius, this.center)
 
     override fun intersects(ray: Ray3): Boolean {
         // The algorithm to model bounding sphere to ray intersections uses
