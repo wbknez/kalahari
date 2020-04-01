@@ -5,6 +5,7 @@ import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.sample.Sampler2
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
+import com.willoutwest.kalahari.util.hash
 
 /**
  * Represents a collection of viewing parameters that control how pairs of
@@ -120,6 +121,22 @@ class Camera(name: String) :
     }
 
     override fun clone(): Camera = Camera(this)
+
+    override fun equals(other: Any?): Boolean =
+        when(other) {
+            is Camera -> super.equals(other) &&
+                         this.exposure == other.exposure &&
+                         this.eye == other.eye &&
+                         this.lookAt == other.lookAt &&
+                         this.type == other.type &&
+                         this.up == other.up &&
+                         this.uvw == other.uvw
+            else      -> false
+        }
+
+    override fun hashCode(): Int =
+        hash(super.hashCode(), this.exposure, this.eye, this.lookAt, this.type,
+             this.up, this.uvw)
 
     fun setEye(x: Float, y: Float, z: Float) {
         this.eye.set(x, y, z)
