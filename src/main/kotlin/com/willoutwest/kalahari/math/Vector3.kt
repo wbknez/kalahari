@@ -14,6 +14,13 @@ open class Vector3(x: Float = 0.0f, y: Float = 0.0f, z: Float = 0.0f)
     companion object {
 
         /**
+         * A "jitter" vector to offset around the y-axis.
+         *
+         * This is used repeatedly in various places in the text.
+         */
+        val Jitter = Vector3(0.0034f, 1.0f, 0.0071f)
+
+        /**
          * The generalized unit vector.
          */
         val Unit = Vector3(1f, 1f, 1f)
