@@ -3,6 +3,7 @@ package com.willoutwest.kalahari.scene.light
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
+import com.willoutwest.kalahari.scene.Actor
 
 /**
  * Represents a mechanism for modeling the radiance output of an arbitrary
@@ -33,6 +34,8 @@ interface Bulb {
      *
      * @param light
      *        The collection of lighting parameters to use.
+     * @param root
+     *        The scenegraph root to use.
      * @param record
      *        The surface to compute the radiance for, given as a successful
      *        intersection against a cast ray.
@@ -40,7 +43,8 @@ interface Bulb {
      *        The color to store the result in.
      * @return A reference to store for easy chaining.
      */
-    fun L(light: Light, record: Intersection, store: Color3): Color3
+    fun L(light: Light, root: Actor, record: Intersection, store: Color3):
+        Color3
 
     /**
      * Returns the probability density function that describes the finite
@@ -60,7 +64,7 @@ interface Bulb {
 
     /**
      * Computes the direction of a shadow ray in order to test whether or
-     * not an object is in shadow.
+     * not an object is lit.
      *
      * @param light
      *        The collection of lighting parameters to use.
@@ -71,5 +75,5 @@ interface Bulb {
      *        The vector to store the result in.
      * @return A reference to store for easy chaining.
      */
-    fun shineOn(light: Light, record: Intersection, store: Vector3): Vector3
+    fun shineAt(light: Light, record: Intersection, store: Vector3): Vector3
 }
