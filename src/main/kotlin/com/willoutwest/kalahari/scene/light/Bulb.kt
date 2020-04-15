@@ -27,6 +27,21 @@ interface Bulb {
     fun G(light: Light, record: Intersection): Float
 
     /**
+     * Computes the direction of a shadow ray in order to test whether or
+     * not an object is lit.
+     *
+     * @param light
+     *        The collection of lighting parameters to use.
+     * @param record
+     *        The surface to compute the radiance for, given as a successful
+     *        intersection against a cast ray.
+     * @param store
+     *        The vector to store the result in.
+     * @return A reference to store for easy chaining.
+     */
+    fun illuminate(light: Light, record: Intersection, store: Vector3): Vector3
+
+    /**
      * Computes both the color and amount of radiance emitted by the
      * specified light.
      *
@@ -61,19 +76,4 @@ interface Bulb {
      * @return A probability density function.
      */
     fun pdf(light: Light, record: Intersection): Float
-
-    /**
-     * Computes the direction of a shadow ray in order to test whether or
-     * not an object is lit.
-     *
-     * @param light
-     *        The collection of lighting parameters to use.
-     * @param record
-     *        The surface to compute the radiance for, given as a successful
-     *        intersection against a cast ray.
-     * @param store
-     *        The vector to store the result in.
-     * @return A reference to store for easy chaining.
-     */
-    fun shineAt(light: Light, record: Intersection, store: Vector3): Vector3
 }

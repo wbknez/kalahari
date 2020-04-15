@@ -13,9 +13,9 @@ abstract class AbstractBulb : Bulb {
 
     override fun G(light: Light, record: Intersection): Float = 1f
 
-    override fun pdf(light: Light, record: Intersection): Float = 1f
-
-    override fun shineAt(light: Light, record: Intersection,
-                         store: Vector3): Vector3 =
+    override fun illuminate(light: Light, record: Intersection,
+                            store: Vector3): Vector3 =
         store.set(Vector3.Zero)
+
+    override fun pdf(light: Light, record: Intersection): Float = 1f
 }
