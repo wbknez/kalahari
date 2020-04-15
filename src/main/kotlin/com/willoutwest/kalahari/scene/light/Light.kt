@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.scene.light
 
 import com.willoutwest.kalahari.material.ColorSource
+import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
 import com.willoutwest.kalahari.util.hash
@@ -10,9 +11,11 @@ import com.willoutwest.kalahari.util.hash
  * of radiance throughout a scene.
  *
  * @property cL
- *        The radiance color.
+ *           The radiance color.
  * @property kL
- *        The radiance intensity coefficient.
+ *           The radiance intensity coefficient.
+ * @property location
+ *           The location in three-dimensional space.
  */
 class Light(name: String) :
     Cloneable, ParameterMap(name), Typeable<Light.Type> {
@@ -26,6 +29,8 @@ class Light(name: String) :
     var cL: ColorSource by this.params
 
     var kL: Float by this.params
+
+    var location: Point3 by this.params
 
     override var type: Type by this.params
 
