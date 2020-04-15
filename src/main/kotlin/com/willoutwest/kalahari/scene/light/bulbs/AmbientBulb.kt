@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.scene.light.bulbs
 
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.intersect.Intersection
+import com.willoutwest.kalahari.scene.Actor
 import com.willoutwest.kalahari.scene.light.Bulb
 import com.willoutwest.kalahari.scene.light.Light
 
@@ -11,6 +12,8 @@ import com.willoutwest.kalahari.scene.light.Light
  */
 class AmbientBulb : AbstractBulb(), Bulb {
 
-    override fun L(light: Light, record: Intersection, store: Color3): Color3 =
-        light.cL.getColor(record, store).timesSelf(light.kL)
+    override fun L(light: Light, root: Actor, record: Intersection,
+                   store: Color3): Color3 =
+        light.cL.getColor(record, store)
+            .timesSelf(light.kL)
 }
