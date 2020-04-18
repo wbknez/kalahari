@@ -42,7 +42,7 @@ data class Intersection(@JvmField var depth: Int = 0,
     override fun clone(): Intersection = Intersection(this)
 
     /**
-     *
+     * Sets the properties of this record to those of the specified one.
      *
      * @param record
      *        The record to copy from.
