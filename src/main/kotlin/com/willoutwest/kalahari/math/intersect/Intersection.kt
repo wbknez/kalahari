@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.math.intersect
 
 import com.willoutwest.kalahari.math.Normal3
 import com.willoutwest.kalahari.math.Point3
+import com.willoutwest.kalahari.math.Ray3
 
 /**
  * Represents the result of a ray intersecting with an arbitrary geometric
@@ -15,6 +16,8 @@ import com.willoutwest.kalahari.math.Point3
  *           The normal to an intersection.
  * @property obj
  *           User data (usually the intersecting surface or its material).
+ * @property ray
+ *           The original and un-transformed camera ray.
  * @property reversed
  *           Whether or not the intersection normal has been reversed.
  * @property worldPosition
@@ -24,6 +27,7 @@ data class Intersection(@JvmField var depth: Int = 0,
                         @JvmField val localPosition: Point3 = Point3(),
                         @JvmField val normal: Normal3 = Normal3(),
                         @JvmField var obj: Any? = null,
+                        @JvmField val ray: Ray3 = Ray3(),
                         @JvmField var reversed: Boolean = false,
                         @JvmField val worldPosition: Point3 = Point3())
     : Cloneable {
@@ -36,13 +40,16 @@ data class Intersection(@JvmField var depth: Int = 0,
      */
     constructor(record: Intersection?)
         : this(record!!.depth, record.localPosition.clone(),
-               record.normal.clone(), record.obj, record.reversed,
+               record.normal.clone(), record.obj, record.ray, record.reversed,
                record.worldPosition.clone())
 
     override fun clone(): Intersection = Intersection(this)
 
     /**
      * Sets the properties of this record to those of the specified one.
+     *
+     * Please note that the <code>ray</code> property is not set here; this
+     * is done by the tracer after intersection testing is complete.
      *
      * @param record
      *        The record to copy from.
