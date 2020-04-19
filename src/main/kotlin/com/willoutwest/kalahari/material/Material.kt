@@ -9,6 +9,8 @@ import com.willoutwest.kalahari.util.hash
  * Represents a collection of rendering parameters that controls the
  * colorization of reflected light from an arbitrary geometric surface.
  *
+ * @param name
+ *        The material name to use.
  * @property cD
  *        The ambient and diffuse reflection color.
  * @property kA
@@ -37,6 +39,18 @@ class Material(name: String) :
     var sampler: Sampler3 by this.params
 
     override var type: Type by this.params
+
+    /**
+     * Constructor.
+     *
+     * @param name
+     *        The material name to use.
+     * @param type
+     *        The material type to use.
+     */
+    constructor(name: String, type: Type) : this(name) {
+        this.type = type
+    }
 
     /**
      * Constructor.
