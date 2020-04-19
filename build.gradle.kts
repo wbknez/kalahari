@@ -14,6 +14,7 @@ dependencies {
     implementation(Libraries.luaj)
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
+    implementation(Libraries.snakeyaml)
 
     testImplementation(Libraries.kotlintest)
 }

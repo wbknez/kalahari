@@ -9,6 +9,7 @@ object Versions {
     const val luaj       = "3.0.1"
     const val rxjava     = "2.2.17"
     const val rxkotlin   = "2.4.0"
+    const val snakeyaml  = "1.26"
 }
 
 /**
@@ -29,4 +30,5 @@ object Libraries {
     const val rxjava      = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
     const val rxkotlin    =
         "io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlin}"
+    const val snakeyaml   = "org.yaml:snakeyaml:${Versions.snakeyaml}"
 }
