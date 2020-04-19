@@ -39,6 +39,18 @@ class Light(name: String) :
     /**
      * Constructor.
      *
+     * @param name
+     *        The light name to use.
+     * @param type
+     *        The light type to use.
+     */
+    constructor(name: String, type: Type) : this(name) {
+        this.type = type
+    }
+
+    /**
+     * Constructor.
+     *
      * @param light
      *        The light to copy from.
      */

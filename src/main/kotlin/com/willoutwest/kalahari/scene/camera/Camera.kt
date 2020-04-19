@@ -107,6 +107,18 @@ class Camera(name: String) :
     /**
      * Constructor.
      *
+     * @param name
+     *        The camera name to use.
+     * @param type
+     *        The camera type to use.
+     */
+    constructor(name: String, type: Type) : this(name) {
+        this.type = type
+    }
+
+    /**
+     * Constructor.
+     *
      * @param camera
      *        The camera to copy from.
      */
