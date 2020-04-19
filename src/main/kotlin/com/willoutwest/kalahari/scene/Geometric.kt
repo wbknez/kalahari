@@ -1,6 +1,6 @@
 package com.willoutwest.kalahari.scene
 
-import com.willoutwest.kalahari.math.Color3
+import com.willoutwest.kalahari.material.Material
 import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
 import com.willoutwest.kalahari.math.Quaternion
@@ -13,13 +13,13 @@ import com.willoutwest.kalahari.util.FloatContainer
  * Represents an implementation of [Actor] that contains an arbitrary
  * geometric surface with associated visualization information.
  *
- * @property color
- *           The color to use.
+ * @property material
+ *           The material to use.
  * @property surface
  *           The geometric surface to intersect.
  */
 class Geometric(name: String, private val surface: Surface,
-                var color: Color3? = null)
+                var material: Material? = null)
     : AbstractActor(name), Actor, Cloneable {
 
     /**
