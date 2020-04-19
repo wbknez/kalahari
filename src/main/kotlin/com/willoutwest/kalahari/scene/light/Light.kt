@@ -10,6 +10,8 @@ import com.willoutwest.kalahari.util.hash
  * Represents a collection of lighting parameters that controls the emittance
  * of radiance throughout a scene.
  *
+ * @param name
+ *        The light name to use.
  * @property cL
  *           The radiance color.
  * @property kL

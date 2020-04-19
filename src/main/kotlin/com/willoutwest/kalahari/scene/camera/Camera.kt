@@ -12,6 +12,8 @@ import com.willoutwest.kalahari.util.hash
  * pixel coordinates are transformed into rays that trace the boundaries of a
  * scene.
  *
+ * @param name
+ *        The camera name to use.
  * @property beta
  *           The stereo separation angle.
  * @property distance
