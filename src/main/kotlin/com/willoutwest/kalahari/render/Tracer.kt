@@ -1,5 +1,8 @@
 package com.willoutwest.kalahari.render
 
+import com.willoutwest.kalahari.material.Material
+import com.willoutwest.kalahari.material.Materials
+import com.willoutwest.kalahari.material.Shader
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
@@ -10,6 +13,9 @@ import com.willoutwest.kalahari.scene.Scene
 import com.willoutwest.kalahari.scene.camera.Camera
 import com.willoutwest.kalahari.scene.camera.Cameras
 import com.willoutwest.kalahari.scene.camera.Lens
+import com.willoutwest.kalahari.scene.light.Bulb
+import com.willoutwest.kalahari.scene.light.Light
+import com.willoutwest.kalahari.scene.light.Lights
 import com.willoutwest.kalahari.util.TypeAssociator
 
 /**
@@ -20,6 +26,8 @@ import com.willoutwest.kalahari.util.TypeAssociator
  * tracer, which allows the eventual determiniation of the color of reflective
  * and transparent surfaces through the use of recursive ray generation.
  *
+ * @property bulbs
+ *           A mapping of light types to bulbs.
  * @property drawOrder
  *           The ordering of pixels for drawing.
  * @property hEps
@@ -34,6 +42,9 @@ import com.willoutwest.kalahari.util.TypeAssociator
 class Tracer {
 
     @JvmField
+    var bulbs: TypeAssociator<Light.Type, Bulb> = TypeAssociator()
+
+    @JvmField
     var drawOrder: DrawingOrder = NaturalDrawingOrder()
 
     @JvmField
@@ -45,8 +56,13 @@ class Tracer {
     @JvmField
     val sEps: EpsilonTable = EpsilonTable(0.0001f)
 
+    @JvmField
+    val shaders: TypeAssociator<Material.Type, Shader> = TypeAssociator()
+
     init {
+        this.bulbs.addAll(Lights.defaultBulbs())
         this.lenses.addAll(Cameras.defaultLenses())
+        this.shaders.addAll(Materials.defaultShaders())
     }
 
     /**
@@ -78,8 +94,7 @@ class Tracer {
      *        The color to store the result in.
      * @return A reference to [store] for easy chaining.
      */
-    fun trace(ray: Ray3, scene: Scene, depth: Int, store: Color3):
-        Color3 =
+    fun trace(ray: Ray3, scene: Scene, depth: Int, store: Color3): Color3 =
         when(depth < scene.viewport.maxDepth) {
             false -> store.set(Color3.Black)
             true  -> {
@@ -91,11 +106,13 @@ class Tracer {
                     false -> store.set(scene.viewport.bgColor)
                     true  -> {
                         hRecord.depth += 1
+                        hRecord.ray.set(ray)
 
-                        val geom  = hRecord.obj as Geometric
-                        val color = geom.color
+                        val geom     = hRecord.obj as Geometric
+                        val material = geom.material!!
+                        val shader   = this.shaders[material]
 
-                        store.set(color)
+                        shader.shade(scene, this, hRecord, store)
                     }
                 }
 
