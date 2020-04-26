@@ -5,12 +5,13 @@ import com.willoutwest.kalahari.scene.camera.lenses.PinholeLens
 import com.willoutwest.kalahari.scene.camera.lenses.SphericalLens
 import com.willoutwest.kalahari.scene.camera.lenses.StereoLens
 import com.willoutwest.kalahari.scene.camera.lenses.ThinLens
+import com.willoutwest.kalahari.script.ScriptingResourceFactory
 
 /**
  * Represents a collection of utility methods for creating and working with
  * [Camera] objects.
  */
-sealed class Cameras {
+sealed class Cameras : ScriptingResourceFactory {
 
     /**
      * Represents the type of cameras this project supports by default.
