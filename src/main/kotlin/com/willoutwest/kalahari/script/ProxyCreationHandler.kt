@@ -1,8 +1,6 @@
 package com.willoutwest.kalahari.script
 
 import org.luaj.vm2.LuaValue
-import org.luaj.vm2.lib.jse.CoerceJavaToLua
-import org.luaj.vm2.lib.jse.CoerceLuaToJava
 import java.lang.reflect.Array
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
@@ -52,14 +50,13 @@ class ProxyCreationHandler(private val luaObj: LuaValue) : InvocationHandler {
             true  -> Array.getLength(args!![n])
         }
 
-        val argList = Array<LuaValue>(n + m) {
+        val argList = Array(n + m) {
             when(it < n) {
-                false -> CoerceJavaToLua.coerce(Array.get(args!![n], it - n))
-                true  -> CoerceJavaToLua.coerce(args!![it])
+                false -> toLua(Array.get(args!![n], it - n))
+                true  -> toLua(args!![it])
             }
         }
 
-        return CoerceLuaToJava.coerce(func.invoke(argList).arg1(),
-                                      method.returnType)
+        return fromLua(func.invoke(argList).arg1(), method.returnType)
     }
 }

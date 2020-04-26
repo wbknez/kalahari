@@ -6,12 +6,12 @@ import com.willoutwest.kalahari.render.Tracer
 import com.willoutwest.kalahari.render.outputs.ImageOutput
 import com.willoutwest.kalahari.scene.Scene
 import com.willoutwest.kalahari.script.ScriptingLibrary
+import com.willoutwest.kalahari.script.toLua
 import com.willoutwest.kalahari.util.use
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 import com.xenomachina.argparser.mainBody
 import org.luaj.vm2.Globals
-import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.JsePlatform
 import java.util.logging.Level
 import java.util.logging.LogManager
@@ -130,8 +130,8 @@ sealed class AppEntry {
                     val scene  = Scene()
                     val tracer = Tracer()
 
-                    globals.set("scene",  CoerceJavaToLua.coerce(scene))
-                    globals.set("tracer", CoerceJavaToLua.coerce(tracer))
+                    globals.set("scene",  toLua(scene))
+                    globals.set("tracer", toLua(tracer))
 
                     chunk.call()
 
