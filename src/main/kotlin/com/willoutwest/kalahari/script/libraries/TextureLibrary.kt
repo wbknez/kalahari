@@ -22,7 +22,7 @@ class TextureLibrary : ScriptingLibrary {
      *        The blue color component to use.
      * @return A filled texture.
      */
-    fun fill(red: Float, green: Float, blue: Float): FillTexture =
+    fun fill(red: Float, green: Float, blue: Float): Texture =
         FillTexture(red, green, blue)
 
     /**
@@ -32,5 +32,5 @@ class TextureLibrary : ScriptingLibrary {
      *        The fill color to use.
      * @return A filled texture.
      */
-    fun fill(color: Color3): FillTexture = FillTexture(color)
+    fun fill(color: Color3): Texture = FillTexture(color)
 }
