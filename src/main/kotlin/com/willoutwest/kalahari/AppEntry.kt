@@ -5,7 +5,7 @@ import com.willoutwest.kalahari.render.Pipeline
 import com.willoutwest.kalahari.render.Tracer
 import com.willoutwest.kalahari.render.outputs.ImageOutput
 import com.willoutwest.kalahari.scene.Scene
-import com.willoutwest.kalahari.script.ScriptingLibrary
+import com.willoutwest.kalahari.script.ScriptingModule
 import com.willoutwest.kalahari.script.toLua
 import com.willoutwest.kalahari.util.use
 import com.xenomachina.argparser.ArgParser
@@ -101,7 +101,7 @@ sealed class AppEntry {
         private fun initScriptingEnvironment(): Globals {
             val globals = JsePlatform.standardGlobals()
 
-            globals.load(ScriptingLibrary())
+            globals.load(ScriptingModule())
 
             return globals
         }

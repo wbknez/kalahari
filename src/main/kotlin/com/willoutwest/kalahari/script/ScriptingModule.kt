@@ -1,8 +1,8 @@
 package com.willoutwest.kalahari.script
 
-import com.willoutwest.kalahari.script.factories.MaterialLibrary
-import com.willoutwest.kalahari.script.factories.ActorLibrary
-import com.willoutwest.kalahari.script.factories.LightLibrary
+import com.willoutwest.kalahari.script.libraries.MaterialLibrary
+import com.willoutwest.kalahari.script.libraries.ActorLibrary
+import com.willoutwest.kalahari.script.libraries.LightLibrary
 import org.luaj.vm2.LuaTable
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.TwoArgFunction
