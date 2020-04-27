@@ -50,6 +50,18 @@ class LightLibrary : ScriptingLibrary {
     }
 
     /**
+     * Creates a new ambient light with the specified properties and a
+     * default name of "global".
+     *
+     * @param cL
+     *        The radiance color to use.
+     * @param kL
+     *        The radiance intensity to use.
+     * @return An ambient light.
+     */
+    fun ambient(cL: Texture, kL: Float): Light = ambient("global", cL, kL)
+
+    /**
      * Creates a new ambient light with the specified properties.
      *
      * @param name
