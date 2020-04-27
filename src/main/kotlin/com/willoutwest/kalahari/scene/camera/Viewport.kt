@@ -86,6 +86,19 @@ class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
         hash(this.bounds, this.bgColor, this.gamma, this.gamutOp,
              this.invGamma, this.maxDepth, this.pixelSize, this.sampler)
 
+    /**
+     * Sets the dimensions of this viewport to the specified dimensions
+     * given in pixels.
+     *
+     * @param width
+     *        The width to use, in pixels.
+     * @param height
+     *        The height to use, in pixels.
+     */
+    fun setBounds(width: Int, height: Int) {
+        this.bounds = Bounds(width, height)
+    }
+
     override fun toString() =
         "Viewport(bgColor=${this.bgColor}, bounds=${this.bounds}, " +
         "gamma=${this.gamma}, gamutOp=${this.gamutOp}, " +
