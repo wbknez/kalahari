@@ -4,13 +4,13 @@ import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.material.Material
 import com.willoutwest.kalahari.material.Shader
 import com.willoutwest.kalahari.material.shaders.MatteShader
-import com.willoutwest.kalahari.script.ResourceLibrary
+import com.willoutwest.kalahari.script.ScriptingLibrary
 
 /**
  * Represents a mechanism for creating and working with [Material] objects
  * in a Lua scripting environment.
  */
-class MaterialLibrary : ResourceLibrary {
+class MaterialLibrary : ScriptingLibrary {
 
     /**
      * Represents the type of materials this project supports by default.
