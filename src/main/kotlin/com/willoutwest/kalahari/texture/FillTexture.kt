@@ -1,16 +1,17 @@
-package com.willoutwest.kalahari.material
+package com.willoutwest.kalahari.texture
 
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.intersect.Intersection
 
 /**
- * Represents an implementation of [ColorSource] that always returns a
+ * Represents an implementation of [Texture] that always returns a
  * single, constant color independent of any intersection.
  *
  * @property color
  *           The color to use.
  */
-data class ConstantColor(private val color: Color3) : Cloneable, ColorSource {
+data class FillTexture(private val color: Color3) : Cloneable,
+                                                    Texture {
 
     /**
      * Constructor.
@@ -31,9 +32,10 @@ data class ConstantColor(private val color: Color3) : Cloneable, ColorSource {
      * @param constant
      *        The constant color to copy from.
      */
-    constructor(constant: ConstantColor?) : this(constant!!.color)
+    constructor(constant: FillTexture?) : this(constant!!.color)
 
-    public override fun clone(): ConstantColor = ConstantColor(this)
+    public override fun clone(): FillTexture =
+        FillTexture(this)
 
     override fun getColor(record: Intersection, store: Color3): Color3 =
         store.set(this.color)

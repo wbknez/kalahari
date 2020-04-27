@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.material
 
 import com.willoutwest.kalahari.math.sample.Sampler3
+import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
 import com.willoutwest.kalahari.util.hash
@@ -30,7 +31,7 @@ class Material(name: String) :
      */
     interface Type
 
-    var cD: ColorSource by this.params
+    var cD: Texture by this.params
 
     var kA: Float by this.params
 

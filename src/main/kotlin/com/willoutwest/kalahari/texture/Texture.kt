@@ -1,4 +1,4 @@
-package com.willoutwest.kalahari.material
+package com.willoutwest.kalahari.texture
 
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.intersect.Intersection
@@ -9,7 +9,7 @@ import com.willoutwest.kalahari.math.intersect.Intersection
  * arbitrary geometric surface.
  */
 @FunctionalInterface
-interface ColorSource {
+interface Texture {
 
     /**
      * Computes the color resulting from the transformation of an

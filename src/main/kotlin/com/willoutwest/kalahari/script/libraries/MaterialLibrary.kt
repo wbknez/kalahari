@@ -1,16 +1,16 @@
-package com.willoutwest.kalahari.script.factories
+package com.willoutwest.kalahari.script.libraries
 
-import com.willoutwest.kalahari.material.ColorSource
+import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.material.Material
 import com.willoutwest.kalahari.material.Shader
 import com.willoutwest.kalahari.material.shaders.MatteShader
-import com.willoutwest.kalahari.script.ScriptingResourceFactory
+import com.willoutwest.kalahari.script.ResourceLibrary
 
 /**
  * Represents a mechanism for creating and working with [Material] objects
  * in a Lua scripting environment.
  */
-class MaterialFactory : ScriptingResourceFactory {
+class MaterialLibrary : ResourceLibrary {
 
     /**
      * Represents the type of materials this project supports by default.
@@ -49,11 +49,8 @@ class MaterialFactory : ScriptingResourceFactory {
      *        The diffuse reflection coefficient to use.
      * @return A matte material.
      */
-    fun matte(name: String, cD: ColorSource, kA: Float, kD: Float):
-        Material {
-        val mat =
-            Material(name,
-                                                                          Type.Matte)
+    fun matte(name: String, cD: Texture, kA: Float, kD: Float): Material {
+        val mat = Material(name, Type.Matte)
 
         mat.cD = cD
         mat.kA = kA
