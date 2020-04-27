@@ -1,6 +1,6 @@
 package com.willoutwest.kalahari.scene.light
 
-import com.willoutwest.kalahari.material.ColorSource
+import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
@@ -28,7 +28,7 @@ class Light(name: String) :
      */
     interface Type
 
-    var cL: ColorSource by this.params
+    var cL: Texture by this.params
 
     var kL: Float by this.params
 
