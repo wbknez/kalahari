@@ -1,7 +1,7 @@
 package com.willoutwest.kalahari.render
 
 import com.willoutwest.kalahari.material.Material
-import com.willoutwest.kalahari.material.Materials
+import com.willoutwest.kalahari.script.libraries.MaterialLibrary
 import com.willoutwest.kalahari.material.Shader
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.ComputeUtils
@@ -11,11 +11,11 @@ import com.willoutwest.kalahari.render.orders.NaturalDrawingOrder
 import com.willoutwest.kalahari.scene.Geometric
 import com.willoutwest.kalahari.scene.Scene
 import com.willoutwest.kalahari.scene.camera.Camera
-import com.willoutwest.kalahari.scene.camera.Cameras
+import com.willoutwest.kalahari.script.libraries.CameraLibrary
 import com.willoutwest.kalahari.scene.camera.Lens
 import com.willoutwest.kalahari.scene.light.Bulb
 import com.willoutwest.kalahari.scene.light.Light
-import com.willoutwest.kalahari.scene.light.Lights
+import com.willoutwest.kalahari.script.libraries.LightLibrary
 import com.willoutwest.kalahari.util.TypeAssociator
 
 /**
@@ -60,9 +60,9 @@ class Tracer {
     val shaders: TypeAssociator<Material.Type, Shader> = TypeAssociator()
 
     init {
-        this.bulbs.addAll(Lights.defaultBulbs())
-        this.lenses.addAll(Cameras.defaultLenses())
-        this.shaders.addAll(Materials.defaultShaders())
+        this.bulbs.addAll(LightLibrary.defaultBulbs())
+        this.lenses.addAll(CameraLibrary.defaultLenses())
+        this.shaders.addAll(MaterialLibrary.defaultShaders())
     }
 
     /**
