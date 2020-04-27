@@ -7,4 +7,4 @@ package com.willoutwest.kalahari.script
  * This is a marker interface that denotes classes intended to be included
  * in the scripting library as a sub-module via tables.
  */
-interface ScriptingResourceFactory
+interface ResourceLibrary
