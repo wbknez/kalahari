@@ -3,6 +3,7 @@ package com.willoutwest.kalahari.script
 import com.willoutwest.kalahari.script.libraries.MaterialLibrary
 import com.willoutwest.kalahari.script.libraries.ActorLibrary
 import com.willoutwest.kalahari.script.libraries.LightLibrary
+import com.willoutwest.kalahari.script.libraries.MathLibrary
 import org.luaj.vm2.LuaTable
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.TwoArgFunction
@@ -71,6 +72,7 @@ class ScriptingModule : TwoArgFunction() {
         khsl.set("actors", toLua(ActorLibrary()))
         khsl.set("lights", toLua(LightLibrary()))
         khsl.set("materials", toLua(MaterialLibrary()))
+        khsl.set("math", toLua(MathLibrary()))
 
         if(!env.get("package").isnil()) {
             env.get("package")
