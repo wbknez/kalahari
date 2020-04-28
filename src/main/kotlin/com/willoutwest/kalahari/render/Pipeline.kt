@@ -96,6 +96,10 @@ class Pipeline(numThreads: Int) : AutoCloseable {
                         lens.capture(coords, scene.camera, scene.viewport)
                     val color = tracer.trace(ray, scene, 0)
 
+                    if(color.red > 1f) { color.red = 1f }
+                    if(color.green > 1f) { color.green = 1f }
+                    if(color.blue > 1f) { color.blue = 1f }
+
                     val x = coords.x
                     val y = scene.viewport.bounds.height - coords.y - 1
 
