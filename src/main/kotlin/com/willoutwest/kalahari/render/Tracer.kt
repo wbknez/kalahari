@@ -8,6 +8,7 @@ import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
 import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.render.orders.NaturalDrawingOrder
+import com.willoutwest.kalahari.render.toners.LinearToner
 import com.willoutwest.kalahari.scene.Geometric
 import com.willoutwest.kalahari.scene.Scene
 import com.willoutwest.kalahari.scene.camera.Camera
@@ -38,6 +39,8 @@ import com.willoutwest.kalahari.util.TypeAssociator
  * @property sEps
  *           The collection of per-geometry epsilon values that denote the
  *           parametric minimum for a valid shadow ray-to-surface intersection.
+ * @property toner
+ *           The local (per-pixel) tone mapping operator.
  */
 class Tracer {
 
@@ -58,6 +61,9 @@ class Tracer {
 
     @JvmField
     val shaders: TypeAssociator<Material.Type, Shader> = TypeAssociator()
+
+    @JvmField
+    var toner: Toner = LinearToner()
 
     init {
         this.bulbs.addAll(LightLibrary.defaultBulbs())
