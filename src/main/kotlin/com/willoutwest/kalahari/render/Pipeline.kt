@@ -1,12 +1,9 @@
 package com.willoutwest.kalahari.render
 
-import com.willoutwest.kalahari.math.Point3
-import com.willoutwest.kalahari.math.Ray3
-import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.scene.Scene
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.toObservable
-import java.util.logging.Level
+import java.util.concurrent.CountDownLatch
 import java.util.logging.Logger
 
 /**
@@ -75,57 +72,64 @@ class Pipeline(numThreads: Int) : AutoCloseable {
      *        The ray tracing function to use.
      */
     fun submit(scene: Scene, tracer: Tracer) {
-        val cameras = tracer.lenses[scene.camera].getCameras(scene.camera)
+        val cameras     = tracer.lenses[scene.camera].getCameras(scene.camera)
+        val invSamples  = 1f / scene.viewport.sampler.numSamples
+
+
 
         cameras.forEach { camera ->
-            val lens = tracer.lenses[camera]
+            val latch = CountDownLatch(scene.viewport.bounds.area)
+            val lens  = tracer.lenses[camera]
 
-            if(cameras.size > 1) {
-                lens.prepare(camera, scene.viewport)
-            }
+            lens.prepare(camera, scene.viewport)
 
             tracer.drawOrder.orderOf(scene.viewport.bounds).toObservable()
-                .doOnNext { logger.log(Level.INFO, "Tracing pixel: {0}.", it) }
-                .doOnComplete {
-                    logger.log(Level.INFO, "Traced {0} pixels.",
-                               scene.viewport.bounds.area)
-                    logger.log(Level.INFO, "Rendering complete!")
-                }
                 .flatMap { coords ->
-                    val ray =
-                        lens.capture(coords, scene.camera, scene.viewport)
-                    val color = tracer.trace(ray, scene, 0)
+                    Observable.range(0, scene.viewport.sampler.numSamples)
+                        .map {
+                            lens.capture(coords, camera, scene.viewport)
+                        }
+                        .map { ray ->
+                            tracer.trace(ray, scene, 0)
+                        }
+                        .reduce { a, b -> a + b}
+                        .map { color ->
+                            color.timesSelf(invSamples)
+                            tracer.toner.tone(camera, scene.viewport, color,
+                                              color)
+                            scene.viewport.gamutOp.operate(color, color)
+                        }
+                        .map { traced ->
+                            val x = coords.x
+                            val y = scene.viewport.bounds.height - coords.y - 1
 
-                    if(color.red > 1f) { color.red = 1f }
-                    if(color.green > 1f) { color.green = 1f }
-                    if(color.blue > 1f) { color.blue = 1f }
-
-                    val x = coords.x
-                    val y = scene.viewport.bounds.height - coords.y - 1
-
-                    Observable.just(Pixel(x, y + camera.offSet, color.rgb))
-                }
-                .doOnNext {
-                    logger.log(Level.INFO, "Pixel traced: {0}.", it)
+                            Pixel(x, y + camera.offSet, traced.rgb)
+                        }
+                        .toObservable()
                 }
                 .subscribe(
                     { pixel: Pixel ->
                         this.listeners.forEach {
                             it.onEmit(pixel)
                         }
+                        latch.countDown()
                     },
                     { t: Throwable ->
                         throw PipelineException(
                             "Caught in the main pipeline during rendering.", t
                         )
                     },
-                    { this.listeners.forEach { it.onComplete() } },
+                    { },
                     {
                         this.listeners.forEach {
                             it.onStart(scene.viewport.bounds)
                         }
                     }
                 )
+
+            latch.await()
+
+            this.listeners.forEach { it.onComplete() }
         }
     }
 }
