@@ -13,13 +13,21 @@ import com.willoutwest.kalahari.util.hash
  * @param name
  *        The material name to use.
  * @property cD
- *        The ambient and diffuse reflection color.
+ *           The ambient and diffuse reflection color.
+ * @property cS
+ *           The specular reflection color.
+ * @property exp
+ *           The specular reflection exponent.
+ * @property expS
+ *           The glossy specular reflection exponent.
  * @property kA
  *        The ambient reflection coefficient.
  * @property kD
  *           The diffuse reflection coefficient.
+ * @property kS
+ *           The specular reflection coefficient.
  * @property sampler
- *
+ *           The material sampler.
  */
 class Material(name: String) :
     Cloneable, ParameterMap(name), Typeable<Material.Type> {
@@ -33,9 +41,17 @@ class Material(name: String) :
 
     var cD: Texture by this.params
 
+    var cS: Texture by this.params
+
+    var exp: Float by this.params
+
+    var expS: Float by this.params
+
     var kA: Float by this.params
 
     var kD: Float by this.params
+
+    var kS: Float by this.params
 
     var sampler: Sampler3 by this.params
 
