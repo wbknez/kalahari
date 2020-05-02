@@ -10,8 +10,20 @@ import com.willoutwest.kalahari.math.intersect.Intersection
  * @property color
  *           The color to use.
  */
-data class FillTexture(private val color: Color3) : Cloneable,
-                                                    Texture {
+data class FillTexture(private val color: Color3) : Cloneable, Texture {
+
+    companion object {
+
+        /**
+         * Represents a texture filled with the color black.
+         */
+        val Black = FillTexture(Color3.White)
+
+        /**
+         * Represents a texture filled with the color white.
+          */
+        val White = FillTexture(Color3.White)
+    }
 
     /**
      * Constructor.
