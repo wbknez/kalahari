@@ -5,8 +5,8 @@ import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.util.FloatContainer
 
 /**
- * Represents object whose geometric bounds may be tested, and thereby
- * traced, using rays.
+ * Represents an object whose geometric bounds may be tested, and
+ * thereby traced, using rays.
  */
 @FunctionalInterface
 interface Intersectable {
