@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.scene.light.bulbs
 
 import com.willoutwest.kalahari.math.Color3
+import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.scene.Actor
@@ -25,4 +26,7 @@ class PointBulb : AbstractBulb(), Bulb {
                    record: Intersection, store: Color3): Color3 =
         light.cL.getColor(record, store)
             .timesSelf(light.kL)
+
+    override fun shadowLength(ray: Ray3, light: Light): Float =
+        light.location.distanceTo(ray.origin)
 }

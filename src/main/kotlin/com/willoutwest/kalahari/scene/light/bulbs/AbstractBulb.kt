@@ -1,5 +1,6 @@
 package com.willoutwest.kalahari.scene.light.bulbs
 
+import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.scene.light.Bulb
@@ -18,4 +19,6 @@ abstract class AbstractBulb : Bulb {
         store.set(Vector3.Zero)
 
     override fun pdf(light: Light, record: Intersection): Float = 1f
+
+    override fun shadowLength(ray: Ray3, light: Light): Float = Float.MAX_VALUE
 }

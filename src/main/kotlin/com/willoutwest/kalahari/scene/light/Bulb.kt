@@ -4,12 +4,13 @@ import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.scene.Actor
+import com.willoutwest.kalahari.scene.shadow.ShadowCreator
 
 /**
  * Represents a mechanism for modeling the radiance output of an arbitrary
  * light source.
  */
-interface Bulb {
+interface Bulb : ShadowCreator {
 
     /**
      * Computes a partial cosine factor (n <b>dot</b> omegaI) for the area
