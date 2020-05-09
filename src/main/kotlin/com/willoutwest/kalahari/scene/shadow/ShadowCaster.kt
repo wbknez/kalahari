@@ -1,9 +1,9 @@
 package com.willoutwest.kalahari.scene.shadow
 
-import com.sun.org.apache.xml.internal.security.signature.ObjectContainer
 import com.willoutwest.kalahari.math.EpsilonTable
 import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.util.FloatContainer
+import com.willoutwest.kalahari.util.ObjectContainer
 
 /**
  * Represents an object whose geometric bounds may be tested, and thereby
