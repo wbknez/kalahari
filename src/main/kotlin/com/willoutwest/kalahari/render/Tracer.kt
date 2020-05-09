@@ -111,7 +111,7 @@ class Tracer {
                 when(scene.root.intersects(ray, tMin, hRecord, this.hEps)) {
                     false -> store.set(scene.viewport.bgColor)
                     true  -> {
-                        hRecord.depth += 1
+                        hRecord.depth = depth
                         hRecord.ray.set(ray)
 
                         val geom     = hRecord.obj as Geometric
