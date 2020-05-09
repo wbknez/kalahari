@@ -9,14 +9,14 @@ import org.luaj.vm2.LuaTable
 import org.luaj.vm2.LuaValue
 
 /**
- * Test suite for [ScriptingLibrary].
+ * Test suite for [ScriptingModule].
  */
-class ScriptingLibraryTest : ShouldSpec() {
+class ScriptingModuleTest : ShouldSpec() {
 
     override fun isolationMode(): IsolationMode? =
         IsolationMode.InstancePerTest
 
-    private val library = ScriptingLibrary()
+    private val library = ScriptingModule()
 
     init {
 
