@@ -5,6 +5,7 @@ import com.willoutwest.kalahari.math.Matrix4
 import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.BoundingVolume
+import com.willoutwest.kalahari.scene.shadow.ShadowMode
 
 /**
  * An implementation of [Actor] that provides basic infrastructure for
@@ -14,6 +15,8 @@ abstract class AbstractActor(override val name: String) : Actor {
 
     override var bounds: BoundingVolume? = null
 
+    override var castsShadows: ShadowMode = ShadowMode.Enable
+
     override var enabled: Boolean = true
 
     override val invTransform: Matrix4 = Matrix4.Identity.clone()
@@ -21,6 +24,8 @@ abstract class AbstractActor(override val name: String) : Actor {
     override val motion: Motion = Motion()
 
     override var parent: Actor? = null
+
+    override var receivesShadows: ShadowMode = ShadowMode.Enable
 
     override fun move(x: Float, y: Float, z: Float): Actor {
         this.motion.translation.x += x
