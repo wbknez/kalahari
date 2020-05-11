@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.scene
 
 import com.willoutwest.kalahari.math.intersect.Intersectable
+import com.willoutwest.kalahari.scene.shadow.ShadowCaster
 
 /**
  * Represents an arbitrarily-defined geometric surface.
@@ -21,7 +22,7 @@ import com.willoutwest.kalahari.math.intersect.Intersectable
  * (they are always leaves), all intersections are assumed to take place in
  * object space.
  */
-interface Surface : Cloneable, Intersectable {
+interface Surface : Cloneable, Intersectable, ShadowCaster {
 
     /**
      * Returns a copy of this surface.
