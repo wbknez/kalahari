@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.material
 
 import com.willoutwest.kalahari.math.sample.Sampler3
+import com.willoutwest.kalahari.scene.shadow.ShadowMode
 import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
@@ -14,6 +15,8 @@ import com.willoutwest.kalahari.util.hash
  *        The material name to use.
  * @property cD
  *           The ambient and diffuse reflection color.
+ * @property cR
+ *           The perfect reflection color.
  * @property cS
  *           The specular reflection color.
  * @property exp
@@ -24,8 +27,12 @@ import com.willoutwest.kalahari.util.hash
  *        The ambient reflection coefficient.
  * @property kD
  *           The diffuse reflection coefficient.
+ * @property kR
+ *           The perfect reflection coefficient.
  * @property kS
  *           The specular reflection coefficient.
+ * @property receivesShadows
+ *           Controls whether or not shadows may be received.
  * @property sampler
  *           The material sampler.
  */
@@ -41,6 +48,8 @@ class Material(name: String) :
 
     var cD: Texture by this.params
 
+    var cR: Texture by this.params
+
     var cS: Texture by this.params
 
     var exp: Float by this.params
@@ -51,7 +60,11 @@ class Material(name: String) :
 
     var kD: Float by this.params
 
+    var kR: Float by this.params
+
     var kS: Float by this.params
+
+    var receivesShadows: ShadowMode = ShadowMode.Enable
 
     var sampler: Sampler3 by this.params
 
@@ -89,4 +102,13 @@ class Material(name: String) :
         }
 
     override fun hashCode(): Int = hash(super.hashCode(), this.type)
+
+    /**
+     * Returns whether or not this shadowable may receive shadows from
+     * surrounding, or nearby, objects.
+     *
+     * @return Whether or not shadows may be received.
+     */
+    fun isReceivingShadows(): Boolean =
+        this.receivesShadows == ShadowMode.Enable
 }
