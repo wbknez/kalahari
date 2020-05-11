@@ -16,6 +16,9 @@ import com.willoutwest.kalahari.script.libraries.CameraLibrary
 import com.willoutwest.kalahari.scene.camera.Lens
 import com.willoutwest.kalahari.scene.light.Bulb
 import com.willoutwest.kalahari.scene.light.Light
+import com.willoutwest.kalahari.scene.shadow.ShadowUtils
+import com.willoutwest.kalahari.scene.shadow.detectors.BasicDetector
+import com.willoutwest.kalahari.scene.shadow.detectors.CachingDetector
 import com.willoutwest.kalahari.script.libraries.LightLibrary
 import com.willoutwest.kalahari.util.TypeAssociator
 
@@ -70,6 +73,18 @@ class Tracer {
         this.lenses.addAll(CameraLibrary.defaultLenses())
         this.shaders.addAll(MaterialLibrary.defaultShaders())
     }
+
+    /**
+     * Sets whether or not shadowing caching should be used.
+     *
+     * @param shouldCache
+     *        Whether or not to cache shadow detection results.
+     */
+    fun setShadowCaching(shouldCache: Boolean) =
+        when(shouldCache) {
+            false -> ShadowUtils.setDetector { BasicDetector() }
+            true  -> ShadowUtils.setDetector { CachingDetector() }
+        }
 
     /**
      * Computes the reflected color of light based on the path of the
