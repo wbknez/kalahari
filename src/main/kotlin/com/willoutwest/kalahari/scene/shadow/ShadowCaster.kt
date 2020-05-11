@@ -28,7 +28,8 @@ interface ShadowCaster {
      *        The collection of epsilon values to use for determining a
      *        successful intersection.
      * @param tMax
-     *        The maximum allowed parametric time of an intersection.
+     *        The maximum allowed parametric time for a shadow-ray
+     *        intersection.
      * @return Whether or not a shadow-ray intersection occurred.
      */
     fun shadows(ray: Ray3, tMin: FloatContainer, obj: ObjectContainer,
