@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.math
 
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.util.FloatContainer
+import com.willoutwest.kalahari.util.ObjectContainer
 import com.willoutwest.kalahari.util.pool.ConstraintHandler
 import com.willoutwest.kalahari.util.pool.QueueObjectPool
 
@@ -33,6 +34,9 @@ import com.willoutwest.kalahari.util.pool.QueueObjectPool
  *           The pool of temporary colors.
  * @property matrices
  *           The pool of temporary matrices.
+ * @property objects
+ *           The pool of temporary object containers (for minimum parametric
+ *           time).
  * @property points
  *           The pool of temporary three-dimensional points.
  * @property quats
@@ -52,6 +56,8 @@ class ComputeCache(handler: ConstraintHandler) {
     val colors = QueueObjectPool(4, handler, { Color3() })
 
     val matrices = QueueObjectPool(2, handler, { Matrix4() })
+
+    val objects = QueueObjectPool(4, handler, { ObjectContainer(null) })
 
     val points = QueueObjectPool(2, handler, { Point3() })
 
