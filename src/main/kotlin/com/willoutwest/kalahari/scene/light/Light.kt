@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.scene.light
 
 import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.math.Point3
+import com.willoutwest.kalahari.scene.shadow.ShadowMode
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
 import com.willoutwest.kalahari.util.hash
@@ -12,6 +13,8 @@ import com.willoutwest.kalahari.util.hash
  *
  * @param name
  *        The light name to use.
+ * @property castsShadows
+ *           Controls whether or not shadows may be cast.
  * @property cL
  *           The radiance color.
  * @property kL
@@ -27,6 +30,8 @@ class Light(name: String) :
      * should be used to determine how radiance is emitted.
      */
     interface Type
+
+    var castsShadows: ShadowMode = ShadowMode.Enable
 
     var cL: Texture by this.params
 
@@ -68,4 +73,12 @@ class Light(name: String) :
         }
 
     override fun hashCode(): Int = hash(super.hashCode(), this.type)
+
+    /**
+     * Returns whether or not this shadowable may cast shadows onto other
+     * objects in a scene.
+     *
+     * @return Whether or not shadows may be cast.
+     */
+    fun isCastingShadows(): Boolean = this.castsShadows == ShadowMode.Enable
 }
