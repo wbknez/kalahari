@@ -8,6 +8,7 @@ import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.util.FloatContainer
+import com.willoutwest.kalahari.util.ObjectContainer
 
 /**
  * Represents an implementation of [Actor] that contains an arbitrary
@@ -56,6 +57,10 @@ class Geometric(name: String, private val surface: Surface,
         return hit
     }
 
+    override fun isReceivingShadows(): Boolean =
+        super<AbstractActor>.isReceivingShadows() &&
+        this.material?.isReceivingShadows() == true
+
     override fun move(x: Float, y: Float, z: Float): Geometric =
         super.move(x, y, z) as Geometric
 
@@ -74,4 +79,26 @@ class Geometric(name: String, private val surface: Surface,
         super.scale(x, y, z) as Geometric
 
     override fun scale(vec: Vector3): Geometric = super.scale(vec) as Geometric
+
+    override fun shadows(ray: Ray3, tMin: FloatContainer, obj: ObjectContainer,
+                         eps: EpsilonTable, tMax: Float): Boolean {
+        if(this.bounds?.intersects(ray) == false) {
+            return false
+        }
+
+        val cache = ComputeUtils.localCache
+        val sRay  = cache.rays.borrow()
+
+        sRay.set(ray).transformSelf(this.invTransform)
+
+        val hit = this.surface.shadows(sRay, tMin, obj, eps, tMax)
+
+        if(hit) {
+            obj.obj = this
+        }
+
+        cache.rays.reuse(sRay)
+
+        return hit
+    }
 }

@@ -7,6 +7,7 @@ import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.util.FloatContainer
+import com.willoutwest.kalahari.util.ObjectContainer
 
 /**
  * Represents an implementation of [Actor] that contains a collection of
@@ -105,6 +106,28 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
         super.scale(x, y, z) as Group
 
     override fun scale(vec: Vector3): Group = super.scale(vec) as Group
+
+    override fun shadows(ray: Ray3, tMin: FloatContainer, obj: ObjectContainer,
+                         eps: EpsilonTable, tMax: Float): Boolean {
+        if(!this.isCastingShadows()) {
+            return false
+        }
+
+        if(this.bounds?.intersects(ray) == false) {
+            return false
+        }
+
+        val cache   = ComputeUtils.localCache
+        val sRay    = cache.rays.borrow()
+
+        sRay.set(ray).transformSelf(this.invTransform)
+
+        val hit = this.children.any { it.shadows(sRay, tMin, obj, eps, tMax) }
+
+        cache.rays.reuse(sRay)
+
+        return hit
+    }
 
     override fun visit(visitor: (Actor) -> Unit) {
         super.visit(visitor)

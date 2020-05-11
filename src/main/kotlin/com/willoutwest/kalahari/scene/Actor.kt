@@ -5,6 +5,7 @@ import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.BoundingVolume
 import com.willoutwest.kalahari.math.intersect.Intersectable
+import com.willoutwest.kalahari.scene.shadow.Shadowable
 
 /**
  * Represents a spatially-aware scenegraph element.
@@ -29,7 +30,7 @@ import com.willoutwest.kalahari.math.intersect.Intersectable
  * @property parent
  *           The parent in the scene graph, if any.
  */
-interface Actor : Cloneable, Intersectable {
+interface Actor : Cloneable, Intersectable, Shadowable {
 
     var bounds: BoundingVolume?
 
