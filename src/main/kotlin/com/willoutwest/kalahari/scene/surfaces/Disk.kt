@@ -18,7 +18,7 @@ import com.willoutwest.kalahari.util.ObjectContainer
  * @param radius
  *        The radius.
  * @param normal
- *        The normalized direction.
+ *        The normalized direction to face.
  */
 data class Disk(val center: Point3, val radius: Float, val normal: Normal3)
     : Cloneable, Surface {

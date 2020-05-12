@@ -36,21 +36,6 @@ data class Sphere(val center: Point3, val radius: Float) : Cloneable, Surface {
     /**
      * Constructor.
      *
-     * @param x
-     *        The x-axis coordinate of the center to use.
-     * @param y
-     *        The y-axis coordinate of the center to use.
-     * @param z
-     *        The z-axis coordinate of the center to use.
-     * @param radius
-     *        The radius to use.
-     */
-    constructor(x: Float, y: Float, z: Float, radius: Float = 1f)
-                : this(Point3(x, y, z), radius)
-
-    /**
-     * Constructor.
-     *
      * @param sphere
      *        The sphere to copy from.
      */
