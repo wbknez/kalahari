@@ -39,8 +39,8 @@ class MaterialLibrary : ScriptingLibrary {
          * @return A mapping of material types to shaders.
          */
         fun defaultShaders(): Map<Material.Type, Shader> = mapOf(
-            Type.Matte to MatteShader(),
-            Type.Phong to PhongShader()
+            Type.Matte      to MatteShader(),
+            Type.Phong      to PhongShader()
         )
     }
 

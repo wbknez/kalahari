@@ -6,7 +6,8 @@ import com.willoutwest.kalahari.scene.camera.Camera
 import com.willoutwest.kalahari.scene.camera.Viewport
 
 /**
- * Represents an implementation of [Toner] that uses linear exposure.
+ * Represents an implementation of [Toner] that applies a linear camera
+ * exposure and inverse gamma.
  */
 class LinearToner : Toner {
 
