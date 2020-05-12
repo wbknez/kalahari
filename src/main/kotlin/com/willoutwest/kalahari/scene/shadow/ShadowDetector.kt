@@ -12,8 +12,8 @@ import com.willoutwest.kalahari.scene.Scene
 interface ShadowDetector {
 
     /**
-     * Determines whether or not the specified point is visible to the camera
-     * and not hidden by an object in the specified scene.
+     * Determines whether or not the specified point is in shadow relative to
+     * a camera and therefore hidden by an object in the specified scene.
      *
      * @param worldPosition
      *        The un-transformed world position
@@ -27,8 +27,8 @@ interface ShadowDetector {
      * @param eps
      *        The collection of epsilon values to use for determining a
      *        successful intersection.
-     * @return Whether or not a point is visible.
+     * @return Whether or not a point is in shadow.
      */
-    fun isVisible(worldPosition: Point3, omegaI: Vector3, tS: Float,
-                  scene: Scene, eps: EpsilonTable): Boolean
+    fun isInShadow(worldPosition: Point3, omegaI: Vector3, tS: Float,
+                   scene: Scene, eps: EpsilonTable): Boolean
 }

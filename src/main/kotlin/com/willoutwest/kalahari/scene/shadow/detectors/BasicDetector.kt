@@ -13,8 +13,8 @@ import com.willoutwest.kalahari.scene.shadow.ShadowDetector
  */
 class BasicDetector : ShadowDetector {
 
-    override fun isVisible(worldPosition: Point3, omegaI: Vector3, tS: Float,
-                           scene: Scene, eps: EpsilonTable): Boolean {
+    override fun isInShadow(worldPosition: Point3, omegaI: Vector3, tS: Float,
+                            scene: Scene, eps: EpsilonTable): Boolean {
         val cache = ComputeUtils.localCache
 
         val obj   = cache.objects.borrow()
@@ -30,6 +30,6 @@ class BasicDetector : ShadowDetector {
         cache.rays.reuse(sRay)
         cache.tmins.reuse(tMin)
 
-        return !hit
+        return hit
     }
 }

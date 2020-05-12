@@ -30,8 +30,8 @@ class CachingDetector : ShadowDetector {
 
     private val invTransform: Matrix4 = Matrix4()
 
-    override fun isVisible(worldPosition: Point3, omegaI: Vector3, tS: Float,
-                           scene: Scene, eps: EpsilonTable): Boolean {
+    override fun isInShadow(worldPosition: Point3, omegaI: Vector3, tS: Float,
+                            scene: Scene, eps: EpsilonTable): Boolean {
         val cache = ComputeUtils.localCache
 
         val obj   = cache.objects.borrow()
@@ -56,7 +56,7 @@ class CachingDetector : ShadowDetector {
         cache.rays.reuse(cRay, sRay)
         cache.tmins.reuse(tMin)
 
-        return !hit
+        return hit
     }
 
     /**
