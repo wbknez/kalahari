@@ -9,6 +9,7 @@ import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.render.Tracer
 import com.willoutwest.kalahari.scene.Geometric
 import com.willoutwest.kalahari.scene.Scene
+import com.willoutwest.kalahari.scene.shadow.ShadowUtils
 
 /**
  * Represents an implementation of [Shader] that computes the reflectance
@@ -22,7 +23,7 @@ import com.willoutwest.kalahari.scene.Scene
  * @property specular
  *           The specular reflectance equation.
  */
-class PhongShader : Shader {
+open class PhongShader : Shader {
 
     private val ambient: LambertianBrdf = LambertianBrdf()
 
@@ -44,6 +45,8 @@ class PhongShader : Shader {
         val geom     = record.obj as Geometric
         val material = geom.material!!
 
+        val detector = ShadowUtils.localDetector
+
         omegaNot.set(record.ray.dir)
         store.set(Color3.Black)
 
@@ -64,17 +67,25 @@ class PhongShader : Shader {
             val nDotI = bulb.illuminate(it, record, omegaI).dot(record.normal)
 
             if(nDotI > 0f) {
-                this.diffuse.f(material, record, omegaI, omegaNot, lD)
-                this.specular.f(material, record, omegaI, omegaNot, lS)
+                val applyShadow = it.isCastingShadows() &&
+                                  geom.isReceivingShadows()
+                val tS          = bulb.shadowLength(record.ray, it)
 
-                bulb.L(it, scene.root, record, L)
+                if(!applyShadow || !detector.isInShadow(record.worldPosition,
+                                                        omegaI, tS, scene,
+                                                        tracer.sEps)) {
+                    this.diffuse.f(material, record, omegaI, omegaNot, lD)
+                    this.specular.f(material, record, omegaI, omegaNot, lS)
 
-                lD.plusSelf(lS)
+                    bulb.L(it, scene.root, record, L)
 
-                L.timesSelf(lD)
-                    .timesSelf(nDotI)
+                    lD.plusSelf(lS)
 
-                store.plusSelf(L)
+                    L.timesSelf(lD)
+                        .timesSelf(nDotI)
+
+                    store.plusSelf(L)
+                }
             }
         }
 

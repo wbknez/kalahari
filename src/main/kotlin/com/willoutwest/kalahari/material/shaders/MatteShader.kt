@@ -10,6 +10,7 @@ import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.render.Tracer
 import com.willoutwest.kalahari.scene.Geometric
 import com.willoutwest.kalahari.scene.Scene
+import com.willoutwest.kalahari.scene.shadow.ShadowUtils
 
 /**
  * Represents an implementation of [Shader] that computes the reflectance
@@ -39,6 +40,8 @@ class MatteShader : Shader {
         val geom     = record.obj as Geometric
         val material = geom.material!!
 
+        val detector = ShadowUtils.localDetector
+
         omegaNot.set(record.ray.dir)
         store.set(Color3.Black)
 
@@ -59,13 +62,21 @@ class MatteShader : Shader {
             val nDotI = bulb.illuminate(it, record, omegaI).dot(record.normal)
 
             if(nDotI > 0f) {
-                this.diffuse.f(material, record, omegaI, omegaNot, lD)
-                bulb.L(it, scene.root, record, L)
+                val applyShadow = it.isCastingShadows() &&
+                                  geom.isReceivingShadows()
+                val tS          = bulb.shadowLength(record.ray, it)
 
-                L.timesSelf(lD)
-                    .timesSelf(nDotI)
+                if(!applyShadow || !detector.isInShadow(record.worldPosition,
+                                                        omegaI, tS, scene,
+                                                        tracer.sEps)) {
+                    this.diffuse.f(material, record, omegaI, omegaNot, lD)
+                    bulb.L(it, scene.root, record, L)
 
-                store.plusSelf(L)
+                    L.timesSelf(lD)
+                        .timesSelf(nDotI)
+
+                    store.plusSelf(L)
+                }
             }
         }
 
