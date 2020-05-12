@@ -82,6 +82,10 @@ class Geometric(name: String, private val surface: Surface,
 
     override fun shadows(ray: Ray3, tMin: FloatContainer, obj: ObjectContainer,
                          eps: EpsilonTable, tMax: Float): Boolean {
+        if(!this.isCastingShadows()) {
+            return false
+        }
+
         if(this.bounds?.intersects(ray) == false) {
             return false
         }
