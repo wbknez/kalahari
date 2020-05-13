@@ -24,6 +24,7 @@ data class Disk(val center: Point3, val radius: Float, val normal: Normal3)
     : Cloneable, Surface {
 
     companion object {
+
         /**
          * Denotes a successful intersection with a normal, or "hit", ray.
          */
@@ -83,7 +84,7 @@ data class Disk(val center: Point3, val radius: Float, val normal: Normal3)
 
         val t = this.normal.dot(x, y, z) / ray.dir.dot(this.normal)
 
-        if(t <= eps[ID]) {
+        if(t <= eps[ID] || t >= tMax) {
             return false
         }
 
@@ -92,8 +93,7 @@ data class Disk(val center: Point3, val radius: Float, val normal: Normal3)
         val pZ       = ray.origin.x + t * ray.dir.x
         val rSquared = this.radius * this.radius
 
-        return when(this.center.distanceSquaredTo(pX, pY, pZ) < rSquared &&
-                    tMax > t) {
+        return when(this.center.distanceSquaredTo(pX, pY, pZ) < rSquared) {
             false -> false
             true  -> {
                 tMin.value = t
