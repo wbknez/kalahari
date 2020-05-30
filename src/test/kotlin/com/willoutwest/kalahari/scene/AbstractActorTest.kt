@@ -10,6 +10,7 @@ import com.willoutwest.kalahari.math.quaternion
 import com.willoutwest.kalahari.math.shouldBe
 import com.willoutwest.kalahari.math.vector3
 import com.willoutwest.kalahari.util.FloatContainer
+import com.willoutwest.kalahari.util.ObjectContainer
 import io.kotlintest.properties.Gen
 import io.kotlintest.properties.assertAll
 import io.kotlintest.specs.ShouldSpec
@@ -23,6 +24,9 @@ class TestActor(name: String) : AbstractActor(name), Cloneable {
     override fun intersects(ray: Ray3, tMin: FloatContainer,
                             record: Intersection,
                             eps: EpsilonTable): Boolean = false
+
+    override fun shadows(ray: Ray3, tMin: FloatContainer, obj: ObjectContainer,
+                         eps: EpsilonTable, tMax: Float): Boolean = false
 }
 
 class TestActorGenerator(val maxChars: Int = 20) : Gen<TestActor> {
