@@ -33,12 +33,18 @@ data class Triangle(val v0: Point3 = Point3.Zero.clone(),
         /**
          * Denotes a successful intersection with a normal, or "hit", ray.
          */
-        const val HitEps  = 0.0001f
+        const val HitEps    = 0.0001f
 
         /**
          * The unique identifier in an epsilon table.
          */
-        const val ID      = "surf.tri"
+        const val ID        = "surf.tri"
+
+        /**
+         * Denotes a successful intersection with a reflected, or "shadow",
+         * ray.
+         */
+        const val ShadowEps = 0.001f
     }
 
     /**

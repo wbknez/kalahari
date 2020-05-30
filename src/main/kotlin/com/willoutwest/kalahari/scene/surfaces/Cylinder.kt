@@ -27,12 +27,18 @@ data class Cylinder(val bottom: Float, val top: Float, val radius: Float) :
         /**
          * Denotes a successful intersection with a normal, or "hit", ray.
          */
-        const val HitEps  = 0.0001f
+        const val HitEps    = 0.0001f
 
         /**
          * The unique identifier in an epsilon table.
          */
-        const val ID      = "surf.cylinder"
+        const val ID        = "surf.cylinder"
+
+        /**
+         * Denotes a successful intersection with a reflected, or "shadow",
+         * ray.
+         */
+        const val ShadowEps = 0.001f
     }
 
     constructor(cyl: Cylinder?) : this(cyl!!.bottom, cyl.top, cyl.radius)

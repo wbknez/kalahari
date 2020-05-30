@@ -25,12 +25,18 @@ class Plane(val point: Point3, val normal: Normal3): Cloneable, Surface {
         /**
          * Denotes a successful intersection with a normal, or "hit", ray.
          */
-        const val HitEps  = 0.0001f
+        const val HitEps    = 0.0001f
 
         /**
          * The unique identifier in an epsilon table.
          */
-        const val ID      = "surf.plane"
+        const val ID        = "surf.plane"
+
+        /**
+         * Denotes a successful intersection with a reflected, or "shadow",
+         * ray.
+         */
+        const val ShadowEps = 0.001f
     }
 
     /**

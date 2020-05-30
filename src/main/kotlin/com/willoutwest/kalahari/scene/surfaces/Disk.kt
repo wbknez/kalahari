@@ -28,12 +28,18 @@ data class Disk(val center: Point3, val radius: Float, val normal: Normal3)
         /**
          * Denotes a successful intersection with a normal, or "hit", ray.
          */
-        const val HitEps  = 0.0001f
+        const val HitEps    = 0.0001f
 
         /**
          * The unique identifier in an epsilon table.
          */
-        const val ID      = "surf.disk"
+        const val ID        = "surf.disk"
+
+        /**
+         * Denotes a successful intersection with a reflected, or "shadow",
+         * ray.
+         */
+        const val ShadowEps = 0.001f
     }
 
     constructor(disk: Disk?) : this(disk!!.center, disk.radius, disk.normal)

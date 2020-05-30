@@ -19,6 +19,7 @@ import com.willoutwest.kalahari.scene.light.Light
 import com.willoutwest.kalahari.scene.shadow.ShadowUtils
 import com.willoutwest.kalahari.scene.shadow.detectors.BasicDetector
 import com.willoutwest.kalahari.scene.shadow.detectors.CachingDetector
+import com.willoutwest.kalahari.scene.surfaces.EpsilonUtils
 import com.willoutwest.kalahari.script.libraries.LightLibrary
 import com.willoutwest.kalahari.util.TypeAssociator
 
@@ -54,13 +55,15 @@ class Tracer {
     var drawOrder: DrawingOrder = NaturalDrawingOrder()
 
     @JvmField
-    val hEps: EpsilonTable = EpsilonTable(0.0001f)
+    val hEps: EpsilonTable = EpsilonTable(0.0001f,
+                                          EpsilonUtils.hitEpsilons())
 
     @JvmField
     val lenses: TypeAssociator<Camera.Type, Lens> = TypeAssociator()
 
     @JvmField
-    val sEps: EpsilonTable = EpsilonTable(0.0001f)
+    val sEps: EpsilonTable = EpsilonTable(0.0001f,
+                                          EpsilonUtils.shadowEpsilons())
 
     @JvmField
     val shaders: TypeAssociator<Material.Type, Shader> = TypeAssociator()
