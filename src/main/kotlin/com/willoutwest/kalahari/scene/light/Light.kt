@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.scene.light
 
 import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.math.Point3
+import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.scene.shadow.ShadowMode
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
@@ -17,9 +18,11 @@ import com.willoutwest.kalahari.util.hash
  *           Controls whether or not shadows may be cast.
  * @property cL
  *           The radiance color.
+ * @property dir
+ *           The radiance direction.
  * @property kL
  *           The radiance intensity coefficient.
- * @property location
+ * @property point
  *           The location in three-dimensional space.
  */
 class Light(name: String) :
@@ -35,9 +38,11 @@ class Light(name: String) :
 
     var cL: Texture by this.params
 
+    var dir: Vector3 by this.params
+
     var kL: Float by this.params
 
-    var location: Point3 by this.params
+    var point: Point3 by this.params
 
     override var type: Type by this.params
 

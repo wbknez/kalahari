@@ -16,17 +16,12 @@ class PointBulb : AbstractBulb(), Bulb {
 
     override fun illuminate(light: Light, record: Intersection,
                             store: Vector3): Vector3 =
-        store.set(light.location)
+        store.set(light.point)
             .minusSelf(record.localPosition.x,
                        record.localPosition.y,
                        record.localPosition.z)
             .normalizeSelf()
 
-    override fun L(light: Light, root: Actor,
-                   record: Intersection, store: Color3): Color3 =
-        light.cL.getColor(record, store)
-            .timesSelf(light.kL)
-
     override fun shadowLength(ray: Ray3, light: Light): Float =
-        light.location.distanceTo(ray.origin)
+        light.point.distanceTo(ray.origin)
 }
