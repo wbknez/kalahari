@@ -62,13 +62,16 @@ class MatteShader : Shader {
             val nDotI = bulb.illuminate(it, record, omegaI).dot(record.normal)
 
             if(nDotI > 0f) {
-                val applyShadow = it.isCastingShadows() &&
-                                  geom.isReceivingShadows()
+                var isVisible   = true
                 val tS          = bulb.shadowLength(record.ray, it)
 
-                if(!applyShadow || !detector.isInShadow(record.worldPosition,
-                                                        omegaI, tS, scene,
-                                                        tracer.sEps)) {
+                if(it.isCastingShadows() && geom.isReceivingShadows()) {
+                    isVisible = !detector.isInShadow(
+                        record.worldPosition, omegaI, tS, scene, tracer.sEps
+                    )
+                }
+
+                if(isVisible) {
                     this.diffuse.f(material, record, omegaI, omegaNot, lD)
                     bulb.L(it, scene.root, record, L)
 
