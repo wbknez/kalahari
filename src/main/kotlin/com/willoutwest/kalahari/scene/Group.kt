@@ -74,11 +74,11 @@ class Group(name: String) : AbstractActor(name), Actor, Cloneable {
         }
 
         if(hit) {
+            ray.projectAlong(tMin.value, record.worldPosition)
             record.set(hRecord)
 
             record.normal.transformSelf(this.invTransform)
                          .normalizeSelf()
-            record.worldPosition.transformSelf(this.invTransform)
 
             tMin.value = minTime
         }

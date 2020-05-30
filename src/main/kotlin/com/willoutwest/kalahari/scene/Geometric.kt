@@ -47,9 +47,10 @@ class Geometric(name: String, private val surface: Surface,
         val hit = this.surface.intersects(hRay, tMin, record, eps)
 
         if(hit) {
+            ray.projectAlong(tMin.value, record.worldPosition)
+
             record.normal.transformSelf(this.invTransform)
             record.obj = this
-            record.worldPosition.transformSelf(this.invTransform)
         }
 
         cache.rays.reuse(hRay)
