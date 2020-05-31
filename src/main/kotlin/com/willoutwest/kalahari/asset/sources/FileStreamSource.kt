@@ -10,8 +10,7 @@ import java.nio.file.Path
  * Represents an implementation of [StreamSource] that utilizes the local
  * filesystem to provide new input streams for a given path.
  */
-class FileStreamSource :
-    StreamSource {
+class FileStreamSource : StreamSource {
 
     override fun close() {}
 
