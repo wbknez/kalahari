@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.asset
 
 import java.io.IOException
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Represents a collection of assets in various forms and created
@@ -39,6 +40,9 @@ class AssetCache : AutoCloseable {
      * that asset will be returned and no additional operations will take
      * place.
      *
+     * This method is intended for scripting use in order to avoid needing to
+     * avoid importing the Java NIO libraries.
+     *
      * @param id
      *        The asset identifier to use.
      * @param path
@@ -55,9 +59,35 @@ class AssetCache : AutoCloseable {
      * @throws StreamFailureException
      *         If there was any other problem with I/O operations.
      */
-    fun load(id: String, path: Path, register: Boolean): Any {
-        return this.load(AssetKey(id, path), register)
-    }
+    fun load(id: String, path: String, register: Boolean): Any =
+        this.load(AssetKey(id, Paths.get(path)), register)
+
+    /**
+     * Attempts to load the asset with the specified key identifier and file
+     * path, registering it with this asset cache if necessary.
+     *
+     * If the specified key has already been used to load an asset, then
+     * that asset will be returned and no additional operations will take
+     * place.
+     *
+     * @param id
+     *        The asset identifier to use.
+     * @param path
+     *        The asset file path to use.
+     * @param register
+     *        Whether or not to place the final asset into the cache.
+     * @return A loaded asset.
+     * @throws MalformedAssetException
+     *         If there was a problem loading the asset.
+     * @throws NoSuchReaderException
+     *         If no reader is associated with an extension.
+     * @throws NoSuchStreamException
+     *         If a stream source could not be found.
+     * @throws StreamFailureException
+     *         If there was any other problem with I/O operations.
+     */
+    fun load(id: String, path: Path, register: Boolean): Any =
+        this.load(AssetKey(id, path), register)
 
     /**
      * Attempts to load the asset with the specified key, registering it
