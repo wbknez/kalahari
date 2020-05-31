@@ -30,5 +30,6 @@ data class Image(val width: Int, val height: Int,
         }
     }
 
-    operator fun get(x: Int, y: Int): Color3 = this.data[x + this.width * y]
+    operator fun get(x: Int, y: Int): Color3 =
+        this.data[x + this.width * (this.height - y - 1)]
 }
