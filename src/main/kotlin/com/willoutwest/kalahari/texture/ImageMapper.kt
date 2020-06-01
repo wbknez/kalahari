@@ -4,8 +4,8 @@ import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.math.TexCoord2
 
 /**
- * Represents a mechanism for mapping the intersection point of a geometric
- * object in three-dimensional Cartesian space to a two-dimensional texture
+ * Represents a mechanism for mapping the intersection point on a geometric
+ * surface in three-dimensional Cartesian space to a two-dimensional texture
  * space.
  */
 interface ImageMapper {
