@@ -15,12 +15,13 @@ class SphericalMapper : ImageMapper {
 
     override fun map(hit: Point3, width: Int, height: Int, store: TexCoord2)
         : TexCoord2 {
+
         val phi   = atan2(hit.x, hit.z)
         val theta = acos(hit.y)
 
         store.u = when(phi < 0.0) {
-            false -> phi / MathUtils.InvTwoPi
-            true  -> 1f + (phi / MathUtils.InvTwoPi)
+            false -> phi * MathUtils.InvTwoPi
+            true  -> 1f + (phi * MathUtils.InvTwoPi)
         }
         store.v = 1f - theta * MathUtils.InvPi
 
