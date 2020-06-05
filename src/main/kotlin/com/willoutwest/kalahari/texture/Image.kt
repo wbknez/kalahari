@@ -14,7 +14,15 @@ import com.willoutwest.kalahari.math.Color3
  *           The image width in pixels.
  */
 data class Image(val width: Int, val height: Int,
-                 private val data: List<Color3>) {
+                 private val data: List<Color3>) : Cloneable {
+
+    /**
+     * Constructor.
+     *
+     * @param image
+     *        The image to copy.
+     */
+    constructor(image: Image?) : this(image!!.width, image.height, image.data)
 
     init {
         require(height >= 1) {
@@ -29,6 +37,8 @@ data class Image(val width: Int, val height: Int,
             "The amount of image data must equal the width times the height."
         }
     }
+
+    public override fun clone(): Image = Image(this)
 
     operator fun get(x: Int, y: Int): Color3 =
         this.data[x + this.width * (this.height - y - 1)]
