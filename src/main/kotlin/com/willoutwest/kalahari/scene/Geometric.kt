@@ -7,6 +7,7 @@ import com.willoutwest.kalahari.math.Quaternion
 import com.willoutwest.kalahari.math.Ray3
 import com.willoutwest.kalahari.math.Vector3
 import com.willoutwest.kalahari.math.intersect.Intersection
+import com.willoutwest.kalahari.texture.TextureMode
 import com.willoutwest.kalahari.util.FloatContainer
 import com.willoutwest.kalahari.util.ObjectContainer
 
@@ -18,9 +19,13 @@ import com.willoutwest.kalahari.util.ObjectContainer
  *           The material to use.
  * @property surface
  *           The geometric surface to intersect.
+ * @property textureMode
+ *           Controls whether or not texture coordinates are transformed
+ *           into local object space.
  */
 class Geometric(name: String, private val surface: Surface,
-                var material: Material? = null)
+                var material: Material? = null,
+                var textureMode: TextureMode = TextureMode.Local)
     : AbstractActor(name), Actor, Cloneable {
 
     /**
@@ -47,6 +52,10 @@ class Geometric(name: String, private val surface: Surface,
         val hit = this.surface.intersects(hRay, tMin, record, eps)
 
         if(hit) {
+            if(!this.isTransformingTextures()) {
+                ray.projectAlong(tMin.value, record.localPosition)
+            }
+
             ray.projectAlong(tMin.value, record.worldPosition)
 
             record.normal.transformSelf(this.invTransform)
@@ -61,6 +70,15 @@ class Geometric(name: String, private val surface: Surface,
     override fun isReceivingShadows(): Boolean =
         super<AbstractActor>.isReceivingShadows() &&
         this.material?.isReceivingShadows() == true
+
+    /**
+     * Returns whether or not this geometric is transforming texture
+     * coordinates into local space.
+     *
+     * @return Whether or not textures are transformed.
+     */
+    fun isTransformingTextures(): Boolean =
+        this.textureMode == TextureMode.Local
 
     override fun move(x: Float, y: Float, z: Float): Geometric =
         super.move(x, y, z) as Geometric
