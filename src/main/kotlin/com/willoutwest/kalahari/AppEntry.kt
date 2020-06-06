@@ -1,6 +1,9 @@
 package com.willoutwest.kalahari
 
 import com.willoutwest.kalahari.asset.AssetCache
+import com.willoutwest.kalahari.asset.readers.ImageReader
+import com.willoutwest.kalahari.asset.sources.ClasspathStreamSource
+import com.willoutwest.kalahari.asset.sources.FileStreamSource
 import com.willoutwest.kalahari.render.Pipeline
 import com.willoutwest.kalahari.render.Tracer
 import com.willoutwest.kalahari.render.outputs.ImageOutput
@@ -16,6 +19,7 @@ import org.luaj.vm2.lib.jse.JsePlatform
 import java.util.logging.Level
 import java.util.logging.LogManager
 import java.util.logging.Logger
+import javax.imageio.ImageIO
 
 /**
  * The main driver for the Kalahari ray tracing project.
@@ -92,6 +96,26 @@ sealed class AppEntry {
         }
 
         /**
+         * Creates and initializes an asset cache with all potential objects
+         * supported in this project associated with their readers, as well
+         * as support for finding assets on the classpath and local filesystem.
+         *
+         * @return An asset cache with all supported readers.
+         */
+        private fun createDefaultCache(): AssetCache {
+            val assets = AssetCache()
+
+            assets.loader.appendSource(FileStreamSource())
+            assets.loader.appendSource(ClasspathStreamSource())
+
+            ImageIO.getReaderFileSuffixes().forEach {
+                assets.loader.associateReader(it, ImageReader())
+            }
+
+            return assets
+        }
+
+        /**
          * Creates and initializes a set of global values for use with a Lua
          * interpreter, loading all necessary libraries into the global
          * namespace.
@@ -118,7 +142,7 @@ sealed class AppEntry {
             ArgParser(args).parseInto(::Arguments).run {
                 initLogging(this.quiet, this.verbose)
 
-                val assets   = AssetCache()
+                val assets   = createDefaultCache()
                 val pipeline = Pipeline(this.threads)
 
                 arrayOf(assets, pipeline).use {
@@ -130,6 +154,7 @@ sealed class AppEntry {
                     val scene  = Scene()
                     val tracer = Tracer()
 
+                    globals.set("assets", toLua(assets))
                     globals.set("scene",  toLua(scene))
                     globals.set("tracer", toLua(tracer))
 
