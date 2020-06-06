@@ -36,7 +36,7 @@ class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
                     var maxDepth: Int = 1,
                     var pixelSize: Float = 1f,
                     var sampler: Sampler2 = Sampler.squareOf(
-                       1, 83, JitteredSampleGenerator()
+                       16, 83, JitteredSampleGenerator()
                     )) : Cloneable {
 
     var gamma: Float = 1f
