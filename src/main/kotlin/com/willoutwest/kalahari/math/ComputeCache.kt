@@ -69,5 +69,7 @@ class ComputeCache(handler: ConstraintHandler) {
 
     val tmins = QueueObjectPool(4, handler, { FloatContainer(0f) })
 
+    val uvs = QueueObjectPool(1, handler, { TexCoord2() })
+
     val vectors = QueueObjectPool(4, handler, { Vector3() })
 }
