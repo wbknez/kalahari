@@ -41,6 +41,11 @@ sealed class MathUtils {
         const val InvPi            = (1.0 / Math.PI).toFloat()
 
         /**
+         * Represents the inverse of two pi, 1/2π
+         */
+        const val InvTwoPi         = (1.0 / (2 * Math.PI)).toFloat()
+
+        /**
          * Represents pi over two, or π/2.
          */
         const val PiOverTwo        = (Math.PI / 2.0).toFloat()
