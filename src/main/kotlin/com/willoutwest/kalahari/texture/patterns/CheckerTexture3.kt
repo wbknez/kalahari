@@ -15,7 +15,7 @@ import com.willoutwest.kalahari.texture.Texture
  * behavior is desired.
  */
 class CheckerTexture3(evenColor: Texture, oddColor: Texture, scale: Float) :
-    AbstractCheckerTexture(evenColor, oddColor, scale), Cloneable {
+    AbstractCheckerTexture(evenColor, oddColor, scale), Cloneable, Texture {
 
     companion object {
 
@@ -29,7 +29,7 @@ class CheckerTexture3(evenColor: Texture, oddColor: Texture, scale: Float) :
      * Constructor.
      *
      * @param tex
-     *        The checkerboard texture to copy from.
+     *        The 3D checkerboard texture to copy from.
      */
     constructor(tex: CheckerTexture3?) : this(tex!!.evenColor, tex.oddColor,
                                                  tex.scale)
