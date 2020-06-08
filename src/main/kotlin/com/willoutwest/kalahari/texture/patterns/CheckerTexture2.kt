@@ -26,6 +26,12 @@ class CheckerTexture2(evenColor: Texture, oddColor: Texture, scale: Float,
         this(tex!!.evenColor, tex.oddColor, tex.scale, tex.outlineColor,
              tex.outlineWidth)
 
+    init {
+        require(this.outlineWidth >= 0f) {
+            "Checker outline width cannot be less than zero."
+        }
+    }
+
     public override fun clone(): CheckerTexture2 = CheckerTexture2(this)
 
     override fun getColor(record: Intersection, store: Color3): Color3 {

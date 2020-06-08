@@ -14,4 +14,10 @@ import com.willoutwest.kalahari.texture.Texture
  */
 abstract class AbstractCheckerTexture(val evenColor: Texture,
                                       val oddColor: Texture,
-                                      val scale: Float) : Texture
+                                      val scale: Float) : Texture {
+    init {
+        require(this.scale > 0f) {
+            "Checker scale must be positive."
+        }
+    }
+}
