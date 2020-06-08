@@ -15,6 +15,16 @@ data class FillTexture(private val color: Color3) : Cloneable, Texture {
     companion object {
 
         /**
+         * Represents a texture filled with the color black.
+         */
+        val Black = FillTexture(Color3.Black)
+
+        /**
+         * Represents a texture filled with the color white.
+         */
+        val White = FillTexture(Color3.White)
+
+        /**
          * Converts the specified integer color components (minimum of zero,
          * maximum of 255) into a filled texture.
          *
