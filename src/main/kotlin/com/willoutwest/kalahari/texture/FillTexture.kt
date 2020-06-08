@@ -15,14 +15,19 @@ data class FillTexture(private val color: Color3) : Cloneable, Texture {
     companion object {
 
         /**
-         * Represents a texture filled with the color black.
+         * Converts the specified integer color components (minimum of zero,
+         * maximum of 255) into a filled texture.
+         *
+         * @param red
+         *        The red integer color component to use.
+         * @param green
+         *        The green integer color component to use.
+         * @param blue
+         *        The blue integer color component to use.
+         * @return A filled texture.
          */
-        val Black = FillTexture(Color3.White)
-
-        /**
-         * Represents a texture filled with the color white.
-          */
-        val White = FillTexture(Color3.White)
+        fun fromRgb(red: Int, green: Int, blue: Int): Texture =
+            FillTexture(Color3.fromRgb(red, green, blue))
     }
 
     /**
