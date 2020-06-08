@@ -103,6 +103,22 @@ class Color3(red: Float = 0.0f, green: Float = 0.0f, blue: Float = 0.0f)
          * Represents the color white.
          */
         val White = Color3(1f, 1f, 1f)
+
+        /**
+         * Converts the specified integer color components (minimum of zero,
+         * maximum of 255) into floating-point format.
+         *
+         * @param red
+         *        The red integer color component to use.
+         * @param green
+         *        The green integer color component to use.
+         * @param blue
+         *        The blue integer color component to use.
+         * @return A new color.
+         */
+        fun fromRgb(red: Int, green: Int, blue: Int): Color3 =
+            Color3(intToComponent(red), intToComponent(green),
+                   intToComponent(blue))
     }
 
     var red: Float
