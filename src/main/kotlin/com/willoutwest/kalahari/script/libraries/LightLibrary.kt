@@ -9,6 +9,7 @@ import com.willoutwest.kalahari.scene.light.bulbs.AmbientBulb
 import com.willoutwest.kalahari.scene.light.bulbs.DirectionalBulb
 import com.willoutwest.kalahari.scene.light.bulbs.PointBulb
 import com.willoutwest.kalahari.script.ScriptingLibrary
+import com.willoutwest.kalahari.texture.FillTexture
 
 /**
  * Represents a mechanism for creating and working with [Light] objects
@@ -51,6 +52,24 @@ class LightLibrary : ScriptingLibrary {
             Type.Point       to PointBulb()
         )
     }
+
+    /**
+     * Creates a new ambient light with a default name of "global", a
+     * default color of white, and a default intensity of one.
+     *
+     * @return An ambient light.
+     */
+    fun ambient(): Light = ambient("global", FillTexture.White, 1f)
+
+    /**
+     * Creates a new ambient light with the specified properties, a
+     * default name of "global", and a default intensity of one.
+     *
+     * @param cL
+     *        The radiance color to use.
+     * @return An ambient light.
+     */
+    fun ambient(cL: Texture): Light = ambient("global", cL, 1f)
 
     /**
      * Creates a new ambient light with the specified properties and a
