@@ -3,6 +3,7 @@ package com.willoutwest.kalahari.scene.light
 import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.math.Vector3
+import com.willoutwest.kalahari.math.sample.Sampler3
 import com.willoutwest.kalahari.scene.shadow.ShadowMode
 import com.willoutwest.kalahari.util.ParameterMap
 import com.willoutwest.kalahari.util.Typeable
@@ -44,6 +45,8 @@ class Light(name: String) :
 
     var point: Point3 by this.params
 
+    var sampler: Sampler3 by this.params
+
     override var type: Type by this.params
 
     /**
@@ -77,7 +80,8 @@ class Light(name: String) :
             else     -> false
         }
 
-    override fun hashCode(): Int = hash(super.hashCode(), this.type)
+    override fun hashCode(): Int =
+        hash(super.hashCode(), this.castsShadows, this.type)
 
     /**
      * Returns whether or not this shadowable may cast shadows onto other
