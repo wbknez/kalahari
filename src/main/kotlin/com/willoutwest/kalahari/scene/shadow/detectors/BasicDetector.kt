@@ -4,7 +4,8 @@ import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.EpsilonTable
 import com.willoutwest.kalahari.math.Point3
 import com.willoutwest.kalahari.math.Vector3
-import com.willoutwest.kalahari.scene.Scene
+import com.willoutwest.kalahari.scene.Actor
+import com.willoutwest.kalahari.scene.light.Light
 import com.willoutwest.kalahari.scene.shadow.ShadowDetector
 
 /**
@@ -13,8 +14,12 @@ import com.willoutwest.kalahari.scene.shadow.ShadowDetector
  */
 class BasicDetector : ShadowDetector {
 
-    override fun isInShadow(worldPosition: Point3, omegaI: Vector3, tS: Float,
-                            scene: Scene, eps: EpsilonTable): Boolean {
+    override fun isInShadow(light: Light,
+                            worldPosition: Point3,
+                            omegaI: Vector3,
+                            tS: Float,
+                            root: Actor,
+                            eps: EpsilonTable): Boolean {
         val cache = ComputeUtils.localCache
 
         val obj   = cache.objects.borrow()
@@ -23,8 +28,8 @@ class BasicDetector : ShadowDetector {
 
         sRay.set(omegaI, worldPosition)
 
-        val hit = scene.root.isCastingShadows() &&
-                  scene.root.shadows(sRay, tMin, obj, eps, tS)
+        val hit = root.isCastingShadows() &&
+                  root.shadows(sRay, tMin, obj, eps, tS)
 
         cache.objects.reuse(obj)
         cache.rays.reuse(sRay)
