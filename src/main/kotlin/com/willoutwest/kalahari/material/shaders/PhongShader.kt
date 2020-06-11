@@ -47,6 +47,9 @@ open class PhongShader : Shader {
 
         val detector = ShadowUtils.localDetector
 
+        val root     = scene.root
+        val sEps     = tracer.sEps
+
         omegaNot.set(record.ray.dir)
         store.set(Color3.Black)
 
@@ -72,7 +75,7 @@ open class PhongShader : Shader {
 
                 if(it.isCastingShadows() && geom.isReceivingShadows()) {
                     isVisible = !detector.isInShadow(
-                        record.worldPosition, omegaI, tS, scene, tracer.sEps
+                        it, record.worldPosition, omegaI, tS, root, sEps
                     )
                 }
 

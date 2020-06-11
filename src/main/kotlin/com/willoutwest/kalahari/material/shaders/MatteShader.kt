@@ -42,6 +42,9 @@ class MatteShader : Shader {
 
         val detector = ShadowUtils.localDetector
 
+        val root     = scene.root
+        val sEps     = tracer.sEps
+
         omegaNot.set(record.ray.dir)
         store.set(Color3.Black)
 
@@ -67,7 +70,7 @@ class MatteShader : Shader {
 
                 if(it.isCastingShadows() && geom.isReceivingShadows()) {
                     isVisible = !detector.isInShadow(
-                        record.worldPosition, omegaI, tS, scene, tracer.sEps
+                        it, record.worldPosition, omegaI, tS, root, sEps
                     )
                 }
 
