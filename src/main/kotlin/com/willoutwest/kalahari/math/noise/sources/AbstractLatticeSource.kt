@@ -4,13 +4,18 @@ import com.willoutwest.kalahari.math.noise.NoiseSource
 
 /**
  * Represents an implementation of [NoiseSource] that provides basic
- * infrastructure for creating noise from a three-dimensional integer lattice.
+ * infrastructure for creating noise based on a three-dimensional integer
+ * lattice.
  *
- * @property indexTable
+ * @property indices
  *           The table of lattice points.
- * @property valueTable
+ * @property values
  *           The table of source-specific values.
  */
-abstract class AbstractLatticeSource<T>(
-    protected val indexTable: Array<Short>,
-    protected val valueTable: Array<T>) : NoiseSource
+abstract class AbstractLatticeSource(indexSize: Int,
+                                     valueSize: Int) : NoiseSource {
+
+    protected val indices: ShortArray = ShortArray(indexSize)
+
+    protected val values: FloatArray = FloatArray(valueSize)
+}
