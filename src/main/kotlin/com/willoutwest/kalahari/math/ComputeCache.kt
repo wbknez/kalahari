@@ -30,6 +30,8 @@ import com.willoutwest.kalahari.util.pool.QueueObjectPool
  *
  * @param handler
  *        The constraint handler to use.
+ * @property arrays
+ *           The pool of temporary four-element arrays.
  * @property colors
  *           The pool of temporary colors.
  * @property matrices
@@ -52,6 +54,8 @@ import com.willoutwest.kalahari.util.pool.QueueObjectPool
  *           The pool of temporary three-dimensional vectors.
  */
 class ComputeCache(handler: ConstraintHandler) {
+
+    val arrays = QueueObjectPool(3, handler, { FloatArray(4) })
 
     val colors = QueueObjectPool(4, handler, { Color3() })
 
