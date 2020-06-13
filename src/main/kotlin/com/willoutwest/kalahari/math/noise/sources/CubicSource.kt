@@ -52,6 +52,12 @@ class CubicSource() :
 
     private val mask = this.indices.size - 1
 
+    /**
+     * Constructor.
+     *
+     * @param source
+     *        The noise source to copy from.
+     */
     constructor(source: CubicSource?) : this() {
         source!!.indices.copyInto(this.indices)
         source.values.copyInto(this.values)

@@ -5,7 +5,9 @@ import com.willoutwest.kalahari.math.Point3
 /**
  * Represents a mechanism for creating coherent noise.
  */
-interface Speaker {
+interface Speaker : Cloneable {
+
+    public override fun clone(): Speaker
 
     /**
      * Computes a single noise-based value using the specified position
