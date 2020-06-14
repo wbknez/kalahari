@@ -54,9 +54,7 @@ class Pipeline(numThreads: Int) : AutoCloseable {
      *        The tracer to use.
      */
     fun prepare(scene: Scene, tracer: Tracer) {
-        scene.root.visit {
-            it.motion.toMatrix(it.invTransform).invertSelf()
-        }
+        scene.root.visit { it.updateTransform() }
 
         tracer.lenses[scene.camera].prepare(scene.camera, scene.viewport)
     }
