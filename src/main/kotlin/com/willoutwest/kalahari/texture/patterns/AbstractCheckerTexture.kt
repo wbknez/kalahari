@@ -1,5 +1,6 @@
 package com.willoutwest.kalahari.texture.patterns
 
+import com.willoutwest.kalahari.texture.AbstractTexture
 import com.willoutwest.kalahari.texture.Texture
 
 /**
@@ -14,7 +15,9 @@ import com.willoutwest.kalahari.texture.Texture
  */
 abstract class AbstractCheckerTexture(val evenColor: Texture,
                                       val oddColor: Texture,
-                                      val scale: Float) : Texture {
+                                      val scale: Float) :
+    AbstractTexture(), Texture {
+
     init {
         require(this.scale > 0f) {
             "Checker scale must be positive."

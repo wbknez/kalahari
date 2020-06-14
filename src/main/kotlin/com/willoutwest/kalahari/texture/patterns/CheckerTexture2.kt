@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.texture.patterns
 
 import com.willoutwest.kalahari.math.Color3
+import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.MathUtils.Companion.floori
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.texture.Texture
@@ -11,6 +12,11 @@ import com.willoutwest.kalahari.texture.Texture
  *
  * This checker texture is primarily intended for flat surfaces such as
  * planes and rectangles but may be used for other surfaces as necessary.
+ *
+ * @property outlineColor
+ *
+ * @property outlineWidth
+ *
  */
 class CheckerTexture2(evenColor: Texture, oddColor: Texture, scale: Float,
                       val outlineColor: Texture, val outlineWidth: Float) :
@@ -35,10 +41,16 @@ class CheckerTexture2(evenColor: Texture, oddColor: Texture, scale: Float,
     public override fun clone(): CheckerTexture2 = CheckerTexture2(this)
 
     override fun getColor(record: Intersection, store: Color3): Color3 {
+        val cache         = ComputeUtils.localCache
+        val localPosition = cache.points.borrow()
+        
+        localPosition.set(record.localPosition)
+            .transformSelf(this.invTransform)
+        
         val d  = 1f / this.scale
 
-        val x  = record.localPosition.x * d
-        val z  = record.localPosition.z * d
+        val x  = localPosition.x * d
+        val z  = localPosition.z * d
 
         val iX = floori(x)
         val iZ = floori(z)
@@ -48,6 +60,8 @@ class CheckerTexture2(evenColor: Texture, oddColor: Texture, scale: Float,
 
         val width     = 0.5f * this.outlineWidth * d
 
+        cache.points.reuse(localPosition)
+        
         return when((fX < width || fX > (1f - width)) ||
                     (fZ < width || fZ > (1f - width))) {
             false -> when((iX + iZ) % 2 == 0) {

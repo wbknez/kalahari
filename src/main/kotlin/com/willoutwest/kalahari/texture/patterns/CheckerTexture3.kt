@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.texture.patterns
 
 import com.willoutwest.kalahari.math.Color3
+import com.willoutwest.kalahari.math.ComputeUtils
 import com.willoutwest.kalahari.math.MathUtils.Companion.floori
 import com.willoutwest.kalahari.math.intersect.Intersection
 import com.willoutwest.kalahari.texture.Texture
@@ -37,14 +38,22 @@ class CheckerTexture3(evenColor: Texture, oddColor: Texture, scale: Float) :
     override fun clone(): CheckerTexture3 = CheckerTexture3(this)
 
     override fun getColor(record: Intersection, store: Color3): Color3 {
+        val cache         = ComputeUtils.localCache
+        val localPosition = cache.points.borrow()
+
+        localPosition.set(record.localPosition)
+            .transformSelf(this.invTransform)
+        
         val d = 1f / this.scale
 
-        val x = (record.localPosition.x + Bias) * d
-        val y = (record.localPosition.y + Bias) * d
-        val z = (record.localPosition.z + Bias) * d
+        val x = (localPosition.x + Bias) * d
+        val y = (localPosition.y + Bias) * d
+        val z = (localPosition.z + Bias) * d
 
         val result = floori(x) + floori(y) + floori(z)
 
+        cache.points.reuse(localPosition)
+        
         return when(result % 2 == 0) {
             false -> this.oddColor.getColor(record, store)
             true  -> this.evenColor.getColor(record, store)
