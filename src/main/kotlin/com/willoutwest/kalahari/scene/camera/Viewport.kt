@@ -12,7 +12,7 @@ import com.willoutwest.kalahari.util.hash
 /**
  * Represents a single "view" of a scene given by a pixel-filled plane.
  *
- * @property bgColor
+ * @property backgroundColor
  *           The background color.
  * @property bounds
  *           The viewing bounds.
@@ -29,13 +29,13 @@ import com.willoutwest.kalahari.util.hash
  * @property sampler
  *           The sampling mechanism to reduce anti-aliasing.
  */
-class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
-                    var bounds: Bounds = Bounds(600, 400),
-                    gamma: Float = 1f,
-                    var gamutOp: ColorOperator = ClampingColorOperator(),
-                    var maxDepth: Int = 1,
-                    var pixelSize: Float = 1f,
-                    var sampler: Sampler2 = Sampler.squareOf(
+class Viewport(var backgroundColor: Color3 = Color3(0f, 0f, 0f),
+               var bounds: Bounds = Bounds(600, 400),
+               gamma: Float = 1f,
+               var gamutOp: ColorOperator = ClampingColorOperator(),
+               var maxDepth: Int = 1,
+               var pixelSize: Float = 1f,
+               var sampler: Sampler2 = Sampler.squareOf(
                        16, 83, JitteredSampleGenerator()
                     )) : Cloneable {
 
@@ -59,7 +59,7 @@ class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
      *        The viewport to copy from.
      */
     constructor(viewport: Viewport?) :
-        this(viewport!!.bgColor, viewport.bounds, viewport.gamma,
+        this(viewport!!.backgroundColor, viewport.bounds, viewport.gamma,
              viewport.gamutOp, viewport.maxDepth, viewport.pixelSize,
              viewport.sampler)
 
@@ -71,20 +71,35 @@ class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
 
     override fun equals(other: Any?): Boolean =
         when(other) {
-            is Viewport -> this.bgColor   == other.bgColor   &&
-                           this.bounds    == other.bounds    &&
-                           this.gamma     == other.gamma     &&
-                           this.gamutOp   == other.gamutOp   &&
-                           this.invGamma  == other.invGamma  &&
-                           this.maxDepth  == other.maxDepth  &&
+            is Viewport -> this.backgroundColor == other.backgroundColor &&
+                           this.bounds == other.bounds &&
+                           this.gamma == other.gamma &&
+                           this.gamutOp == other.gamutOp &&
+                           this.invGamma == other.invGamma &&
+                           this.maxDepth == other.maxDepth &&
                            this.pixelSize == other.pixelSize &&
-                           this.sampler   == other.sampler
+                           this.sampler == other.sampler
             else        -> false
         }
 
     override fun hashCode(): Int =
-        hash(this.bounds, this.bgColor, this.gamma, this.gamutOp,
+        hash(this.bounds, this.backgroundColor, this.gamma, this.gamutOp,
              this.invGamma, this.maxDepth, this.pixelSize, this.sampler)
+
+    /**
+     * Sets the background color of this viewport to the specified
+     * color components.
+     *
+     * @param red
+     *        The red color component to use.
+     * @param green
+     *        The green color component to use.
+     * @param blue
+     *        The blue color component to use.
+     */
+    fun setBackgroundColor(red: Float, green: Float, blue: Float) {
+        this.backgroundColor.set(red, green, blue)
+    }
 
     /**
      * Sets the dimensions of this viewport to the specified dimensions
@@ -100,7 +115,7 @@ class Viewport(var bgColor: Color3 = Color3(0f, 0f, 0f),
     }
 
     override fun toString() =
-        "Viewport(bgColor=${this.bgColor}, bounds=${this.bounds}, " +
+        "Viewport(bgColor=${this.backgroundColor}, bounds=${this.bounds}, " +
         "gamma=${this.gamma}, gamutOp=${this.gamutOp}, " +
         "invGamma=${this.invGamma}, maxDepth=${this.maxDepth}, " +
         "pixelSize=${this.pixelSize}, sampler=${this.sampler})"
