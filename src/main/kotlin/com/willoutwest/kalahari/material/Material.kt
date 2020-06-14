@@ -15,6 +15,8 @@ import com.willoutwest.kalahari.util.hash
  *        The material name to use.
  * @property cD
  *           The ambient and diffuse reflection color.
+ * @property cE
+ *           The emissive reflection color.
  * @property cR
  *           The perfect reflection color.
  * @property cS
@@ -24,9 +26,11 @@ import com.willoutwest.kalahari.util.hash
  * @property expS
  *           The glossy specular reflection exponent.
  * @property kA
- *        The ambient reflection coefficient.
+ *           The ambient reflection coefficient.
  * @property kD
  *           The diffuse reflection coefficient.
+ * @proeprty kE
+ *           The emissive reflection coefficient.
  * @property kR
  *           The perfect reflection coefficient.
  * @property kS
@@ -48,6 +52,8 @@ class Material(name: String) :
 
     var cD: Texture by this.params
 
+    var cE: Texture by this.params
+
     var cR: Texture by this.params
 
     var cS: Texture by this.params
@@ -59,6 +65,8 @@ class Material(name: String) :
     var kA: Float by this.params
 
     var kD: Float by this.params
+
+    var kE: Float by this.params
 
     var kR: Float by this.params
 
@@ -111,4 +119,17 @@ class Material(name: String) :
      */
     fun isReceivingShadows(): Boolean =
         this.receivesShadows == ShadowMode.Enable
+
+    /**
+     * Updates the inverse transformation matrices of all textures in this
+     * material.
+     */
+    fun updateTextureTransforms() {
+        this.params.values.forEach {
+            when(it is Texture) {
+                false -> Unit
+                true  -> it.updateTransform()
+            }
+        }
+    }
 }
