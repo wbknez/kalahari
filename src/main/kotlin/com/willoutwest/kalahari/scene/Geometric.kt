@@ -124,4 +124,13 @@ class Geometric(name: String, private val surface: Surface,
 
         return hit
     }
+
+    /**
+     * Updates both this geometric's inverse transformation matrix as well
+     * as any materials in its possession.
+     */
+    override fun updateTransform() {
+        super.updateTransform()
+        this.material?.updateTextureTransforms()
+    }
 }
