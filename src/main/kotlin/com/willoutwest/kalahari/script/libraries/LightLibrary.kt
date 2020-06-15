@@ -55,7 +55,7 @@ class LightLibrary : ScriptingLibrary {
 
     /**
      * Creates a new ambient light with a default name of "global", a
-     * default color of white, and a default intensity of one.
+     * default color of white, and a default intensity of onecd.
      *
      * @return An ambient light.
      */
