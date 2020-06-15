@@ -1,6 +1,7 @@
 package com.willoutwest.kalahari.script.libraries
 
 import com.willoutwest.kalahari.math.Color3
+import com.willoutwest.kalahari.math.noise.Speaker
 import com.willoutwest.kalahari.script.ScriptingLibrary
 import com.willoutwest.kalahari.texture.FillTexture
 import com.willoutwest.kalahari.texture.Image
@@ -13,6 +14,8 @@ import com.willoutwest.kalahari.texture.mappers.RectangularMapper
 import com.willoutwest.kalahari.texture.mappers.SphericalMapper
 import com.willoutwest.kalahari.texture.patterns.CheckerTexture2
 import com.willoutwest.kalahari.texture.patterns.CheckerTexture3
+import com.willoutwest.kalahari.texture.patterns.NoisyTexture
+import com.willoutwest.kalahari.texture.patterns.WrapTexture
 
 /**
  * Represents a mechanism for creating and working with [Texture] objects
@@ -44,7 +47,7 @@ class TextureLibrary : ScriptingLibrary {
      *        The second checker color to use.
      * @param outlineColor
      *        The outline color to use.
-     * @return A 2D checker texture.
+     * @return A new 2D checker texture.
      */
     fun checker2(evenColor: Texture, oddColor: Texture,
                  outlineColor: Texture): Texture =
@@ -63,7 +66,7 @@ class TextureLibrary : ScriptingLibrary {
      *        The outline color to use.
      * @param outlineWidth
      *        The outline width to use.
-     * @return A 2D checker texture.
+     * @return A new 2D checker texture.
      */
     fun checker2(evenColor: Texture, oddColor: Texture, scale: Float,
                  outlineColor: Texture, outlineWidth: Float): Texture =
@@ -77,7 +80,7 @@ class TextureLibrary : ScriptingLibrary {
      *        The first checker color to use.
      * @param oddColor
      *        The second checker color to use.
-     * @return A 3D checker texture.
+     * @return A new 3D checker texture.
      */
     fun checker3(evenColor: Texture, oddColor: Texture) =
         checker3(evenColor, oddColor, 1f)
@@ -91,14 +94,14 @@ class TextureLibrary : ScriptingLibrary {
      *        The second checker color to use.
      * @param scale
      *        The checker scale to use.
-     * @return A 3D checker texture.
+     * @return A new 3D checker texture.
      */
     fun checker3(evenColor: Texture, oddColor: Texture, scale: Float):
         Texture =
         CheckerTexture3(evenColor, oddColor, scale)
 
     /**
-     * Creates a new filled texture using the specified color components.
+     * Creates a new filled texture with the specified color components.
      *
      * @param red
      *        A red color component to use.
@@ -106,7 +109,7 @@ class TextureLibrary : ScriptingLibrary {
      *        The green color component to use.
      * @param blue
      *        The blue color component to use.
-     * @return A filled texture.
+     * @return A new filled texture.
      */
     fun fill(red: Float, green: Float, blue: Float): Texture =
         FillTexture(red, green, blue)
@@ -121,16 +124,62 @@ class TextureLibrary : ScriptingLibrary {
     fun fill(color: Color3): Texture = FillTexture(color)
 
     /**
-     *
+     * Creates a new image filled texture with the specified parameters.
      *
      * @param img
-     *
+     *        The image to use.
      * @param mapper
-     *
-     * @return
+     *        The texture mapping algorithm to use.
+     * @return A new image texture.
      */
     fun image(img: Image, mapper: ImageMapper): Texture =
         ImageTexture(img, mapper)
+
+    /**
+     * Creates a new noise filled texture with the specified parameters and
+     * a default output range of <code>[0, 1]</code>.
+     * 
+     * @param speaker
+     *        The noise generator to use.
+     * @param color
+     *        The color to use.
+     * @return A new noisy texture.
+     */
+    fun noisy(speaker: Speaker, color: Texture): Texture =
+        this.noisy(speaker, color, 0f, 1f)
+
+    /**
+     * Creates a new noise filled texture with the specified parameters.
+     * 
+     * @param speaker
+     *        The noise generator to use.
+     * @param color
+     *        The color to use.
+     * @param minOutput
+     *        The minimum allowed noise scaling to use.
+     * @param maxOutput
+     *        The maximum allowed noise scaling to use.
+     * @return A new noisy texture.
+     */
+    fun noisy(speaker: Speaker, color: Texture, minOutput: Float,
+              maxOutput: Float): Texture =
+        NoisyTexture(speaker, color, minOutput, maxOutput)
+
+    /**
+     * Creates a new wrapped noise filled texture with the specified
+     * parameters.
+     *
+     * @param speaker
+     *        The noise generator to use.
+     * @param color
+     * 
+     * @param expansionNumber
+     *        The amplitude expansion amount to use.
+     * @return A new wrap texture.
+     */
+    fun wrap(speaker: Speaker, color: Texture, expansionNumber: Float): 
+        Texture =
+        WrapTexture(speaker, color, expansionNumber)
 
     /* *** Fill Texture Library *** */
 
