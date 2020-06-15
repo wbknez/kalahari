@@ -20,7 +20,7 @@ sealed class RandomUtils {
 
     companion object {
 
-        private val base    = SplittableRandom(System.currentTimeMillis())
+        private var base    = SplittableRandom(System.currentTimeMillis())
 
         private val randoms = ThreadLocalStorage({ base.split() })
 
@@ -111,6 +111,14 @@ sealed class RandomUtils {
         }
 
         /**
+         * Computes a pseudo-random number between the minimum and maximum 
+         * possible integer values, inclusive.
+         * 
+         * @return A pseudo-random number as an integer.
+         */
+        fun nextInt(): Int = localRandom.nextInt()
+
+        /**
          * Computes a pseudo-random number between zero (inclusive) and the
          * specified end value (exclusive).
          *
@@ -131,5 +139,16 @@ sealed class RandomUtils {
          * @return A pseudo-random number as an integer.
          */
         fun nextInt(a: Int, b: Int) = localRandom.nextInt(a, b)
+
+        /**
+         * Creates a new parent pseudo-random number generator using the 
+         * specified seed.
+         * 
+         * @param seed
+         *        The seed to use.
+         */
+        fun setSeed(seed: Long) {
+            base = SplittableRandom(seed)
+        }
     }
 }
