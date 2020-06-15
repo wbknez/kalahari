@@ -27,7 +27,7 @@ class TurbulenceSpeaker(source: Speaker, gain: Float, octaves: Int) :
 
             val so = this.source.output(fX, fY, fZ)
 
-            turbulence *= amplitude * MathUtils.abs(so)
+            turbulence += amplitude * MathUtils.abs(so)
             amplitude  *= 0.5f
             frequency  *= 2f
         }

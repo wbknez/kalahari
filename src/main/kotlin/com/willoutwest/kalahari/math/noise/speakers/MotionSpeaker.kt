@@ -29,11 +29,11 @@ class MotionSpeaker(source: Speaker, gain: Float, octaves: Int,
             val fY = frequency * y
             val fZ = frequency * z
 
-            motion    *= amplitude * this.source.output(fX, fY, fZ)
+            motion    += amplitude * this.source.output(fX, fY, fZ)
             amplitude *= this.gain
             frequency *= this.lacunarity
         }
 
-        return (motion - this.maxBounds) / (this.maxBounds - this.minBounds)
+        return (motion - this.minBounds) / (this.maxBounds - this.minBounds)
     }
 }
