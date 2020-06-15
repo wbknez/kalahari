@@ -6,6 +6,7 @@ import com.willoutwest.kalahari.script.libraries.CameraLibrary
 import com.willoutwest.kalahari.script.libraries.ColorLibrary
 import com.willoutwest.kalahari.script.libraries.LightLibrary
 import com.willoutwest.kalahari.script.libraries.MathLibrary
+import com.willoutwest.kalahari.script.libraries.NoiseLibrary
 import com.willoutwest.kalahari.script.libraries.TextureLibrary
 import org.luaj.vm2.LuaTable
 import org.luaj.vm2.LuaValue
@@ -78,6 +79,7 @@ class ScriptingModule : TwoArgFunction() {
         khsl.set("lights", toLua(LightLibrary()))
         khsl.set("materials", toLua(MaterialLibrary()))
         khsl.set("math", toLua(MathLibrary()))
+        khsl.set("noise", toLua(NoiseLibrary()))
         khsl.set("textures", toLua(TextureLibrary()))
 
         if(!env.get("package").isnil()) {
