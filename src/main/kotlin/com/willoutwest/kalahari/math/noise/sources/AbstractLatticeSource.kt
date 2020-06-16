@@ -12,10 +12,9 @@ import com.willoutwest.kalahari.math.noise.NoiseSource
  * @property values
  *           The table of source-specific values.
  */
-abstract class AbstractLatticeSource(indexSize: Int,
-                                     valueSize: Int) : NoiseSource {
+abstract class AbstractLatticeSource(indexSize: Int, valueSize: Int) : NoiseSource {
 
     protected val indices: ShortArray = ShortArray(indexSize)
 
-    protected val values: FloatArray = FloatArray(valueSize)
+    protected val values: FloatArray  = FloatArray(valueSize)
 }

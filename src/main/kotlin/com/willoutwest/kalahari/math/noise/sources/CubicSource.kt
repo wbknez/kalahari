@@ -49,8 +49,8 @@ class CubicSource() :
          */
         const val TableSize = 256
     }
-
-    private val mask = this.indices.size - 1
+    
+    private val mask = TableSize - 1
 
     /**
      * Constructor.
@@ -74,7 +74,7 @@ class CubicSource() :
     override fun clone(): CubicSource = CubicSource(this)
 
     /**
-     * Computes the index on the lattice of this cubic source from which to
+     * Computes the index on the lattice of this source from which to
      * provide noise.
      *
      * @param x
@@ -89,7 +89,7 @@ class CubicSource() :
         this.permute(x + this.permute(y + this.permute(z)))
 
     /**
-     * Hashes the specified index with the mask of this cubic source,
+     * Hashes the specified index with the mask of this lattice source,
      * forcing it to be within the bounds of
      * <code>[[0, table size - 1]]</code>.
      *
