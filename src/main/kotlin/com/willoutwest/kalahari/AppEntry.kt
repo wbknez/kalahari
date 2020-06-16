@@ -7,6 +7,7 @@ import com.willoutwest.kalahari.asset.sources.FileStreamSource
 import com.willoutwest.kalahari.render.Pipeline
 import com.willoutwest.kalahari.render.Tracer
 import com.willoutwest.kalahari.render.outputs.ImageOutput
+import com.willoutwest.kalahari.render.outputs.TextOutput
 import com.willoutwest.kalahari.scene.Scene
 import com.willoutwest.kalahari.script.ScriptingModule
 import com.willoutwest.kalahari.script.toLua
@@ -42,6 +43,10 @@ sealed class AppEntry {
 
         val quiet by parser.flagging(
             "-q", "--quiet", help = "disable logging output"
+        )
+
+        val showProgress by parser.flagging(
+            "-s", "--show-progress", help = "show rendering progress with text"
         )
 
         val threads by parser.storing(
@@ -146,6 +151,12 @@ sealed class AppEntry {
                 val pipeline = Pipeline(this.threads)
 
                 arrayOf(assets, pipeline).use {
+                    if(this.showProgress && !this.quiet) {
+                        pipeline.addListener(TextOutput(
+                            prefix = "Rendering...", suffix = "Complete"
+                        ))
+                    }
+
                     pipeline.addListener(ImageOutput(this.output))
 
                     val globals = initScriptingEnvironment()

@@ -127,7 +127,7 @@ class Tracer {
                 val tMin    = cache.tmins.borrow()
 
                 when(scene.root.intersects(ray, tMin, hRecord, this.hEps)) {
-                    false -> store.set(scene.viewport.bgColor)
+                    false -> store.set(scene.viewport.backgroundColor)
                     true  -> {
                         hRecord.depth = depth
                         hRecord.ray.set(ray)
