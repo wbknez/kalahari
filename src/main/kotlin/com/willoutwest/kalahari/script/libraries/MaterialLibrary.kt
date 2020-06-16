@@ -3,6 +3,7 @@ package com.willoutwest.kalahari.script.libraries
 import com.willoutwest.kalahari.texture.Texture
 import com.willoutwest.kalahari.material.Material
 import com.willoutwest.kalahari.material.Shader
+import com.willoutwest.kalahari.material.shaders.EmissiveShader
 import com.willoutwest.kalahari.material.shaders.MatteShader
 import com.willoutwest.kalahari.material.shaders.PhongShader
 import com.willoutwest.kalahari.script.ScriptingLibrary
@@ -18,6 +19,11 @@ class MaterialLibrary : ScriptingLibrary {
      * Represents the type of materials this project supports by default.
      */
     enum class Type : Material.Type {
+
+        /**
+         * Represents a material with emissive shading only.
+         */
+        Emissive,
 
         /**
          * Represents a material with diffuse shading only.
@@ -39,6 +45,7 @@ class MaterialLibrary : ScriptingLibrary {
          * @return A mapping of material types to shaders.
          */
         fun defaultShaders(): Map<Material.Type, Shader> = mapOf(
+            Type.Emissive   to EmissiveShader(),
             Type.Matte      to MatteShader(),
             Type.Phong      to PhongShader()
         )
