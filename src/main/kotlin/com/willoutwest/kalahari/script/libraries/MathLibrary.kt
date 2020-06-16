@@ -16,7 +16,43 @@ import com.willoutwest.kalahari.script.ScriptingLibrary
  * in a Lua scripting environment.
  */
 class MathLibrary : ScriptingLibrary {
+    
+    object points {
 
+        @JvmField
+        val Unit = Point3.Unit.clone()
+
+        @JvmField
+        val X    = Point3.X.clone()
+
+        @JvmField
+        val Y    = Point3.Y.clone()
+
+        @JvmField
+        val Z    = Point3.Z.clone()
+
+        @JvmField
+        val Zero = Point3.Zero.clone()
+    }
+    
+    object vectors {
+
+        @JvmField
+        val Unit = Vector3.Unit.clone()
+        
+        @JvmField
+        val X    = Vector3.X.clone()
+
+        @JvmField
+        val Y    = Vector3.Y.clone()
+
+        @JvmField
+        val Z    = Vector3.Z.clone()
+
+        @JvmField
+        val Zero = Vector3.Zero.clone()
+    }
+    
     /**
      * Creates a new RGB color with the specified components.
      *
