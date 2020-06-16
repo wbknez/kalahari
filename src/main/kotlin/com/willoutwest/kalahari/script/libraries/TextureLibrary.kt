@@ -3,6 +3,7 @@ package com.willoutwest.kalahari.script.libraries
 import com.willoutwest.kalahari.math.Color3
 import com.willoutwest.kalahari.math.noise.Speaker
 import com.willoutwest.kalahari.script.ScriptingLibrary
+import com.willoutwest.kalahari.script.fromLua
 import com.willoutwest.kalahari.texture.FillTexture
 import com.willoutwest.kalahari.texture.Image
 import com.willoutwest.kalahari.texture.ImageMapper
@@ -14,8 +15,31 @@ import com.willoutwest.kalahari.texture.mappers.RectangularMapper
 import com.willoutwest.kalahari.texture.mappers.SphericalMapper
 import com.willoutwest.kalahari.texture.patterns.CheckerTexture2
 import com.willoutwest.kalahari.texture.patterns.CheckerTexture3
+import com.willoutwest.kalahari.texture.patterns.MultiWrapTexture
 import com.willoutwest.kalahari.texture.patterns.NoisyTexture
 import com.willoutwest.kalahari.texture.patterns.WrapTexture
+import org.luaj.vm2.LuaTable
+import org.luaj.vm2.LuaValue
+import java.util.NavigableMap
+import java.util.TreeMap
+
+/**
+ * Converts the specified Lua table into a collection of textures associated
+ * by floating-point thresholds.
+ * 
+ * @param table
+ *        The Lua table to convert.
+ * @return A collection of textures associated by floats.
+ */
+private fun toNavigableMap(table: LuaTable): NavigableMap<Float, Texture> {
+    val map = TreeMap<Float, Texture>()
+    
+    table.keys().forEach { key ->
+        map.put(key.tofloat(), fromLua(table.get(key), Texture::class.java))
+    }
+    
+    return map
+}
 
 /**
  * Represents a mechanism for creating and working with [Texture] objects
@@ -136,6 +160,22 @@ class TextureLibrary : ScriptingLibrary {
         ImageTexture(img, mapper)
 
     /**
+     * Creates a new wrapped texture with multiple colors using the
+     * specified parameters.
+     *
+     * @param colors
+     *        The collection of textures associated by thresholds to use.
+     * @param speaker
+     *        The noise generator to use.
+     * @param expansionNumber
+     *        The amplitude expansion amount to use.
+     * @return A new multi-wrap texture.
+     */
+    fun multiwrap(speaker: Speaker, colors: LuaTable, expansionNumber: Float):
+        Texture = 
+        MultiWrapTexture(speaker, toNavigableMap(colors), expansionNumber)
+    
+    /**
      * Creates a new noise filled texture with the specified parameters and
      * a default output range of <code>[0, 1]</code>.
      * 
@@ -172,7 +212,7 @@ class TextureLibrary : ScriptingLibrary {
      * @param speaker
      *        The noise generator to use.
      * @param color
-     * 
+     *        The color to use.
      * @param expansionNumber
      *        The amplitude expansion amount to use.
      * @return A new wrap texture.
