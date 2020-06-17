@@ -2,6 +2,7 @@ package com.willoutwest.kalahari.script.libraries
 
 import com.willoutwest.kalahari.math.noise.Speaker
 import com.willoutwest.kalahari.math.noise.sources.CubicSource
+import com.willoutwest.kalahari.math.noise.sources.SimplexSource
 import com.willoutwest.kalahari.math.noise.speakers.MotionSpeaker
 import com.willoutwest.kalahari.math.noise.speakers.TurbulenceSpeaker
 import com.willoutwest.kalahari.script.ScriptingLibrary
@@ -33,11 +34,29 @@ class NoiseLibrary : ScriptingLibrary {
      *        ratio to use.
      * @param lacunarity
      *        The ratio of successive spatial frequencies to use.
+     * @return A new noise-filled texture.
      */
     fun motion(source: Speaker, gain: Float, octaves: Int, lacunarity: Float):
         Speaker =
         MotionSpeaker(source, gain, octaves, lacunarity)
 
+    /**
+     * Creates a new simplex noise source with the time in milliseconds 
+     * since epoch as the default seed.
+     * 
+     * @return A simplex noise source.
+     */
+    fun simplex(): Speaker = this.simplex(System.currentTimeMillis())
+
+    /**
+     * Creates a new simplex noise source with the specified seed.
+     * 
+     * @param seed
+     *        The seed to use.
+     * @return A simplex noise source.
+     */
+    fun simplex(seed: Long): Speaker = SimplexSource(seed)
+    
     /**
      * Creates a new speaker that applies a fractal summation using the 
      * specified parameters.
@@ -49,7 +68,8 @@ class NoiseLibrary : ScriptingLibrary {
      * @param source
      *        A source of noise to use.
      * @param octaves
-     * 
+     *        The number of successive frequencies that differ by a constant
+     *        ratio to use.
      * @return A new fractal-summation speaker.
      */
     fun sum(source: Speaker, octaves: Int): Speaker =

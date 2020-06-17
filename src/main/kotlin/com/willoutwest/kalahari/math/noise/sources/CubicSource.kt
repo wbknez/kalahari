@@ -7,7 +7,7 @@ import com.willoutwest.kalahari.math.noise.NoiseSource
 
 /**
  * Represents an implementation of [NoiseSource] that uses cubic
- * interpolation on random noise mapped to an integer lattice.
+ * interpolation to map random noise to an integer lattice.
  *
  * @property mask
  *           The hashing mask.
