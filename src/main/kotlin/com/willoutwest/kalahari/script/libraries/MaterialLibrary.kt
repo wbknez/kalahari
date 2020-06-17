@@ -52,6 +52,26 @@ class MaterialLibrary : ScriptingLibrary {
     }
 
     /**
+     * Creates a new emissive material with the specified parameters.
+     * 
+     * @param name
+     *        The material name to use.
+     * @param cE
+     *        The emissive color to use.
+     * @param kE
+     *        The emissive coefficient to use.
+     * @return An emissive material.
+     */
+    fun emissive(name: String, cE: Texture, kE: Float): Material {
+        val mat = Material(name, Type.Emissive)
+
+        mat.cE = cE
+        mat.kE = kE
+        
+        return mat
+    }
+
+    /**
      * Creates a new matte material with the specified properties.
      *
      * @param name

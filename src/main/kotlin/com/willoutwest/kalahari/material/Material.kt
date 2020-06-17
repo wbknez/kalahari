@@ -16,7 +16,7 @@ import com.willoutwest.kalahari.util.hash
  * @property cD
  *           The ambient and diffuse reflection color.
  * @property cE
- *           The emissive reflection color.
+ *           The emissive color.
  * @property cR
  *           The perfect reflection color.
  * @property cS
@@ -29,8 +29,8 @@ import com.willoutwest.kalahari.util.hash
  *           The ambient reflection coefficient.
  * @property kD
  *           The diffuse reflection coefficient.
- * @proeprty kE
- *           The emissive reflection coefficient.
+ * @property kE
+ *           The emissive coefficient.
  * @property kR
  *           The perfect reflection coefficient.
  * @property kS
