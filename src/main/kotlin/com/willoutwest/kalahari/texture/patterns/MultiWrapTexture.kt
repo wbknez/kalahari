@@ -22,8 +22,7 @@ import java.util.NavigableMap
 class MultiWrapTexture(speaker: Speaker,
                        val colors: NavigableMap<Float, Texture>,
                        val expansionNumber: Float) :
-    AbstractProceduralTexture(speaker, colors.values.first()), Cloneable,
-    Texture {
+    AbstractProceduralTexture(speaker), Cloneable, Texture {
 
     init {
         require(this.expansionNumber > 1f) {

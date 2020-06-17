@@ -11,16 +11,16 @@ import com.willoutwest.kalahari.texture.Texture
  * Represents an implementation of [Texture] that applies a wrapped noise
  * function to itself.
  *
- * @param color
- *        The color to apply noise to.
  * @param speaker
  *        The noise function to apply.
+ * @property color
+ *        The color to apply noise to.
  * @property expansionNumber
  *           The amount to expand the amplitude.
  */
-class WrapTexture(speaker: Speaker, color: Texture,
+class WrapTexture(speaker: Speaker, val color: Texture,
                   val expansionNumber: Float) :
-    AbstractProceduralTexture(speaker, color), Cloneable, Texture {
+    AbstractProceduralTexture(speaker), Cloneable, Texture {
 
     init {
         require(this.expansionNumber > 1f) {

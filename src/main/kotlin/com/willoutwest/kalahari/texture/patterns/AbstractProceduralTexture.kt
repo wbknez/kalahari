@@ -11,9 +11,6 @@ import com.willoutwest.kalahari.texture.Texture
  *
  * @property speaker
  *           The speaker to use for noise output.
- * @property color
- *           The color to use.
  */
-abstract class AbstractProceduralTexture(val speaker: Speaker,
-                                         val color: Texture) :
+abstract class AbstractProceduralTexture(val speaker: Speaker) :
     AbstractTexture(), Texture

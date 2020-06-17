@@ -10,26 +10,26 @@ import com.willoutwest.kalahari.texture.Texture
  * Represents an implementation of [Texture] that applies a noise function to
  * itself.
  *
- * @param color
- *        The color to apply noise to.
  * @param maxOutput
  *        The maximum allowed noise scaling.
  * @param speaker
  *        The noise function to apply.
+ * @property color
+ *        The color to apply noise to.
  * @property difference
  *           The difference between the allowed maximum and minimum
  *           noise scaling.
  * @property minOutput
  *           The minimum allowed noise scaling.
  */
-class NoisyTexture(speaker: Speaker, color: Texture,
+class NoisyTexture(speaker: Speaker, val color: Texture,
                    val minOutput: Float, maxOutput: Float) :
-    AbstractProceduralTexture(speaker, color), Cloneable, Texture {
+    AbstractProceduralTexture(speaker), Cloneable, Texture {
 
     private val difference = maxOutput - this.minOutput
 
     init {
-        require(this.minOutput >= 0f && this.minOutput <= 1f) {
+        require(this.minOutput in 0f..1f) {
             "Minimum output must be between [0, 1]."
         }
 
